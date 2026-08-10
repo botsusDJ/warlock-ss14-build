@@ -1,0 +1,204 @@
+# _Warlock
+# Псайкерство техномагов. В отличие от магии волшебника, ограничителем служит не мантия,
+# а запас псионической энергии (WarlockPsiCost). Иконки временно взяты из ванильных наборов.
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: WarlockBaseSpellAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    checkCanInteract: true
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+
+- type: entity
+  abstract: true
+  parent: WarlockBaseSpellAction
+  id: WarlockBaseTargetedSpellAction
+  components:
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+
+# ------------------------------------------------------------------------------------------------
+# 1. Литания Расщепления
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionLitanyOfUnmaking
+  name: Литания Расщепления
+  description: >-
+    Проговорить машине её собственную схему задом наперёд. Конструкция распадается,
+    а высвобожденная структура возвращается вам псионической энергией. Работает только
+    на закреплённой технике.
+  components:
+  - type: Action
+    useDelay: 30
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: knock
+  - type: TargetAction
+    interactOnMiss: false
+    range: 3
+  - type: EntityTargetAction
+    canTargetSelf: false
+    blacklist:
+      components:
+      - MobState
+    event: !type:WarlockLitanyOfUnmakingEvent
+      energyReturn: 20
+      residue:
+      - SheetSteel1
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Machines/machine_switch.ogg
+  - type: WarlockPsiCost
+    cost: 15
+  - type: SpeakOnAction
+    sentence: warlock-speech-spell-litany
+
+# ------------------------------------------------------------------------------------------------
+# 2. Хор Стали
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionChoirOfSteel
+  name: Хор Стали
+  description: >-
+    Незакреплённое железо вокруг срывается с места и стягивается к вам, а через несколько
+    секунд разлетается наружу шрапнелью. Хорошо работает в захламлённом помещении и
+    совершенно бесполезно в пустом коридоре.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/metal_crunch.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: repulse
+  - type: InstantAction
+    event: !type:WarlockChoirOfSteelEvent
+      gatherRadius: 7
+      burstRadius: 2.5
+      duration: 4
+      maxItems: 20
+  - type: WarlockPsiCost
+    cost: 30
+  - type: SpeakOnAction
+    sentence: warlock-speech-spell-choir
+
+# ------------------------------------------------------------------------------------------------
+# 3. Отзвук Мёртвого Бога
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionDeadgodEcho
+  name: Отзвук Мёртвого Бога
+  description: >-
+    Печать запоминает, где стояло всё живое вокруг, а через двенадцать секунд возвращает
+    их обратно. Убегать бесполезно — если вы всё ещё рядом с печатью, откат вас достанет.
+  components:
+  - type: Action
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
+  - type: TargetAction
+    interactOnMiss: false
+    range: 6
+  - type: WorldTargetAction
+    event: !type:WarlockDeadgodEchoEvent
+      anchor: WarlockDeadgodAnchor
+  - type: WarlockPsiCost
+    cost: 35
+  - type: SpeakOnAction
+    sentence: warlock-speech-spell-echo
+
+# ------------------------------------------------------------------------------------------------
+# 4. Заёмное Дыхание
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionBorrowedBreath
+  name: Заёмное Дыхание
+  description: >-
+    Затянуть чужие раны собственным даром. Цель заметно лечится, а вы платите за это
+    выносливостью. На себя это не работает — своё дыхание в долг не берут.
+  components:
+  - type: Action
+    useDelay: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_healing.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: shield
+  - type: TargetAction
+    interactOnMiss: false
+    range: 2
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockBorrowedBreathEvent
+      casterStaminaCost: 35
+      healing:
+        types:
+          Blunt: -20
+          Slash: -20
+          Piercing: -20
+          Heat: -15
+          Shock: -15
+          Asphyxiation: -15
+  - type: WarlockPsiCost
+    cost: 25
+  - type: SpeakOnAction
+    sentence: warlock-speech-spell-breath
+
+# ------------------------------------------------------------------------------------------------
+# 5. Разделённая Участь
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionSharedFate
+  name: Разделённая Участь
+  description: >-
+    Связать свою судьбу с чужой на двадцать пять секунд. Половина любого урона, полученного
+    одним из вас, прилетает второму. Это и щит для союзника, и приговор себе, если выбрать
+    цель неудачно.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: magicmissile
+  - type: TargetAction
+    interactOnMiss: false
+    range: 4
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockSharedFateEvent
+      duration: 25
+      coefficient: 0.5
+  - type: WarlockPsiCost
+    cost: 40
+  - type: SpeakOnAction
+    sentence: warlock-speech-spell-fate

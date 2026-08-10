@@ -1,0 +1,36 @@
+# _Warlock
+# Техномаги — потомки рабочих и учёных гига-государства, облучённых антиматериальными установками.
+# Кожа потемнела, глаза выцвели добела, а сознание получило доступ к псионике.
+# Механически это мутировавшие люди, поэтому вся анатомия наследуется от человеческой.
+
+- type: skinColoration
+  id: WarlockTechnomancerSkin
+  strategy: !type:ClampedHslColoration
+    saturation: [ 0, 0.3 ]
+    lightness: [ 0.1, 0.4 ]
+
+- type: species
+  id: WarlockTechnomancer
+  name: species-name-warlock-technomancer
+  descriptor: technomancer
+  roundStart: true
+  prototype: WarlockMobTechnomancer
+  dollPrototype: WarlockAppearanceTechnomancer
+  defaultSkinTone: "#3b2e2a"
+  skinColoration: WarlockTechnomancerSkin
+  maleFirstNames: WarlockNamesTechnomancerFirstMale
+  femaleFirstNames: WarlockNamesTechnomancerFirstFemale
+  lastNames: WarlockNamesTechnomancerLast
+  naming: FirstLast
+  # Техномаг живёт около 150 лет, взрослеет позже человека.
+  minAge: 20
+  youngAge: 45
+  oldAge: 110
+  maxAge: 150
+  defaultSoundsBySex:
+  - MaleHuman
+  - FemaleHuman
+  - MaleHuman
+  voices:
+  - MaleHuman
+  - FemaleHuman

@@ -1,0 +1,36 @@
+# _Warlock
+# Действия, которые выдают артефакты. В отличие от заклинаний расы, они не требуют дара —
+# артефакт работает в руках у кого угодно, потому что тянет силу из самого себя.
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionThousandHands
+  name: Рука Издалека
+  description: >-
+    Выдернуть предмет прямо в свободную руку с расстояния. Перчатка не разбирает,
+    чей это предмет, и не спрашивает разрешения.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 8
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/thudswoosh.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: item_recall
+  - type: TargetAction
+    interactOnMiss: false
+    range: 8
+    checkCanAccess: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - Item
+    event: !type:WarlockThousandHandsEvent
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Effects/thudswoosh.ogg
+  - type: WarlockPsiCost
+    cost: 5
+    requiresPsionics: false

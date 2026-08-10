@@ -1,0 +1,43 @@
+<Document>
+  # Техномаги
+
+  <Box>
+    <GuideEntityEmbed Entity="WarlockAppearanceTechnomancer" Caption=""/>
+  </Box>
+
+  Потомки рабочих и учёных гига-государства, которых десятилетиями облучали на антиматериальных установках. Это не была радиация, и вылечить это не смогли: кожа темнела, глаза выцветали добела, а сознание получало доступ к тому, для чего у их государства даже не было слова. Их сослали на пограничную планету и забыли — а через триста лет там стоял Техномагический Союз, нашедший артефакты вымершей планетарной расы.
+
+  ## Псионика
+
+  Техномаг носит запас [color=#9fd8ff]псионической энергии[/color] — он виден в панели состояний рядом со здоровьем. Каждое заклинание тратит энергию, а восстанавливается она медленно, около полутора единиц в секунду. Ограничение здесь ресурсное, а не по перезарядке: можно выпустить весь резерв в один заход и остаться пустым на минуту.
+
+  Доступные техники:
+
+  <Box>
+    <GuideEntityEmbed Entity="WarlockActionLitanyOfUnmaking" Caption="Литания Расщепления"/>
+    <GuideEntityEmbed Entity="WarlockActionChoirOfSteel" Caption="Хор Стали"/>
+    <GuideEntityEmbed Entity="WarlockActionDeadgodEcho" Caption="Отзвук Мёртвого Бога"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WarlockActionBorrowedBreath" Caption="Заёмное Дыхание"/>
+    <GuideEntityEmbed Entity="WarlockActionSharedFate" Caption="Разделённая Участь"/>
+  </Box>
+
+  ## Тело
+
+  Анатомически техномаг остаётся человеком, но перестроенным: он живёт до ста пятидесяти лет и взрослеет позже. Он получает [color=#1e90ff]на 60% меньше урона радиацией[/color] и [color=#1e90ff]на 20% меньше урона холодом[/color], но его нервная система работает как проводник — [color=#ffa500]электричество бьёт по нему на 35% сильнее[/color], а клеточные повреждения переносятся [color=#ffa500]на 20% тяжелее[/color].
+
+  ## Артефакты
+
+  Артефакты вымершей расы работают в чужих руках тоже, но техномаг вытягивает из них куда больше. Оковы Логики — единственное, чего он должен бояться по-настоящему: надетые, они отрезают его от дара, и снять их самому невозможно.
+
+  <Box>
+    <GuideEntityEmbed Entity="WarlockArtefactFateDie" Caption=""/>
+    <GuideEntityEmbed Entity="WarlockArtefactLogicShackles" Caption=""/>
+    <GuideEntityEmbed Entity="WarlockArtefactDeadgodCandle" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WarlockArtefactThousandHands" Caption=""/>
+    <GuideEntityEmbed Entity="WarlockArtefactGuildUrn" Caption=""/>
+  </Box>
+</Document>

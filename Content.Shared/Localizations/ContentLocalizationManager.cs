@@ -10,7 +10,21 @@ namespace Content.Shared.Localizations
         [Dependency] private ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "en-US";
+        // _Warlock: основная культура билда — ru-RU, en-US используется как fallback,
+        // чтобы весь ванильный текст продолжал работать без перевода.
+        private const string Culture = "ru-RU";
+
+        /// <summary>
+        /// _Warlock: культура, на которую откатывается локализация, если ключ не найден в <see cref="Culture"/>.
+        /// </summary>
+        private const string FallbackCulture = "en-US";
+
+        /// <summary>
+        /// _Warlock: культура, используемая для форматирования чисел.
+        /// Намеренно оставлена английской, чтобы разделитель дробной части оставался точкой
+        /// и не ломал уже написанные ванильные строки.
+        /// </summary>
+        private const string NumberCulture = "en-US";
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
@@ -26,30 +40,59 @@ namespace Content.Shared.Localizations
         public void Initialize()
         {
             var culture = new CultureInfo(Culture);
+            var cultureEn = new CultureInfo(FallbackCulture);
 
-            _loc.LoadCulture(culture);
-            _loc.AddFunction(culture, "PRESSURE", FormatPressure);
-            _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
-            _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
-            // NOTE: ENERGYWATTHOURS() still takes a value in joules, but formats as watt-hours.
-            _loc.AddFunction(culture, "ENERGYWATTHOURS", FormatEnergyWattHours);
-            _loc.AddFunction(culture, "UNITS", FormatUnits);
-            _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
-            _loc.AddFunction(culture, "LOC", FormatLoc);
-            _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
-            _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
-            _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
+            // _Warlock: fallback грузим первым, затем основную культуру и переключаемся на неё.
+            // Порядок важен: LoadCulture проставляет DefaultCulture только если она ещё не задана.
+            if (!culture.Name.Equals(cultureEn.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                _loc.LoadCulture(cultureEn);
+                _loc.LoadCulture(culture);
+                _loc.SetCulture(culture);
+                _loc.SetFallbackCluture(cultureEn);
+            }
+            else
+            {
+                _loc.LoadCulture(culture);
+            }
 
+            // _Warlock: общие функции регистрируем для каждой загруженной культуры,
+            // иначе ванильные en-US строки с PRESSURE()/UNITS() и т.п. развалятся при фолбэке.
+            foreach (var loaded in GetLoadedCultures(culture, cultureEn))
+            {
+                var target = loaded;
 
-            /*
-             * The following language functions are specific to the english localization. When working on your own
-             * localization you should NOT modify these, instead add new functions specific to your language/culture.
-             * This ensures the english translations continue to work as expected when fallbacks are needed.
-             */
-            var cultureEn = new CultureInfo("en-US");
+                _loc.AddFunction(target, "PRESSURE", FormatPressure);
+                _loc.AddFunction(target, "POWERWATTS", FormatPowerWatts);
+                _loc.AddFunction(target, "POWERJOULES", FormatPowerJoules);
+                // NOTE: ENERGYWATTHOURS() still takes a value in joules, but formats as watt-hours.
+                _loc.AddFunction(target, "ENERGYWATTHOURS", FormatEnergyWattHours);
+                _loc.AddFunction(target, "UNITS", FormatUnits);
+                _loc.AddFunction(target, "TOSTRING", args => FormatToString(target, args));
+                _loc.AddFunction(target, "LOC", FormatLoc);
+                _loc.AddFunction(target, "NATURALFIXED", FormatNaturalFixed);
+                _loc.AddFunction(target, "NATURALPERCENT", FormatNaturalPercent);
+                _loc.AddFunction(target, "PLAYTIME", FormatPlaytime);
 
-            _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
-            _loc.AddFunction(cultureEn, "MANY", FormatMany);
+                /*
+                 * The following language functions are specific to the english localization. When working on your own
+                 * localization you should NOT modify these, instead add new functions specific to your language/culture.
+                 * This ensures the english translations continue to work as expected when fallbacks are needed.
+                 */
+                _loc.AddFunction(target, "MAKEPLURAL", FormatMakePlural);
+                _loc.AddFunction(target, "MANY", FormatMany);
+            }
+        }
+
+        /// <summary>
+        /// _Warlock: возвращает уникальный список загруженных культур в порядке основная -> fallback.
+        /// </summary>
+        private static IEnumerable<CultureInfo> GetLoadedCultures(CultureInfo culture, CultureInfo fallback)
+        {
+            yield return culture;
+
+            if (!culture.Name.Equals(fallback.Name, StringComparison.OrdinalIgnoreCase))
+                yield return fallback;
         }
 
         private ILocValue FormatMany(LocArgs args)
@@ -70,7 +113,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value * 100;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(NumberCulture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
         }
@@ -79,7 +122,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(NumberCulture)).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
         }

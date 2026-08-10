@@ -1,0 +1,83 @@
+# _Warlock
+# Техномаг анатомически остаётся человеком, поэтому органы и группа маркировок берутся у Human.
+# Отличия чисто "надстроечные": псионический орган в мозгу, свечение глаз и иная стойкость к урону.
+
+- type: entity
+  parent: AppearanceHuman
+  id: WarlockAppearanceTechnomancer
+  categories: [ HideSpawnMenu ]
+  name: облик техномага
+  components:
+  - type: HumanoidProfile
+    species: WarlockTechnomancer
+  - type: InitialBody
+    organs:
+      Torso: OrganHumanTorso
+      Head: OrganHumanHead
+      ArmLeft: OrganHumanArmLeft
+      ArmRight: OrganHumanArmRight
+      HandRight: OrganHumanHandRight
+      HandLeft: OrganHumanHandLeft
+      LegLeft: OrganHumanLegLeft
+      LegRight: OrganHumanLegRight
+      FootLeft: OrganHumanFootLeft
+      FootRight: OrganHumanFootRight
+      Brain: WarlockOrganTechnomancerBrain
+      Eyes: OrganHumanEyes
+      Tongue: OrganHumanTongue
+      Appendix: OrganHumanAppendix
+      Ears: OrganHumanEars
+      Lungs: OrganHumanLungs
+      Heart: OrganHumanHeart
+      Stomach: OrganHumanStomach
+      Liver: OrganHumanLiver
+      Kidneys: OrganHumanKidneys
+
+# Псионический орган. Отдельная сущность нужна для того, чтобы позже можно было
+# вырезать/пересаживать источник псионики (лор: братство стали изучало техномагов).
+- type: entity
+  parent: OrganHumanBrain
+  id: WarlockOrganTechnomancerBrain
+  name: мозг техномага
+  suffix: Warlock, Technomancer
+  description: Извилины прошиты тонкой сетью бледных нитей. Они не были имплантированы — они выросли сами.
+
+# Базовое тело техномага без способностей.
+# Полезно для NPC, пленников братства стали и отступников, лишённых дара.
+- type: entity
+  parent:
+  - WarlockAppearanceTechnomancer
+  - MobHuman
+  id: WarlockMobTechnomancerBase
+  abstract: true
+  components:
+  - type: Damageable
+    damageModifierSet: WarlockTechnomancer
+  # Белые выцветшие глаза дают слабую засветку — это главный внешний признак техномага.
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 0.6
+    softness: 1
+    color: "#cfe4ff"
+
+- type: entity
+  parent: WarlockMobTechnomancerBase
+  id: WarlockMobTechnomancer
+  name: Urist McPsi
+  components:
+  - type: WarlockPsionic
+  - type: ActionGrant
+    actions:
+    - WarlockActionLitanyOfUnmaking
+    - WarlockActionChoirOfSteel
+    - WarlockActionDeadgodEcho
+    - WarlockActionBorrowedBreath
+    - WarlockActionSharedFate
+
+- type: entity
+  parent: WarlockMobTechnomancerBase
+  id: WarlockMobTechnomancerMundane
+  name: Urist McPsi
+  suffix: Warlock, Technomancer, Без псионики
+  categories: [ HideSpawnMenu ]

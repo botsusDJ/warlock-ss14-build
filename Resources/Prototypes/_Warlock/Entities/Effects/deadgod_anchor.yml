@@ -1,0 +1,26 @@
+# _Warlock
+# Печать «Отзвука Мёртвого Бога». Спрайт культистской руны используется как плейсхолдер.
+
+- type: entity
+  id: WarlockDeadgodAnchor
+  name: отзвук мёртвого бога
+  description: Бледный контур, вырезанный прямо в воздухе. Он помнит, где вы стояли.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Magic/Cult/rune.rsi
+    layers:
+    - state: cult5
+      color: "#a9e6ff"
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 1.2
+    color: "#a9e6ff"
+  - type: WarlockDeadgodAnchor

@@ -1,0 +1,159 @@
+# _Warlock
+# Артефакты вымершей планетарной расы. Все спрайты — плейсхолдеры из ванильных наборов.
+# Это не ксеноархеологические аномалии: у каждого предмета фиксированный эффект и своя цена.
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: WarlockBaseArtefact
+  description: Артефакт исчезнувшей планетарной расы. Никто не знает, как он работает, но все знают, что работает.
+  components:
+  - type: Tag
+    tags:
+    - WarlockArtefact
+
+# ------------------------------------------------------------------------------------------------
+# 1. Кость Судьбы
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: [ WarlockBaseArtefact, d20Dice ]
+  id: WarlockArtefactFateDie
+  name: Кость Судьбы
+  description: >-
+    Двадцатигранник из тёплого белого камня. Он не предсказывает исход — он его назначает.
+    Гильдия Варлок утверждает, что кость нельзя обмануть, а гильдия Технос до сих пор пытается.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/dice.rsi
+    noRot: true
+    layers:
+    - state: d20_20
+      color: "#dfe8ff"
+  - type: UseDelay
+    delay: 45
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 0.7
+    color: "#dfe8ff"
+  - type: WarlockFateDie
+    energyPerPip: 3
+    failureStamina: 40
+    critFailureShock: 25
+
+# ------------------------------------------------------------------------------------------------
+# 2. Оковы Логики
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: [ WarlockBaseArtefact, ClothingNeckBase ]
+  id: WarlockArtefactLogicShackles
+  name: Оковы Логики
+  description: >-
+    Замкнутый обруч из матового металла. Пока он на шее, дар молчит — а сам обруч
+    не поддаётся своему носителю. Снять его может только чужая рука.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+    state: icon
+    color: "#8a8f99"
+  - type: Clothing
+    slots: [ neck ]
+  - type: WarlockPsiShackles
+    allowSelfRemoval: false
+
+# ------------------------------------------------------------------------------------------------
+# 3. Свеча Мёртвого Бога
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: [ WarlockBaseArtefact, BaseItemDestructible ]
+  id: WarlockArtefactDeadgodCandle
+  name: Свеча Мёртвого Бога
+  description: >-
+    Свеча, которая горит без фитиля и без воска. Пока она зажжена, умирающие рядом
+    не могут умереть — но платит за это тот, кто держит свечу.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Misc/candles.rsi
+    layers:
+    - state: candle-big
+      color: "#b6d8ff"
+    - state: fire-big
+      shader: unshaded
+      visible: false
+      map: [ "flame" ]
+  - type: Appearance
+  - type: ItemToggle
+    onActivate: true
+    onUse: true
+    soundActivate:
+      path: /Audio/Items/candle_blowing.ogg
+  - type: ToggleableVisuals
+    spriteLayer: flame
+  # ItemTogglePointLight управляет светом на клиенте, поэтому свет обязан быть без сетевой синхронизации.
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 3
+    energy: 1.5
+    color: "#b6d8ff"
+  - type: ItemTogglePointLight
+  - type: WarlockDeadgodCandle
+    radius: 4
+    energyPerTick: 2
+    burnPerTick: 1.5
+    healPerTick: 4
+
+# ------------------------------------------------------------------------------------------------
+# 4. Перчатка Тысячи Рук
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: [ WarlockBaseArtefact, ClothingHandsBase ]
+  id: WarlockArtefactThousandHands
+  name: Перчатка Тысячи Рук
+  description: >-
+    Перчатка, сшитая из чего-то, что раньше было множеством ладоней. Надетая, она
+    позволяет взять предмет, до которого вы физически не дотягиваетесь.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+    state: icon
+    color: "#c6b1d8"
+  - type: Clothing
+    slots: [ gloves ]
+  - type: ActionGrant
+    actions:
+    - WarlockActionThousandHands
+  - type: ItemActionGrant
+    activeIfWorn: true
+
+# ------------------------------------------------------------------------------------------------
+# 5. Урна Трёх Гильдий
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactGuildUrn
+  name: Урна Трёх Гильдий
+  description: >-
+    Приземистый сосуд с тремя оттисками на боку. Всё, что в него кладут, перестаёт
+    существовать, а взамен внутри копится чистый дар. Выпить его может только псайкер.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Specific/Chapel/chaplainurn.rsi
+    state: icon
+    color: "#a9c4d8"
+  - type: UseDelay
+    delay: 5
+  - type: PointLight
+    enabled: true
+    radius: 1.6
+    energy: 0.8
+    color: "#a9c4d8"
+  - type: WarlockGuildUrn
+    maxCharge: 60
+    chargePerItem: 10

@@ -1,0 +1,30 @@
+# _Warlock
+# Счётчик псионической энергии. Спрайт временно взят от эссенции ревенанта как плейсхолдер.
+
+- type: alert
+  id: WarlockPsiEnergy
+  category: Health
+  icons:
+  - sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    state: essence0
+  alertViewEntity: WarlockAlertPsiEnergySpriteView
+  name: alerts-warlock-psi-energy-name
+  description: alerts-warlock-psi-energy-desc
+
+- type: entity
+  id: WarlockAlertPsiEnergySpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+    hideLeadingZeroes: true
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/essence_counter.rsi
+    color: "#9fd8ff"
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]

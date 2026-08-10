@@ -1,0 +1,21 @@
+# _Warlock
+# Имена техномагов: смесь искажённых имён старого гига-государства и терминов из артефактов.
+# Фамилия — это, по сути, название линии внутри гильдии.
+
+- type: localizedDataset
+  id: WarlockNamesTechnomancerFirstMale
+  values:
+    prefix: warlock-names-technomancer-first-male-dataset-
+    count: 24
+
+- type: localizedDataset
+  id: WarlockNamesTechnomancerFirstFemale
+  values:
+    prefix: warlock-names-technomancer-first-female-dataset-
+    count: 24
+
+- type: localizedDataset
+  id: WarlockNamesTechnomancerLast
+  values:
+    prefix: warlock-names-technomancer-last-dataset-
+    count: 30
