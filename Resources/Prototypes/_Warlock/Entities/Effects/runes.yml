@@ -1,0 +1,55 @@
+# _Warlock
+# Печати «Отбрасывания» и «Гнили». Обе невидимы: спрайта нет вообще, только коллайдер-триггер.
+# Живут 15 секунд, после чего рассыпаются сами.
+
+- type: entity
+  abstract: true
+  id: WarlockBaseRune
+  name: искажение воздуха
+  description: Что-то не так с этим местом, но глаз не может уловить, что именно.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  # Спрайта нет намеренно — печать не должна быть видна тому, кто на неё идёт.
+  - type: Fixtures
+    fixtures:
+      rune:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: Physics
+    bodyType: Static
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: TimedDespawn
+    lifetime: 15
+
+- type: entity
+  parent: WarlockBaseRune
+  id: WarlockRuneHurling
+  suffix: Warlock, Отбрасывание
+  components:
+  - type: WarlockRune
+    effect: Hurling
+    throwStrength: 14
+    throwDistance: 10
+
+- type: entity
+  parent: WarlockBaseRune
+  id: WarlockRuneBlight
+  suffix: Warlock, Гниль
+  components:
+  - type: WarlockRune
+    effect: Blight
+    explosionIntensity: 12
+    poisonRadius: 3
+    poisonDamage: 35

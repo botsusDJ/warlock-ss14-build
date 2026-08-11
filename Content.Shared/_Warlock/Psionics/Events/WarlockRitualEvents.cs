@@ -1,0 +1,176 @@
+using Content.Shared.Actions;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Warlock.Psionics.Events;
+
+/// <summary>
+/// _Warlock — «Эхо-Копия».
+/// Техномаг заставляет вещи вокруг вспомнить, какими они были, и вспоминание материализуется.
+/// Пол, стены и живое заклинание не трогает: у них слишком длинная память.
+/// </summary>
+public sealed partial class WarlockMirrorEchoEvent : InstantActionEvent
+{
+    [DataField]
+    public float Radius = 3f;
+
+    /// <summary>
+    /// Потолок числа копий за каст. Без него на складе получится лагомёт.
+    /// </summary>
+    [DataField]
+    public int MaxCopies = 8;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Проклятая Хватка».
+/// На полминуты чужая материя перестаёт терпеть прикосновение техномага: всё, что он берёт в руки,
+/// разрывает. Взамен высвободившееся идёт на затягивание его собственных ран.
+/// </summary>
+public sealed partial class WarlockCursedGraspEvent : InstantActionEvent
+{
+    [DataField]
+    public float Duration = 30f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Печать Отбрасывания».
+/// Невидимая печать, которая ждёт шага и швыряет наступившего прочь.
+/// </summary>
+public sealed partial class WarlockWardOfHurlingEvent : WorldTargetActionEvent
+{
+    [DataField]
+    public EntProtoId Rune = "WarlockRuneHurling";
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Печать Гнили».
+/// Та же невидимая печать, но вместо броска она вскрывается взрывом и травит всё вокруг.
+/// </summary>
+public sealed partial class WarlockWardOfBlightEvent : WorldTargetActionEvent
+{
+    [DataField]
+    public EntProtoId Rune = "WarlockRuneBlight";
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Литания Укрепления».
+/// Механизм переписывается на языке артефактов и перестаёт ломаться. Плата берётся не с механизма:
+/// техномаг навсегда отдаёт часть собственной прочности и выносливости. Отменить это нельзя.
+/// </summary>
+public sealed partial class WarlockRiteOfBulwarkEvent : EntityTargetActionEvent
+{
+    /// <summary>
+    /// Набор резистов, который получает укреплённый механизм.
+    /// </summary>
+    [DataField]
+    public ProtoId<DamageModifierSetPrototype> Modifiers = "WarlockBulwark";
+
+    /// <summary>
+    /// Сколько здоровья техномаг теряет навсегда (сдвиг порогов крита и смерти).
+    /// </summary>
+    [DataField]
+    public float HealthCost = 25f;
+
+    /// <summary>
+    /// Во сколько раз падает порог оглушения от усталости. Тоже навсегда.
+    /// </summary>
+    [DataField]
+    public float StaminaPenalty = 0.75f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Чутьё Реликвий».
+/// Дар нащупывает артефакты далеко за пределами видимости и раз в несколько секунд
+/// подсказывает сторону и расстояние до ближайшего.
+/// </summary>
+public sealed partial class WarlockRelicScentEvent : InstantActionEvent
+{
+    [DataField]
+    public float Duration = 60f;
+
+    [DataField]
+    public float Radius = 60f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Иссушающее Касание».
+/// Техномаг выпивает чужую выносливость досуха и заливает её в себя.
+/// </summary>
+public sealed partial class WarlockWitheringTouchEvent : EntityTargetActionEvent
+{
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Погребальный Костёр».
+/// Вокруг техномага держится область немыслимого жара. Источник — он сам, поэтому область
+/// таскается за ним и жарит его наравне со всеми. Уйти от неё нельзя, можно только пережить.
+/// </summary>
+public sealed partial class WarlockPyreAuraEvent : InstantActionEvent
+{
+    [DataField]
+    public float Duration = 20f;
+
+    [DataField]
+    public float Radius = 3f;
+
+    /// <summary>
+    /// До какой температуры разогреваются тайлы вокруг, в кельвинах.
+    /// </summary>
+    [DataField]
+    public float Temperature = 2000f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Личина Брата».
+/// Дар перекраивает одежду техномага в форму Братства Стали. Своё снаряжение никуда не девается —
+/// оно сложено «между», и вернётся, когда личина спадёт.
+/// </summary>
+public sealed partial class WarlockFalseBrotherEvent : InstantActionEvent
+{
+    [DataField]
+    public float Duration = 120f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}
+
+/// <summary>
+/// _Warlock — «Жатва Дара».
+/// Из мёртвого техномага можно вытянуть остаток дара. Мёртвые этого не одобряют,
+/// и иногда жнец уходит вместе с урожаем.
+/// </summary>
+public sealed partial class WarlockGiftHarvestEvent : EntityTargetActionEvent
+{
+    /// <summary>
+    /// Вероятность того, что жнеца разорвёт вместе с добычей.
+    /// </summary>
+    [DataField]
+    public float DisintegrationChance = 0.25f;
+
+    [DataField]
+    public SoundSpecifier? Sound;
+}

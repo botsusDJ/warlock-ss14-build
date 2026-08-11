@@ -1,0 +1,306 @@
+# _Warlock
+# Второй круг псайкерства — ритуалы. Дороже, грязнее и почти всегда с последствиями.
+# Иконки — плейсхолдеры из ванильных наборов.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Эхо-Копия
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionMirrorEcho
+  name: Эхо-Копия
+  description: >-
+    Вещи вокруг вспоминают, какими были, и вспоминание становится вторым предметом.
+    Пол, стены и живое заклинание не берёт — у них слишком длинная память.
+  components:
+  - type: Action
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: item_recall
+  - type: InstantAction
+    event: !type:WarlockMirrorEchoEvent
+      radius: 3
+      maxCopies: 8
+  - type: WarlockPsiCost
+    cost: 45
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-echo-copy
+
+# ------------------------------------------------------------------------------------------------
+# 2. Проклятая Хватка
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionCursedGrasp
+  name: Проклятая Хватка
+  description: >-
+    Тридцать секунд чужая материя не терпит вашего прикосновения: всё, что вы возьмёте
+    в руки, разорвёт. Высвободившееся идёт на затягивание ваших собственных ран.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: gib
+  - type: InstantAction
+    event: !type:WarlockCursedGraspEvent
+      duration: 30
+  - type: WarlockPsiCost
+    cost: 40
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-grasp
+
+# ------------------------------------------------------------------------------------------------
+# 3. Печать Отбрасывания
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionWardOfHurling
+  name: Печать Отбрасывания
+  description: >-
+    Невидимая печать на пятнадцать секунд. Того, кто наступит, швыряет прочь через
+    половину коридора. На вас самих она не срабатывает.
+  components:
+  - type: Action
+    useDelay: 45
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: repulse
+  - type: TargetAction
+    interactOnMiss: false
+    range: 5
+  - type: WorldTargetAction
+    event: !type:WarlockWardOfHurlingEvent
+      rune: WarlockRuneHurling
+  - type: WarlockPsiCost
+    cost: 25
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-ward-hurling
+
+# ------------------------------------------------------------------------------------------------
+# 4. Печать Гнили
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionWardOfBlight
+  name: Печать Гнили
+  description: >-
+    Такая же невидимая печать, но вместо броска она вскрывается взрывом и травит
+    всё живое рядом. Тоже пятнадцать секунд, тоже не трогает вас.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/rumble.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: TargetAction
+    interactOnMiss: false
+    range: 5
+  - type: WorldTargetAction
+    event: !type:WarlockWardOfBlightEvent
+      rune: WarlockRuneBlight
+  - type: WarlockPsiCost
+    cost: 35
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-ward-blight
+
+# ------------------------------------------------------------------------------------------------
+# 5. Литания Укрепления
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionRiteOfBulwark
+  name: Литания Укрепления
+  description: >-
+    Механизм переписывается на языке артефактов и почти перестаёт ломаться — навсегда.
+    Плату берут не с механизма: вы навсегда отдаёте часть собственной прочности и
+    выносливости. Отменить это нельзя.
+  components:
+  - type: Action
+    useDelay: 300
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_change.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: shield
+  - type: TargetAction
+    interactOnMiss: false
+    range: 2
+  - type: EntityTargetAction
+    canTargetSelf: false
+    blacklist:
+      components:
+      - MobState
+    event: !type:WarlockRiteOfBulwarkEvent
+      modifiers: WarlockBulwark
+      healthCost: 25
+      staminaPenalty: 0.75
+  - type: WarlockPsiCost
+    cost: 60
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-bulwark
+
+# ------------------------------------------------------------------------------------------------
+# 6. Чутьё Реликвий
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionRelicScent
+  name: Чутьё Реликвий
+  description: >-
+    Минуту дар нащупывает артефакты далеко за пределами видимости и раз в несколько
+    секунд подсказывает сторону и расстояние до ближайшего.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: jaunt
+  - type: InstantAction
+    event: !type:WarlockRelicScentEvent
+      duration: 60
+      radius: 60
+  - type: WarlockPsiCost
+    cost: 20
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-scent
+
+# ------------------------------------------------------------------------------------------------
+# 7. Иссушающее Касание
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionWitheringTouch
+  name: Иссушающее Касание
+  description: >-
+    Выпить чужую выносливость досуха и залить её в себя. Цель падает с ног,
+    вы поднимаетесь на ноги.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: magicmissile
+  - type: TargetAction
+    interactOnMiss: false
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockWitheringTouchEvent
+  - type: WarlockPsiCost
+    cost: 30
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-wither
+
+# ------------------------------------------------------------------------------------------------
+# 8. Погребальный Костёр
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionPyreAura
+  name: Погребальный Костёр
+  description: >-
+    Двадцать секунд вокруг вас держится область немыслимого жара. Источник — вы сами,
+    поэтому область идёт за вами и жарит вас наравне со всеми. Уйти от неё нельзя.
+  components:
+  - type: Action
+    useDelay: 240
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: InstantAction
+    event: !type:WarlockPyreAuraEvent
+      duration: 20
+      radius: 3
+      temperature: 2000
+  - type: WarlockPsiCost
+    cost: 55
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-pyre
+
+# ------------------------------------------------------------------------------------------------
+# 9. Личина Брата
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionFalseBrother
+  name: Личина Брата
+  description: >-
+    Ваша одежда на две минуты становится формой Братства Стали. Своё снаряжение
+    не пропадает — оно сложено «между» и вернётся, когда личина спадёт.
+  components:
+  - type: Action
+    useDelay: 180
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_chaos.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: InstantAction
+    event: !type:WarlockFalseBrotherEvent
+      duration: 120
+  - type: WarlockPsiCost
+    cost: 35
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-disguise
+
+# ------------------------------------------------------------------------------------------------
+# 10. Жатва Дара
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionGiftHarvest
+  name: Жатва Дара
+  description: >-
+    Вытянуть остаток дара из мёртвого техномага. Мёртвые этого не одобряют:
+    примерно каждая четвёртая жатва уносит жнеца вместе с урожаем.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/ethereal_enter.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: gib
+  - type: TargetAction
+    interactOnMiss: false
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockGiftHarvestEvent
+      disintegrationChance: 0.25
+  - type: WarlockPsiCost
+    cost: 10
+  - type: SpeakOnAction
+    sentence: warlock-speech-ritual-harvest

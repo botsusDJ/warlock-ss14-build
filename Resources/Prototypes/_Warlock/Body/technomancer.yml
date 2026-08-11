@@ -69,11 +69,23 @@
   - type: WarlockPsionic
   - type: ActionGrant
     actions:
+    # Первый круг — тактические заклинания.
     - WarlockActionLitanyOfUnmaking
     - WarlockActionChoirOfSteel
     - WarlockActionDeadgodEcho
     - WarlockActionBorrowedBreath
     - WarlockActionSharedFate
+    # Второй круг — ритуалы. Дороже и почти всегда с последствиями.
+    - WarlockActionMirrorEcho
+    - WarlockActionCursedGrasp
+    - WarlockActionWardOfHurling
+    - WarlockActionWardOfBlight
+    - WarlockActionRiteOfBulwark
+    - WarlockActionRelicScent
+    - WarlockActionWitheringTouch
+    - WarlockActionPyreAura
+    - WarlockActionFalseBrother
+    - WarlockActionGiftHarvest
 
 - type: entity
   parent: WarlockMobTechnomancerBase
