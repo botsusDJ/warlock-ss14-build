@@ -21,11 +21,11 @@ namespace Content.Shared._Warlock.Combat;
 /// а режим и плата берутся у того, кто держит оружие. Для безоружного удара
 /// "оружием" выступает сам моб, поэтому кулаки работают через ту же ветку.
 /// </summary>
-public sealed class WarlockAttackStrengthSystem : EntitySystem
+public sealed partial class WarlockAttackStrengthSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
 
     public override void Initialize()
     {

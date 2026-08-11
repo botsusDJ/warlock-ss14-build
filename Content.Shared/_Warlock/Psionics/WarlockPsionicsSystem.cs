@@ -16,11 +16,11 @@ namespace Content.Shared._Warlock.Psionics;
 /// Магия волшебника из ванилы устроена иначе — там ограничителем служит только кулдаун и мантия.
 /// Здесь ограничитель ресурсный: техномаг может выпустить всё в один бурст и остаться пустым.
 /// </summary>
-public sealed class WarlockPsionicsSystem : EntitySystem
+public sealed partial class WarlockPsionicsSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

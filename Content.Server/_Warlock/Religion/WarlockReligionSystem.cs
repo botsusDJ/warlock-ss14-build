@@ -29,15 +29,15 @@ namespace Content.Server._Warlock.Religion;
 /// Переносная атрибутика (свод, скрижаль, знаки) сама по себе бесполезна — она усиливает
 /// и ускоряет молитву у святилища своего бога, и мешает молиться чужому.
 /// </summary>
-public sealed class WarlockReligionSystem : EntitySystem
+public sealed partial class WarlockReligionSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly WarlockPsionicsSystem _psionics = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private WarlockPsionicsSystem _psionics = default!;
 
     public override void Initialize()
     {

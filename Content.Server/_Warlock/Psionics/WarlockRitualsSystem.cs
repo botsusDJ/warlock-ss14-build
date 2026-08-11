@@ -39,27 +39,27 @@ namespace Content.Server._Warlock.Psionics;
 /// как ловушка, которую нельзя отозвать, а «Погребальный Костёр» и вовсе не различает,
 /// кто внутри области, потому что источник жара — сам техномаг.
 /// </summary>
-public sealed class WarlockRitualsSystem : EntitySystem
+public sealed partial class WarlockRitualsSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MobThresholdSystem _thresholds = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly WarlockPsionicsSystem _psionics = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ExplosionSystem _explosion = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MobThresholdSystem _thresholds = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private WarlockPsionicsSystem _psionics = default!;
 
     private static readonly ProtoId<TagPrototype> ArtefactTag = "WarlockArtefact";
 
@@ -420,7 +420,11 @@ public sealed class WarlockRitualsSystem : EntitySystem
         var angle = MathF.Atan2(direction.Y, direction.X);
         var octant = (int) MathF.Round(angle / (MathF.PI / 4f));
 
-        return ((octant % 8) + 8) % 8 switch
+        // Считаем октант отдельной переменной: если написать "% 8 switch", парсер отдаст
+        // правую восьмёрку самому switch-выражению и попытается взять остаток от строки.
+        var index = ((octant % 8) + 8) % 8;
+
+        return index switch
         {
             0 => "warlock-direction-east",
             1 => "warlock-direction-northeast",
