@@ -6,7 +6,6 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -51,7 +50,11 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
-        SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+        // Только широковещательная подписка: направленную пару
+        // (MobStateComponent, MobStateChangedEvent) уже занял ванильный SharedStunSystem,
+        // а Robust допускает на такую пару ровно одну регистрацию и падает на второй.
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<WarlockObjectiveTerminalComponent, ActivateInWorldEvent>(OnTerminalActivated);
         SubscribeLocalEvent<WarlockObjectiveTerminalComponent, InteractUsingEvent>(OnTerminalInteractUsing);
@@ -223,12 +226,12 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
 
     #region Отслеживание убийства
 
-    private void OnMobStateChanged(Entity<MobStateComponent> ent, ref MobStateChangedEvent args)
+    private void OnMobStateChanged(MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Dead)
             return;
 
-        if (GetJobOf(ent.Owner) is not { } job)
+        if (GetJobOf(args.Target) is not { } job)
             return;
 
         foreach (var (_, state) in _objectives)
