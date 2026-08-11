@@ -153,13 +153,13 @@ public sealed class WarlockReligionSystem : EntitySystem
             if (target.Owner == ent.Owner || HasComp<BloodstreamComponent>(target.Owner))
                 continue;
 
-            // Поля DamageableComponent закрыты песочницей, читаем и лечим только через API системы.
-            if (_damageable.GetTotalDamage(target.Owner) <= 0)
-                continue;
+            // Поля DamageableComponent закрыты песочницей, лечим только через API системы.
+            // HealEvenly ждёт отрицательное значение, сам раскидывает лечение по типам урона цели
+            // и возвращает пустой результат, если чинить было нечего — по нему и считаем.
+            var healed = _damageable.HealEvenly(target.Owner, -amount, origin: ent.Owner);
 
-            // HealEvenly ждёт отрицательное значение и сам раскидывает лечение по типам урона цели.
-            _damageable.HealEvenly(target.Owner, -amount, origin: ent.Owner);
-            repaired++;
+            if (!healed.Empty)
+                repaired++;
         }
 
         _popup.PopupEntity(

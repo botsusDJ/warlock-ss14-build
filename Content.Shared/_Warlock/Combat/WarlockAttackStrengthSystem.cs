@@ -69,7 +69,7 @@ public sealed class WarlockAttackStrengthSystem : EntitySystem
 
         SetStrength(ent, next);
 
-        _popup.PopupPredicted(Loc.GetString(GetStrengthMessage(next)), null, ent.Owner, ent.Owner);
+        _popup.PopupEntity(Loc.GetString(GetStrengthMessage(next)), ent.Owner, ent.Owner);
     }
 
     public void SetStrength(Entity<WarlockAttackStrengthComponent> ent, WarlockAttackStrength strength)

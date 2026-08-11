@@ -84,7 +84,7 @@ public sealed class WarlockPsionicsSystem : EntitySystem
         if (HasComp<WarlockPsiSuppressedComponent>(user))
         {
             args.Cancelled = true;
-            _popup.PopupPredicted(Loc.GetString("warlock-psionics-suppressed"), null, user, user, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("warlock-psionics-suppressed"), user, user, PopupType.MediumCaution);
             return;
         }
 
@@ -95,16 +95,15 @@ public sealed class WarlockPsionicsSystem : EntitySystem
                 return;
 
             args.Cancelled = true;
-            _popup.PopupPredicted(Loc.GetString("warlock-psionics-no-gift"), null, user, user, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("warlock-psionics-no-gift"), user, user, PopupType.MediumCaution);
             return;
         }
 
         if (psionic.Energy < ent.Comp.Cost)
         {
             args.Cancelled = true;
-            _popup.PopupPredicted(
+            _popup.PopupEntity(
                 Loc.GetString("warlock-psionics-not-enough-energy", ("cost", ent.Comp.Cost.Int())),
-                null,
                 user,
                 user,
                 PopupType.MediumCaution);
