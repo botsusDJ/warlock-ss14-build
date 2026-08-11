@@ -3,7 +3,8 @@
 
 - type: alert
   id: WarlockPsiEnergy
-  category: Health
+  # Категорию ставить НЕЛЬЗЯ: алерты одной категории вытесняют друг друга,
+  # и с category: Health счётчик дара дрался за один слот с полоской здоровья.
   icons:
   - sprite: /Textures/Interface/Alerts/essence_counter.rsi
     state: essence0

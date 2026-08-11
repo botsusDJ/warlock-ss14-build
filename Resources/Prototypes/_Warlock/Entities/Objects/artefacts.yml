@@ -58,6 +58,10 @@
     color: "#8a8f99"
   - type: Clothing
     slots: [ neck ]
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#8a8f99"
   - type: WarlockPsiShackles
     allowSelfRemoval: false
 
@@ -123,6 +127,10 @@
     color: "#c6b1d8"
   - type: Clothing
     slots: [ gloves ]
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+        color: "#c6b1d8"
   - type: ActionGrant
     actions:
     - WarlockActionThousandHands

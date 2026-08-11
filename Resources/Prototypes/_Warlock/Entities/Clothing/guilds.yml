@@ -1,0 +1,181 @@
+# _Warlock
+# Облачения трёх гильдий Техномагического Союза.
+# Все спрайты — плейсхолдеры из ванильных наборов, отличаются только подкраской.
+# Иконку красим в Sprite, надетый вид — в Clothing.clothingVisuals (у Clothing нет поля color).
+#
+# Фактос — артефакто-любы, описчики находок. Цвет: охра и кость.
+# Технос — технологи, единственные, кто пытается разобрать артефакт на принципы. Цвет: сталь и медь.
+# Варлок — поклоняются артефактам и их создателю Кассу. Цвет: белёсый лёд.
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Фактос
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformGuildFactos
+  name: комбинезон гильдии Фактос
+  description: Рабочая роба с нашивками описи. Карманов больше, чем нужно живому человеку.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+    layers:
+    - state: icon
+      color: "#d8c39a"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/scientist.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#d8c39a"
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildFactos
+  name: мантия гильдии Фактос
+  description: Длинная опись, пришитая к плащу. Каждая строка — находка, у которой был владелец.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
+    layers:
+    - state: icon
+      color: "#e0d2b4"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#e0d2b4"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadGuildFactos
+  name: капюшон гильдии Фактос
+  description: Глухой капюшон описчика. Смотреть на артефакт полагается только через прорезь.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/chaplain.rsi
+    layers:
+    - state: icon
+      color: "#d8c39a"
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/chaplain.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#d8c39a"
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Технос
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformGuildTechnos
+  name: комбинезон гильдии Технос
+  description: Плотная роба с прожжёнными манжетами. Технос считает ожог доказательством работы.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
+    layers:
+    - state: icon
+      color: "#9aa8b8"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9aa8b8"
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildTechnos
+  name: мантия гильдии Технос
+  description: Плащ с медными вставками вдоль швов. Их назначение объясняют по-разному и всегда неубедительно.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+    layers:
+    - state: icon
+      color: "#b8916a"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#b8916a"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadGuildTechnos
+  name: капюшон гильдии Технос
+  description: Капюшон с откидным светофильтром. Разбирать находку полагается вслепую.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/rad.rsi
+    layers:
+    - state: icon
+      color: "#9aa8b8"
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/rad.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#9aa8b8"
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Варлок
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformGuildWarlock
+  name: облачение гильдии Варлок
+  description: Простая роба без единого украшения. Украшать полагается артефакт, а не себя.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
+    layers:
+    - state: icon
+      color: "#cfe4ff"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#cfe4ff"
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildWarlock
+  name: мантия гильдии Варлок
+  description: >-
+    Мантия лорда гильдии повторяет линии обелиска Касса. Пока лорд Варлок возглавлял Союз,
+    этот силуэт означал власть. Сейчас — только раскол.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    layers:
+    - state: icon
+      color: "#cfe4ff"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#cfe4ff"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadGuildWarlock
+  name: капюшон гильдии Варлок
+  description: Капюшон без прорези для глаз. Тем, у кого белые глаза, прорезь и не нужна.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/cult.rsi
+    layers:
+    - state: icon
+      color: "#cfe4ff"
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/cult.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#cfe4ff"

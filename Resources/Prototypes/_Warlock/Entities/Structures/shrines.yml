@@ -1,0 +1,54 @@
+# _Warlock
+# Святилища двух живых культов. Спрайты — плейсхолдеры из ванильных наборов алтарей.
+
+- type: entity
+  parent: AltarBase
+  id: WarlockShrineMechantechion
+  name: капище Механтехиона
+  description: >-
+    Сварной остов из труб и шестерён, у которого Братство Стали просит исправности.
+    Механтехиона не интересует, кто перед ним — только то, работает оно или нет.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+    state: technology
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 0.8
+    color: "#ffb066"
+  - type: WarlockShrine
+    god: Mechantechion
+    prayerTime: 8
+    radius: 4
+    repairAmount: 40
+
+- type: entity
+  parent: AltarBase
+  id: WarlockObeliskKass
+  name: обелиск Касса
+  description: >-
+    Гладкий столб без единого шва, найденный уже стоящим. Гильдия Варлок утверждает,
+    что это лицо создателя артефактов. Проверить это не удалось никому.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: white
+    color: "#a9e6ff"
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: white
+    color: "#a9e6ff"
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 1
+    color: "#a9e6ff"
+  - type: WarlockShrine
+    god: Kass
+    prayerTime: 8
+    radius: 4
+    energyRestored: 45

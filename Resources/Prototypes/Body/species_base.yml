@@ -151,6 +151,12 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  # _Warlock: три силы ближнего удара доступны всем гуманоидам.
+  # ActionGrant пушится по наследованию, поэтому расы со своими действиями их не теряют.
+  - type: WarlockAttackStrength
+  - type: ActionGrant
+    actions:
+    - WarlockActionCycleAttackStrength
 
 - type: entity
   abstract: true

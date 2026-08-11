@@ -1,0 +1,35 @@
+# _Warlock
+# Три силы ближнего удара. Иконки — плейсхолдеры из ванильных наборов.
+
+- type: alert
+  id: WarlockAttackStrength
+  # Категорию не задаём: алерт должен висеть сам по себе и никого не вытеснять.
+  icons:
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina2
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina4
+  - sprite: /Textures/Interface/Alerts/stamina.rsi
+    state: stamina6
+  maxSeverity: 3
+  minSeverity: 1
+  name: alerts-warlock-attack-strength-name
+  description: alerts-warlock-attack-strength-desc
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionCycleAttackStrength
+  name: Сила удара
+  description: >-
+    Переключает замах по кругу: слабый, средний, сильный. Слабый быстрый и почти безвредный,
+    сильный бьёт вдвое больнее, но медленный и заметно выматывает.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 1
+    checkCanInteract: false
+  - type: Sprite
+    layers:
+    - texture: Interface/Actions/harm.png
+  - type: InstantAction
+    event: !type:WarlockCycleAttackStrengthEvent

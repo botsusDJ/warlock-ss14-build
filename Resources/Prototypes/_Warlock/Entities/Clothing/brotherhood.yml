@@ -1,0 +1,97 @@
+# _Warlock
+# Снаряжение Братства Стали — рейдерского государства не-псайкеров, поклоняющегося Механтехиону.
+# Идеология простая: исправность превыше жизни, ксенос подлежит уничтожению.
+# Спрайты — плейсхолдеры из ванильных наборов.
+
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformBrotherhood
+  name: форма Братства Стали
+  description: >-
+    Затёртая полевая форма с трафаретным номером отряда. Номера идут не по порядку —
+    выбывшие отряды не переименовывают, их просто не набирают заново.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+    layers:
+    - state: icon
+      color: "#6b6f5c"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#6b6f5c"
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterBrotherhoodArmor
+  name: броня Братства Стали
+  description: >-
+    Сваренная из чужого нагрудная броня. Каждая заплата — трофей, и Братство считает,
+    что снимать их непочтительно по отношению к Механтехиону.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    layers:
+    - state: icon
+      color: "#6f7360"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#6f7360"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadBrotherhoodHelmet
+  name: шлем Братства Стали
+  description: Тяжёлый шлем с восемью зубьями на лобовой пластине — знаком Механтехиона.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    layers:
+    - state: icon
+      color: "#6f7360"
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#6f7360"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.9
+
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskBrotherhood
+  name: респиратор Братства Стали
+  description: >-
+    Респиратор со сменным картриджем. Братство носит его не от газа, а потому что
+    дышать через машину считается правильнее, чем дышать самому.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+    layers:
+    - state: icon
+      color: "#6f7360"
+  - type: Clothing
+    sprite: Clothing/Mask/gas.rsi
+    clothingVisuals:
+      mask:
+      - state: equipped-MASK
+        color: "#6f7360"
