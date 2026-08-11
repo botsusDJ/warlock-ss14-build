@@ -1,0 +1,181 @@
+# _Warlock
+# Средства доступа двух цивилизаций.
+#
+# Техномагический Союз умеет делать электронику: у гильдий есть нормальные пропуска и КПК.
+# У Братства Стали электроники нет. Есть трофейные карты, которые режут на одноразовые ключи:
+# ткнул в дверь — дверь открылась, карта осталась в приёмнике. На следующую дверь нужна следующая.
+
+# ================================================================================================
+# Пропуска Техномагического Союза
+# ================================================================================================
+- type: entity
+  parent: IDCardStandard
+  id: WarlockIDCardFactos
+  name: пропуск гильдии Фактос
+  description: Тонкая пластина с описью допусков владельца. Опись, разумеется, ведётся отдельно.
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+      color: "#d8c39a"
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: Scientist
+
+- type: entity
+  parent: IDCardStandard
+  id: WarlockIDCardTechnos
+  name: пропуск гильдии Технос
+  description: Пластина с открытым контактным гребнем. Технос принципиально не прячет разъёмы.
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+      color: "#9aa8b8"
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: StationEngineer
+
+- type: entity
+  parent: IDCardStandard
+  id: WarlockIDCardWarlock
+  name: пропуск гильдии Варлок
+  description: Пластина с оттиском ладони с лишним пальцем. Оттиск не изнашивается.
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+      color: "#cfe4ff"
+    - sprite: Interface/Misc/job_icons.rsi
+      offset: -0.09375, 0.0625
+      state: Chaplain
+
+# ================================================================================================
+# КПК гильдий — только у техномагов
+# ================================================================================================
+- type: entity
+  parent: BasePDA
+  id: WarlockPdaFactos
+  name: КПК гильдии Фактос
+  description: Опись помещается в карман. Лорд гильдии считает это главным достижением Технос.
+  components:
+  - type: Pda
+    id: WarlockIDCardFactos
+  - type: PdaBorderColor
+    borderColor: "#d8c39a"
+    accentVColor: "#8a6f3a"
+
+- type: entity
+  parent: BasePDA
+  id: WarlockPdaTechnos
+  name: КПК гильдии Технос
+  description: Корпус снят и не будет поставлен обратно. Так удобнее, и так виднее, что внутри.
+  components:
+  - type: Pda
+    id: WarlockIDCardTechnos
+  - type: PdaBorderColor
+    borderColor: "#9aa8b8"
+    accentVColor: "#b8916a"
+
+- type: entity
+  parent: BasePDA
+  id: WarlockPdaWarlock
+  name: КПК гильдии Варлок
+  description: >-
+    Гильдия долго спорила, не кощунство ли носить дар в кармане, и решила, что кощунство —
+    но удобное.
+  components:
+  - type: Pda
+    id: WarlockIDCardWarlock
+  - type: PdaBorderColor
+    borderColor: "#cfe4ff"
+    accentVColor: "#5a8ab0"
+
+# ================================================================================================
+# Одноразовые ключи Братства Стали
+# ================================================================================================
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: WarlockBaseAccessKey
+  description: >-
+    Кусок чужого пропуска, обрезанный под приёмник двери. Работает ровно один раз:
+    карту нужно ткнуть прямо в дверь, и она там и останется.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    state: default
+  - type: Tag
+    tags:
+    - WarlockAccessKey
+
+- type: entity
+  parent: WarlockBaseAccessKey
+  id: WarlockAccessKeyBrotherhood
+  name: ключ-карта Братства
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+      color: "#6f7360"
+  - type: WarlockAccessKey
+    tags:
+    - WarlockBrotherhood
+
+- type: entity
+  parent: WarlockBaseAccessKey
+  id: WarlockAccessKeyBrotherhoodCommand
+  name: командирская ключ-карта Братства
+  description: >-
+    Обрезок, который Братство бережёт: такие карты открывают то, что закрыто даже
+    от Боевых Братьев. Всё равно одноразовый.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+      color: "#8a7a4a"
+  - type: WarlockAccessKey
+    tags:
+    - WarlockBrotherhood
+    - WarlockBrotherhoodCommand
+
+# Связка, которую боец Братства таскает с собой. Кончилась — иди за новой.
+# Родитель — ванильная картонная коробка: у Братства нет ничего лучше, и это ровно тот колхоз.
+- type: entity
+  parent: BoxCardboard
+  id: WarlockAccessKeyPouch
+  name: связка ключ-карт
+  description: >-
+    Мятая коробка с нарезанными пропусками. Сколько дверей открыл — столько карт и потратил.
+  components:
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+
+- type: entity
+  parent: WarlockAccessKeyPouch
+  id: WarlockAccessKeyPouchCommand
+  name: командирская связка ключ-карт
+  description: >-
+    Та же мятая коробка, но три карты в ней открывают то, что закрыто от Боевых Братьев.
+    Пересчитывают их каждый раз.
+  components:
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - WarlockAccessKeyBrotherhoodCommand
+      - WarlockAccessKeyBrotherhoodCommand
+      - WarlockAccessKeyBrotherhoodCommand
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood
+      - WarlockAccessKeyBrotherhood

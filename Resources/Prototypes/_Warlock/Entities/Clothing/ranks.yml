@@ -1,0 +1,146 @@
+# _Warlock
+# Знаки звания. Базовые облачения гильдий лежат в guilds.yml, здесь — только отличия верхушки:
+# мантия лорда гильдии и командирские знаки Братства.
+# Спрайты — плейсхолдеры, различаются подкраской и золотом на командных вещах.
+
+# ------------------------------------------------------------------------------------------------
+# Мантии лордов гильдий — носят только три высших звания каждой гильдии
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockOuterGuildFactos
+  id: WarlockOuterGuildFactosLord
+  name: мантия лорда Фактос
+  description: >-
+    Опись на этой мантии не закончена и никогда не будет: лорд Фактос дописывает её
+    до самой смерти, а потом её дописывает преемник.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
+    layers:
+    - state: icon
+      color: "#f2e2b8"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#f2e2b8"
+
+- type: entity
+  parent: WarlockOuterGuildTechnos
+  id: WarlockOuterGuildTechnosLord
+  name: мантия лорда Технос
+  description: >-
+    Медные вставки на этой мантии сложены в схему, которую в гильдии никто не может прочесть.
+    Считается, что это и есть доказательство права носить её.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+    layers:
+    - state: icon
+      color: "#d8b070"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#d8b070"
+
+- type: entity
+  parent: WarlockOuterGuildWarlock
+  id: WarlockOuterGuildWarlockLord
+  name: мантия лорда Варлок
+  description: >-
+    Мантия, в которой лорд Варлок возглавлял весь Техномагический Союз. После вторжения
+    Братства в главный склад её силуэт означает уже не власть, а вопрос.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    layers:
+    - state: icon
+      color: "#eaf4ff"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#eaf4ff"
+
+# ------------------------------------------------------------------------------------------------
+# Командные вещи Братства Стали
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockOuterBrotherhoodArmor
+  id: WarlockOuterBrotherhoodArmorCommand
+  name: броня командира Братства
+  description: >-
+    Та же сварная броня, но заплаты на ней выложены в восемь зубьев. Право носить этот узор
+    в Братстве не присваивают, его забирают у предыдущего владельца.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    layers:
+    - state: icon
+      color: "#8a7a4a"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#8a7a4a"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.75
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  parent: WarlockHeadBrotherhoodHelmet
+  id: WarlockHeadBrotherhoodHelmetCommand
+  name: шлем командира Братства
+  description: Лобовая пластина спилена и залита заново — так делают, когда шлем меняет владельца.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    layers:
+    - state: icon
+      color: "#8a7a4a"
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#8a7a4a"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.8
+
+# ------------------------------------------------------------------------------------------------
+# Роба раба — Братство не считает нужным одевать рабов во что-то ещё
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformBrotherhoodSlave
+  name: роба раба Братства
+  description: >-
+    Мешковина с номером. Номер выжжен, а не нашит: Братство считает, что нашивку
+    можно спороть, а клеймо нельзя.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    layers:
+    - state: icon
+      color: "#8f8a7a"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#8f8a7a"

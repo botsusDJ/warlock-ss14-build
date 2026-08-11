@@ -2,3 +2,10 @@
 
 - type: Tag
   id: WarlockArtefact
+
+- type: Tag
+  id: WarlockAccessKey
+
+# Броня Братства — трофей, который гильдии сдают в свой терминал целей.
+- type: Tag
+  id: WarlockBrotherhoodArmor

@@ -1,0 +1,175 @@
+# _Warlock
+# Гильдия Варлок — поклоняются артефактам и их создателю Кассу. Лорд гильдии возглавлял
+# весь Техномагический Союз, пока вторжение Братства в главный склад не запустило раскол.
+# Все роли доступны только техномагам.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Архимаг-Епископ
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockArchmageBishop
+  name: warlock-job-name-warlock-archmage-bishop
+  description: warlock-job-description-warlock-archmage-bishop
+  playTimeTracker: WarlockJobWarlockArchmageBishop
+  startingGear: WarlockGearWarlockArchmageBishop
+  icon: WarlockJobIconWarlockArchmageBishop
+  supervisors: warlock-job-supervisors-kass
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockGuildWarlock
+
+- type: startingGear
+  id: WarlockGearWarlockArchmageBishop
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlockLord
+    head: WarlockHeadGuildWarlock
+    neck: WarlockSymbolKass
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockTabletKass
+
+# ------------------------------------------------------------------------------------------------
+# 2. Верховный Жрец Касса
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockHighPriest
+  name: warlock-job-name-warlock-high-priest
+  description: warlock-job-description-warlock-high-priest
+  playTimeTracker: WarlockJobWarlockHighPriest
+  startingGear: WarlockGearWarlockHighPriest
+  icon: WarlockJobIconWarlockHighPriest
+  supervisors: warlock-job-supervisors-warlock
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockGuildWarlock
+
+- type: startingGear
+  id: WarlockGearWarlockHighPriest
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlockLord
+    head: WarlockHeadGuildWarlock
+    neck: WarlockSymbolKass
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 3. Жрец
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockPriest
+  name: warlock-job-name-warlock-priest
+  description: warlock-job-description-warlock-priest
+  playTimeTracker: WarlockJobWarlockPriest
+  startingGear: WarlockGearWarlockPriest
+  icon: WarlockJobIconWarlockPriest
+  supervisors: warlock-job-supervisors-warlock
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockGuildWarlock
+
+- type: startingGear
+  id: WarlockGearWarlockPriest
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlock
+    head: WarlockHeadGuildWarlock
+    neck: WarlockSymbolKass
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 4. Ритуалист
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockRitualist
+  name: warlock-job-name-warlock-ritualist
+  description: warlock-job-description-warlock-ritualist
+  playTimeTracker: WarlockJobWarlockRitualist
+  startingGear: WarlockGearWarlockRitualist
+  icon: WarlockJobIconWarlockRitualist
+  supervisors: warlock-job-supervisors-warlock
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockGuildWarlock
+
+- type: startingGear
+  id: WarlockGearWarlockRitualist
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    head: WarlockHeadGuildWarlock
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 5. Маг
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockMage
+  name: warlock-job-name-warlock-mage
+  description: warlock-job-description-warlock-mage
+  playTimeTracker: WarlockJobWarlockMage
+  startingGear: WarlockGearWarlockMage
+  icon: WarlockJobIconWarlockMage
+  supervisors: warlock-job-supervisors-warlock
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockGuildWarlock
+
+- type: startingGear
+  id: WarlockGearWarlockMage
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    head: WarlockHeadGuildWarlock
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 6. Адепт
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobWarlockAdept
+  name: warlock-job-name-warlock-adept
+  description: warlock-job-description-warlock-adept
+  playTimeTracker: WarlockJobWarlockAdept
+  startingGear: WarlockGearWarlockAdept
+  icon: WarlockJobIconWarlockAdept
+  supervisors: warlock-job-supervisors-warlock
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+
+- type: startingGear
+  id: WarlockGearWarlockAdept
+  equipment:
+    id: WarlockPdaWarlock
+    jumpsuit: WarlockUniformGuildWarlock
+    shoes: ClothingShoesColorBlack

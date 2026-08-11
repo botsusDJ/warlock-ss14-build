@@ -1,0 +1,49 @@
+# _Warlock
+# Уровни доступа четырёх фракций.
+#
+# Техномагический Союз: три гильдии видят помещения друг друга только через общий уровень Union,
+# свои мастерские — только по гильдейскому уровню. Верхушка каждой гильдии носит UnionCommand.
+# Братство Стали к Союзу доступа не имеет вообще — это враждебное государство.
+
+- type: accessLevel
+  id: WarlockUnion
+  name: id-card-access-level-warlock-union
+
+- type: accessLevel
+  id: WarlockUnionCommand
+  name: id-card-access-level-warlock-union-command
+
+- type: accessLevel
+  id: WarlockFactos
+  name: id-card-access-level-warlock-factos
+
+- type: accessLevel
+  id: WarlockTechnos
+  name: id-card-access-level-warlock-technos
+
+- type: accessLevel
+  id: WarlockGuildWarlock
+  name: id-card-access-level-warlock-guild-warlock
+
+- type: accessLevel
+  id: WarlockBrotherhood
+  name: id-card-access-level-warlock-brotherhood
+
+- type: accessLevel
+  id: WarlockBrotherhoodCommand
+  name: id-card-access-level-warlock-brotherhood-command
+
+- type: accessGroup
+  id: WarlockUnion
+  tags:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockFactos
+  - WarlockTechnos
+  - WarlockGuildWarlock
+
+- type: accessGroup
+  id: WarlockBrotherhood
+  tags:
+  - WarlockBrotherhood
+  - WarlockBrotherhoodCommand

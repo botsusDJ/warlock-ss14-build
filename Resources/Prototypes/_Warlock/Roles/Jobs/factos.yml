@@ -1,0 +1,176 @@
+# _Warlock
+# Гильдия Фактос — артефакто-любы. Держат опись каждой находки и считают,
+# что артефакт нельзя понять, можно только описать. Все роли доступны только техномагам.
+#
+# Ранги от высшего к низшему. Первые три носят мантию, верхушке достаётся артефакт.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Артархимаг
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosArtarchmage
+  name: warlock-job-name-factos-artarchmage
+  description: warlock-job-description-factos-artarchmage
+  playTimeTracker: WarlockJobFactosArtarchmage
+  startingGear: WarlockGearFactosArtarchmage
+  icon: WarlockJobIconFactosArtarchmage
+  supervisors: warlock-job-supervisors-union
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockFactos
+
+- type: startingGear
+  id: WarlockGearFactosArtarchmage
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactosLord
+    head: WarlockHeadGuildFactos
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockArtefactFateDie
+
+# ------------------------------------------------------------------------------------------------
+# 2. Великий Исследователь
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosGreatSeeker
+  name: warlock-job-name-factos-great-seeker
+  description: warlock-job-description-factos-great-seeker
+  playTimeTracker: WarlockJobFactosGreatSeeker
+  startingGear: WarlockGearFactosGreatSeeker
+  icon: WarlockJobIconFactosGreatSeeker
+  supervisors: warlock-job-supervisors-factos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockFactos
+
+- type: startingGear
+  id: WarlockGearFactosGreatSeeker
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactosLord
+    head: WarlockHeadGuildFactos
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockArtefactGuildUrn
+
+# ------------------------------------------------------------------------------------------------
+# 3. Колдун
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosSorcerer
+  name: warlock-job-name-factos-sorcerer
+  description: warlock-job-description-factos-sorcerer
+  playTimeTracker: WarlockJobFactosSorcerer
+  startingGear: WarlockGearFactosSorcerer
+  icon: WarlockJobIconFactosSorcerer
+  supervisors: warlock-job-supervisors-factos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockFactos
+
+- type: startingGear
+  id: WarlockGearFactosSorcerer
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactos
+    head: WarlockHeadGuildFactos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 4. Чародей
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosEnchanter
+  name: warlock-job-name-factos-enchanter
+  description: warlock-job-description-factos-enchanter
+  playTimeTracker: WarlockJobFactosEnchanter
+  startingGear: WarlockGearFactosEnchanter
+  icon: WarlockJobIconFactosEnchanter
+  supervisors: warlock-job-supervisors-factos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockFactos
+
+- type: startingGear
+  id: WarlockGearFactosEnchanter
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    head: WarlockHeadGuildFactos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 5. Маг
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosMage
+  name: warlock-job-name-factos-mage
+  description: warlock-job-description-factos-mage
+  playTimeTracker: WarlockJobFactosMage
+  startingGear: WarlockGearFactosMage
+  icon: WarlockJobIconFactosMage
+  supervisors: warlock-job-supervisors-factos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockFactos
+
+- type: startingGear
+  id: WarlockGearFactosMage
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    head: WarlockHeadGuildFactos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 6. Адепт
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobFactosAdept
+  name: warlock-job-name-factos-adept
+  description: warlock-job-description-factos-adept
+  playTimeTracker: WarlockJobFactosAdept
+  startingGear: WarlockGearFactosAdept
+  icon: WarlockJobIconFactosAdept
+  supervisors: warlock-job-supervisors-factos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+
+- type: startingGear
+  id: WarlockGearFactosAdept
+  equipment:
+    id: WarlockPdaFactos
+    jumpsuit: WarlockUniformGuildFactos
+    shoes: ClothingShoesColorBlack

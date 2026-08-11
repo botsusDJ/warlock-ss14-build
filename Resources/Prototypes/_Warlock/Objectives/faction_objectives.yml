@@ -1,0 +1,180 @@
+# _Warlock
+# Цели фракций на раунд. Одна цель на фракцию, раскатывается при старте раунда.
+#
+# Пересечения разрешены намеренно: революция может выпасть всем трём гильдиям сразу,
+# две фракции могут одновременно охотиться на одного лорда. Это сюжет, а не поломка.
+#
+# Отслеживаются только те цели, где есть что считать: сданные в терминал трофеи
+# и смерть конкретной должности. Всё остальное — ролевое, решается игроками и админами.
+
+# ================================================================================================
+# Ролевые цели — доступны всем гильдиям Союза
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveGuildWar
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-guild-war-title
+  description: warlock-objective-guild-war-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveSecession
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-secession-title
+  description: warlock-objective-secession-desc
+  weight: 1.5
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveReunifyUnion
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-reunify-title
+  description: warlock-objective-reunify-desc
+  weight: 1.5
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveBlameOtherGuild
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-blame-title
+  description: warlock-objective-blame-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveTruceWithBrotherhood
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-truce-title
+  description: warlock-objective-truce-desc
+  weight: 1
+
+# ================================================================================================
+# Ролевые цели отдельных гильдий
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveFactosCompleteLedger
+  factions: [ GuildFactos ]
+  title: warlock-objective-ledger-title
+  description: warlock-objective-ledger-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveTechnosDisassemble
+  factions: [ GuildTechnos ]
+  title: warlock-objective-disassemble-title
+  description: warlock-objective-disassemble-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveWarlockProveKass
+  factions: [ GuildWarlock ]
+  title: warlock-objective-prove-kass-title
+  description: warlock-objective-prove-kass-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveWarlockRestoreLordship
+  factions: [ GuildWarlock ]
+  title: warlock-objective-restore-lordship-title
+  description: warlock-objective-restore-lordship-desc
+  weight: 2
+
+# ================================================================================================
+# Ролевые цели Братства Стали
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveBrotherhoodCrusade
+  factions: [ Brotherhood ]
+  title: warlock-objective-crusade-title
+  description: warlock-objective-crusade-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveBrotherhoodPriesthood
+  factions: [ Brotherhood ]
+  title: warlock-objective-priesthood-title
+  description: warlock-objective-priesthood-desc
+  weight: 1.5
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveBrotherhoodPurge
+  factions: [ Brotherhood ]
+  title: warlock-objective-purge-title
+  description: warlock-objective-purge-desc
+  weight: 1.5
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveBrotherhoodEnslave
+  factions: [ Brotherhood ]
+  title: warlock-objective-enslave-title
+  description: warlock-objective-enslave-desc
+  weight: 1.5
+
+# ================================================================================================
+# Отслеживаемые: сдать трофеи в терминал
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveStealArtefacts
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock, Brotherhood ]
+  title: warlock-objective-steal-artefacts-title
+  description: warlock-objective-steal-artefacts-desc
+  weight: 1
+  tracking: Deliver
+  deliverTag: WarlockArtefact
+  deliverCount: 3
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveStealBrotherhoodArmor
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-steal-armor-title
+  description: warlock-objective-steal-armor-desc
+  weight: 1
+  tracking: Deliver
+  deliverTag: WarlockBrotherhoodArmor
+  deliverCount: 4
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveSeizeAccessKeys
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-seize-keys-title
+  description: warlock-objective-seize-keys-desc
+  weight: 1
+  tracking: Deliver
+  deliverTag: WarlockAccessKey
+  deliverCount: 6
+
+# ================================================================================================
+# Отслеживаемые: убить главу чужой фракции
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveKillLordCommander
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock ]
+  title: warlock-objective-kill-lord-commander-title
+  description: warlock-objective-kill-lord-commander-desc
+  weight: 1
+  tracking: Assassinate
+  targetJob: WarlockJobBrotherhoodLordCommander
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveKillArchmageBishop
+  factions: [ GuildFactos, GuildTechnos, Brotherhood ]
+  title: warlock-objective-kill-bishop-title
+  description: warlock-objective-kill-bishop-desc
+  weight: 1
+  tracking: Assassinate
+  targetJob: WarlockJobWarlockArchmageBishop
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveKillArtarchmage
+  factions: [ GuildTechnos, GuildWarlock, Brotherhood ]
+  title: warlock-objective-kill-artarchmage-title
+  description: warlock-objective-kill-artarchmage-desc
+  weight: 1
+  tracking: Assassinate
+  targetJob: WarlockJobFactosArtarchmage
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveKillArchtechnomage
+  factions: [ GuildFactos, GuildWarlock, Brotherhood ]
+  title: warlock-objective-kill-archtechnomage-title
+  description: warlock-objective-kill-archtechnomage-desc
+  weight: 1
+  tracking: Assassinate
+  targetJob: WarlockJobTechnosArchtechnomage

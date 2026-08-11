@@ -1,0 +1,216 @@
+# _Warlock
+# Иконки ролей над головой. Спрайты — плейсхолдеры из ванильного job_icons.rsi,
+# подобраны по смыслу: исследователи для Фактос, инженеры для Технос,
+# культисты для Варлок, синдикатовские для Братства Стали.
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Фактос
+# ------------------------------------------------------------------------------------------------
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosArtarchmage
+  icon:
+    sprite: &warlockIcons /Textures/Interface/Misc/job_icons.rsi
+    state: ResearchDirector
+  jobName: warlock-job-name-factos-artarchmage
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosGreatSeeker
+  icon:
+    sprite: *warlockIcons
+    state: SeniorResearcher
+  jobName: warlock-job-name-factos-great-seeker
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosSorcerer
+  icon:
+    sprite: *warlockIcons
+    state: Wizard
+  jobName: warlock-job-name-factos-sorcerer
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosEnchanter
+  icon:
+    sprite: *warlockIcons
+    state: Scientist
+  jobName: warlock-job-name-factos-enchanter
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosMage
+  icon:
+    sprite: *warlockIcons
+    state: Scientist
+  jobName: warlock-job-name-factos-mage
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconFactosAdept
+  icon:
+    sprite: *warlockIcons
+    state: ResearchAssistant
+  jobName: warlock-job-name-factos-adept
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Технос
+# ------------------------------------------------------------------------------------------------
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosArchtechnomage
+  icon:
+    sprite: *warlockIcons
+    state: ChiefEngineer
+  jobName: warlock-job-name-technos-archtechnomage
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosSupremeTechnocrat
+  icon:
+    sprite: *warlockIcons
+    state: SeniorEngineer
+  jobName: warlock-job-name-technos-supreme-technocrat
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosTechnosorcerer
+  icon:
+    sprite: *warlockIcons
+    state: Roboticist
+  jobName: warlock-job-name-technos-technosorcerer
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosTechnomancer
+  icon:
+    sprite: *warlockIcons
+    state: StationEngineer
+  jobName: warlock-job-name-technos-technomancer
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosMage
+  icon:
+    sprite: *warlockIcons
+    state: StationEngineer
+  jobName: warlock-job-name-technos-mage
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconTechnosAdept
+  icon:
+    sprite: *warlockIcons
+    state: TechnicalAssistant
+  jobName: warlock-job-name-technos-adept
+
+# ------------------------------------------------------------------------------------------------
+# Гильдия Варлок
+# ------------------------------------------------------------------------------------------------
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockArchmageBishop
+  icon:
+    sprite: *warlockIcons
+    state: ERTChaplain
+  jobName: warlock-job-name-warlock-archmage-bishop
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockHighPriest
+  icon:
+    sprite: *warlockIcons
+    state: Chaplain
+  jobName: warlock-job-name-warlock-high-priest
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockPriest
+  icon:
+    sprite: *warlockIcons
+    state: Chaplain
+  jobName: warlock-job-name-warlock-priest
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockRitualist
+  icon:
+    sprite: *warlockIcons
+    state: Librarian
+  jobName: warlock-job-name-warlock-ritualist
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockMage
+  icon:
+    sprite: *warlockIcons
+    state: Wizard
+  jobName: warlock-job-name-warlock-mage
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconWarlockAdept
+  icon:
+    sprite: *warlockIcons
+    state: Librarian
+  jobName: warlock-job-name-warlock-adept
+
+# ------------------------------------------------------------------------------------------------
+# Братство Стали
+# ------------------------------------------------------------------------------------------------
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodLordCommander
+  icon:
+    sprite: *warlockIcons
+    state: SyndicateCommander
+  jobName: warlock-job-name-brotherhood-lord-commander
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodChaplain
+  icon:
+    sprite: *warlockIcons
+    state: SyndicateCorpsman
+  jobName: warlock-job-name-brotherhood-chaplain
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodLieutenant
+  icon:
+    sprite: *warlockIcons
+    state: SyndicateOperative
+  jobName: warlock-job-name-brotherhood-lieutenant
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodSergeant
+  icon:
+    sprite: *warlockIcons
+    state: Syndicate
+  jobName: warlock-job-name-brotherhood-sergeant
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodBattleBrother
+  icon:
+    sprite: *warlockIcons
+    state: Syndicate
+  jobName: warlock-job-name-brotherhood-battle-brother
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodScavenger
+  icon:
+    sprite: *warlockIcons
+    state: ShaftMiner
+  jobName: warlock-job-name-brotherhood-scavenger
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconBrotherhoodSlave
+  icon:
+    sprite: *warlockIcons
+    state: Prisoner
+  jobName: warlock-job-name-brotherhood-slave

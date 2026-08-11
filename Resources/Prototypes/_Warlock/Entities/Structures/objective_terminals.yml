@@ -1,0 +1,59 @@
+# _Warlock
+# Терминалы целей. Спрайт — ванильная станционная консоль целиком, только подкрашенная.
+# Слои намеренно не переопределяем: у BaseComputer их пять и на них завязан GenericVisualizer.
+#
+# На терминале читают задание раунда, в него же сдают трофеи, если цель это считает.
+
+- type: entity
+  parent: BaseComputer
+  abstract: true
+  id: WarlockBaseObjectiveTerminal
+  name: терминал целей
+  description: Приземистая консоль с одной строкой на экране. Строку меняют раз в смену.
+
+- type: entity
+  parent: WarlockBaseObjectiveTerminal
+  id: WarlockObjectiveTerminalFactos
+  name: терминал целей Фактос
+  suffix: Warlock, Фактос
+  components:
+  - type: Sprite
+    color: "#d8c39a"
+  - type: WarlockObjectiveTerminal
+    faction: GuildFactos
+
+- type: entity
+  parent: WarlockBaseObjectiveTerminal
+  id: WarlockObjectiveTerminalTechnos
+  name: терминал целей Технос
+  suffix: Warlock, Технос
+  components:
+  - type: Sprite
+    color: "#9aa8b8"
+  - type: WarlockObjectiveTerminal
+    faction: GuildTechnos
+
+- type: entity
+  parent: WarlockBaseObjectiveTerminal
+  id: WarlockObjectiveTerminalWarlock
+  name: терминал целей Варлок
+  suffix: Warlock, Варлок
+  components:
+  - type: Sprite
+    color: "#a9e6ff"
+  - type: WarlockObjectiveTerminal
+    faction: GuildWarlock
+
+- type: entity
+  parent: WarlockBaseObjectiveTerminal
+  id: WarlockObjectiveTerminalBrotherhood
+  name: терминал приказов Братства
+  description: >-
+    Консоль, снятая с чужой станции и приваренная к раме. Экран показывает одну строку,
+    и Братство считает эту строку словом Механтехиона.
+  suffix: Warlock, Братство
+  components:
+  - type: Sprite
+    color: "#6f7360"
+  - type: WarlockObjectiveTerminal
+    faction: Brotherhood

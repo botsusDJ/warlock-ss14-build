@@ -1,0 +1,63 @@
+# _Warlock
+# Четыре фракции вместо департаментов Нанотрейзен.
+#
+# Три гильдии Техномагического Союза перечислены по весу так, чтобы Варлок шёл первым:
+# по лору его лорд возглавлял весь Союз, пока вторжение Братства в главный склад артефактов
+# не запустило раскол. Братство Стали стоит отдельно и ниже всех — это враждебное государство.
+
+- type: department
+  id: WarlockGuildWarlock
+  name: department-WarlockGuildWarlock
+  description: department-WarlockGuildWarlock-description
+  color: "#a9e6ff"
+  weight: 40
+  roles:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobWarlockMage
+  - WarlockJobWarlockAdept
+
+- type: department
+  id: WarlockGuildFactos
+  name: department-WarlockGuildFactos
+  description: department-WarlockGuildFactos-description
+  color: "#d8c39a"
+  weight: 30
+  roles:
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobFactosEnchanter
+  - WarlockJobFactosMage
+  - WarlockJobFactosAdept
+
+- type: department
+  id: WarlockGuildTechnos
+  name: department-WarlockGuildTechnos
+  description: department-WarlockGuildTechnos-description
+  color: "#9aa8b8"
+  weight: 20
+  roles:
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+  - WarlockJobTechnosTechnomancer
+  - WarlockJobTechnosMage
+  - WarlockJobTechnosAdept
+
+- type: department
+  id: WarlockBrotherhood
+  name: department-WarlockBrotherhood
+  description: department-WarlockBrotherhood-description
+  color: "#6f7360"
+  weight: 10
+  roles:
+  - WarlockJobBrotherhoodLordCommander
+  - WarlockJobBrotherhoodChaplain
+  - WarlockJobBrotherhoodLieutenant
+  - WarlockJobBrotherhoodSergeant
+  - WarlockJobBrotherhoodBattleBrother
+  - WarlockJobBrotherhoodScavenger
+  - WarlockJobBrotherhoodSlave

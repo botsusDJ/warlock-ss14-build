@@ -1,0 +1,210 @@
+# _Warlock
+# Братство Стали — рейдерское государство не-псайкеров, поклоняющееся Механтехиону.
+# Идеология: исправность превыше жизни, ксенос подлежит уничтожению.
+#
+# Боевые звания и капелланство доступны только людям. Унатхи в Братстве есть,
+# но исключительно на положении мусорщиков и рабов — своей ксенофобии Братство
+# при этом не отменяет, просто считает чёрную работу недостойной человека.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Лорд-коммандер
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodLordCommander
+  name: warlock-job-name-brotherhood-lord-commander
+  description: warlock-job-description-brotherhood-lord-commander
+  playTimeTracker: WarlockJobBrotherhoodLordCommander
+  startingGear: WarlockGearBrotherhoodLordCommander
+  icon: WarlockJobIconBrotherhoodLordCommander
+  supervisors: warlock-job-supervisors-mechantechion
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  access:
+  - WarlockBrotherhood
+  - WarlockBrotherhoodCommand
+
+- type: startingGear
+  id: WarlockGearBrotherhoodLordCommander
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    outerClothing: WarlockOuterBrotherhoodArmorCommand
+    head: WarlockHeadBrotherhoodHelmetCommand
+    mask: WarlockMaskBrotherhood
+    neck: WarlockSymbolMechantechion
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockCodexMechantechion
+    - WarlockAccessKeyPouchCommand
+
+# ------------------------------------------------------------------------------------------------
+# 2. Капеллан
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodChaplain
+  name: warlock-job-name-brotherhood-chaplain
+  description: warlock-job-description-brotherhood-chaplain
+  playTimeTracker: WarlockJobBrotherhoodChaplain
+  startingGear: WarlockGearBrotherhoodChaplain
+  icon: WarlockJobIconBrotherhoodChaplain
+  supervisors: warlock-job-supervisors-brotherhood-command
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  access:
+  - WarlockBrotherhood
+  - WarlockBrotherhoodCommand
+
+- type: startingGear
+  id: WarlockGearBrotherhoodChaplain
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    outerClothing: WarlockOuterBrotherhoodArmor
+    head: WarlockHeadBrotherhoodHelmet
+    neck: WarlockSymbolMechantechion
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockCodexMechantechion
+    - WarlockAccessKeyPouchCommand
+
+# ------------------------------------------------------------------------------------------------
+# 3. Лейтенант
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodLieutenant
+  name: warlock-job-name-brotherhood-lieutenant
+  description: warlock-job-description-brotherhood-lieutenant
+  playTimeTracker: WarlockJobBrotherhoodLieutenant
+  startingGear: WarlockGearBrotherhoodLieutenant
+  icon: WarlockJobIconBrotherhoodLieutenant
+  supervisors: warlock-job-supervisors-brotherhood-command
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  access:
+  - WarlockBrotherhood
+  - WarlockBrotherhoodCommand
+
+- type: startingGear
+  id: WarlockGearBrotherhoodLieutenant
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    outerClothing: WarlockOuterBrotherhoodArmor
+    head: WarlockHeadBrotherhoodHelmet
+    mask: WarlockMaskBrotherhood
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockAccessKeyPouchCommand
+
+# ------------------------------------------------------------------------------------------------
+# 4. Сержант
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodSergeant
+  name: warlock-job-name-brotherhood-sergeant
+  description: warlock-job-description-brotherhood-sergeant
+  playTimeTracker: WarlockJobBrotherhoodSergeant
+  startingGear: WarlockGearBrotherhoodSergeant
+  icon: WarlockJobIconBrotherhoodSergeant
+  supervisors: warlock-job-supervisors-brotherhood
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  access:
+  - WarlockBrotherhood
+
+- type: startingGear
+  id: WarlockGearBrotherhoodSergeant
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    outerClothing: WarlockOuterBrotherhoodArmor
+    head: WarlockHeadBrotherhoodHelmet
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockAccessKeyPouch
+
+# ------------------------------------------------------------------------------------------------
+# 5. Боевой Брат
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodBattleBrother
+  name: warlock-job-name-brotherhood-battle-brother
+  description: warlock-job-description-brotherhood-battle-brother
+  playTimeTracker: WarlockJobBrotherhoodBattleBrother
+  startingGear: WarlockGearBrotherhoodBattleBrother
+  icon: WarlockJobIconBrotherhoodBattleBrother
+  supervisors: warlock-job-supervisors-brotherhood
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Human
+  access:
+  - WarlockBrotherhood
+
+- type: startingGear
+  id: WarlockGearBrotherhoodBattleBrother
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    outerClothing: WarlockOuterBrotherhoodArmor
+    mask: WarlockMaskBrotherhood
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockAccessKeyPouch
+
+# ------------------------------------------------------------------------------------------------
+# 6. Мусорщик — только унатхи
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodScavenger
+  name: warlock-job-name-brotherhood-scavenger
+  description: warlock-job-description-brotherhood-scavenger
+  playTimeTracker: WarlockJobBrotherhoodScavenger
+  startingGear: WarlockGearBrotherhoodScavenger
+  icon: WarlockJobIconBrotherhoodScavenger
+  supervisors: warlock-job-supervisors-brotherhood
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockBrotherhood
+
+- type: startingGear
+  id: WarlockGearBrotherhoodScavenger
+  equipment:
+    jumpsuit: WarlockUniformBrotherhood
+    mask: WarlockMaskBrotherhood
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockAccessKeyPouch
+
+# ------------------------------------------------------------------------------------------------
+# 7. Раб — только унатхи
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobBrotherhoodSlave
+  name: warlock-job-name-brotherhood-slave
+  description: warlock-job-description-brotherhood-slave
+  playTimeTracker: WarlockJobBrotherhoodSlave
+  startingGear: WarlockGearBrotherhoodSlave
+  icon: WarlockJobIconBrotherhoodSlave
+  supervisors: warlock-job-supervisors-brotherhood
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+
+- type: startingGear
+  id: WarlockGearBrotherhoodSlave
+  equipment:
+    jumpsuit: WarlockUniformBrotherhoodSlave

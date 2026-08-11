@@ -1,0 +1,172 @@
+# _Warlock
+# Гильдия Технос — технологи. Единственные, кто пытается разобрать артефакт на принципы,
+# а не описать или обожествить. Все роли доступны только техномагам.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Архитехномаг
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosArchtechnomage
+  name: warlock-job-name-technos-archtechnomage
+  description: warlock-job-description-technos-archtechnomage
+  playTimeTracker: WarlockJobTechnosArchtechnomage
+  startingGear: WarlockGearTechnosArchtechnomage
+  icon: WarlockJobIconTechnosArchtechnomage
+  supervisors: warlock-job-supervisors-union
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockTechnos
+
+- type: startingGear
+  id: WarlockGearTechnosArchtechnomage
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnosLord
+    head: WarlockHeadGuildTechnos
+    gloves: WarlockArtefactThousandHands
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 2. Верховный Технократ
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosSupremeTechnocrat
+  name: warlock-job-name-technos-supreme-technocrat
+  description: warlock-job-description-technos-supreme-technocrat
+  playTimeTracker: WarlockJobTechnosSupremeTechnocrat
+  startingGear: WarlockGearTechnosSupremeTechnocrat
+  icon: WarlockJobIconTechnosSupremeTechnocrat
+  supervisors: warlock-job-supervisors-technos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockUnionCommand
+  - WarlockTechnos
+
+- type: startingGear
+  id: WarlockGearTechnosSupremeTechnocrat
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnosLord
+    head: WarlockHeadGuildTechnos
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockArtefactGuildUrn
+
+# ------------------------------------------------------------------------------------------------
+# 3. Техноколдун
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosTechnosorcerer
+  name: warlock-job-name-technos-technosorcerer
+  description: warlock-job-description-technos-technosorcerer
+  playTimeTracker: WarlockJobTechnosTechnosorcerer
+  startingGear: WarlockGearTechnosTechnosorcerer
+  icon: WarlockJobIconTechnosTechnosorcerer
+  supervisors: warlock-job-supervisors-technos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockTechnos
+
+- type: startingGear
+  id: WarlockGearTechnosTechnosorcerer
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnos
+    head: WarlockHeadGuildTechnos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 4. Техномант
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosTechnomancer
+  name: warlock-job-name-technos-technomancer
+  description: warlock-job-description-technos-technomancer
+  playTimeTracker: WarlockJobTechnosTechnomancer
+  startingGear: WarlockGearTechnosTechnomancer
+  icon: WarlockJobIconTechnosTechnomancer
+  supervisors: warlock-job-supervisors-technos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockTechnos
+
+- type: startingGear
+  id: WarlockGearTechnosTechnomancer
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    head: WarlockHeadGuildTechnos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 5. Маг
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosMage
+  name: warlock-job-name-technos-mage
+  description: warlock-job-description-technos-mage
+  playTimeTracker: WarlockJobTechnosMage
+  startingGear: WarlockGearTechnosMage
+  icon: WarlockJobIconTechnosMage
+  supervisors: warlock-job-supervisors-technos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+  - WarlockTechnos
+
+- type: startingGear
+  id: WarlockGearTechnosMage
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    head: WarlockHeadGuildTechnos
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 6. Адепт
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobTechnosAdept
+  name: warlock-job-name-technos-adept
+  description: warlock-job-description-technos-adept
+  playTimeTracker: WarlockJobTechnosAdept
+  startingGear: WarlockGearTechnosAdept
+  icon: WarlockJobIconTechnosAdept
+  supervisors: warlock-job-supervisors-technos
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - WarlockTechnomancer
+  access:
+  - WarlockUnion
+
+- type: startingGear
+  id: WarlockGearTechnosAdept
+  equipment:
+    id: WarlockPdaTechnos
+    jumpsuit: WarlockUniformGuildTechnos
+    shoes: ClothingShoesColorBlack

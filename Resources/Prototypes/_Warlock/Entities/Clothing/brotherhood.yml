@@ -51,6 +51,10 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.85
+  # Трофей: гильдии сдают снятую броню в свой терминал целей.
+  - type: Tag
+    tags:
+    - WarlockBrotherhoodArmor
 
 - type: entity
   parent: ClothingHeadBase

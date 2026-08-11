@@ -1,0 +1,82 @@
+# _Warlock
+# Трекеры наигранного времени. Требований по времени пока нет ни у одной роли,
+# но трекер обязателен полем прототипа и понадобится, когда гейты появятся.
+
+# Гильдия Фактос
+- type: playTimeTracker
+  id: WarlockJobFactosArtarchmage
+
+- type: playTimeTracker
+  id: WarlockJobFactosGreatSeeker
+
+- type: playTimeTracker
+  id: WarlockJobFactosSorcerer
+
+- type: playTimeTracker
+  id: WarlockJobFactosEnchanter
+
+- type: playTimeTracker
+  id: WarlockJobFactosMage
+
+- type: playTimeTracker
+  id: WarlockJobFactosAdept
+
+# Гильдия Технос
+- type: playTimeTracker
+  id: WarlockJobTechnosArchtechnomage
+
+- type: playTimeTracker
+  id: WarlockJobTechnosSupremeTechnocrat
+
+- type: playTimeTracker
+  id: WarlockJobTechnosTechnosorcerer
+
+- type: playTimeTracker
+  id: WarlockJobTechnosTechnomancer
+
+- type: playTimeTracker
+  id: WarlockJobTechnosMage
+
+- type: playTimeTracker
+  id: WarlockJobTechnosAdept
+
+# Гильдия Варлок
+- type: playTimeTracker
+  id: WarlockJobWarlockArchmageBishop
+
+- type: playTimeTracker
+  id: WarlockJobWarlockHighPriest
+
+- type: playTimeTracker
+  id: WarlockJobWarlockPriest
+
+- type: playTimeTracker
+  id: WarlockJobWarlockRitualist
+
+- type: playTimeTracker
+  id: WarlockJobWarlockMage
+
+- type: playTimeTracker
+  id: WarlockJobWarlockAdept
+
+# Братство Стали
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodLordCommander
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodChaplain
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodLieutenant
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodSergeant
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodBattleBrother
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodScavenger
+
+- type: playTimeTracker
+  id: WarlockJobBrotherhoodSlave

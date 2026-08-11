@@ -3,6 +3,7 @@
   name: department-Cargo
   description: department-Cargo-description
   color: "#A46106"
+  editorHidden: true # _Warlock: билд использует свои фракции вместо департаментов НТ
   roles:
   - CargoTechnician
   - Quartermaster
@@ -14,6 +15,7 @@
   description: department-Civilian-description
   color: "#9FED58"
   weight: -10
+  editorHidden: true # _Warlock
   roles:
   - Bartender
   - Botanist
@@ -55,6 +57,7 @@
   name: department-Command
   description: department-Command-description
   color: "#334E6D"
+  editorHidden: true # _Warlock
   roles:
   - Captain
   - ChiefEngineer
@@ -80,6 +83,7 @@
   name: department-Engineering
   description: department-Engineering-description
   color: "#EFB341"
+  editorHidden: true # _Warlock
   roles:
   - AtmosphericTechnician
   - ChiefEngineer
@@ -91,6 +95,7 @@
   name: department-Medical
   description: department-Medical-description
   color: "#52B4E9"
+  editorHidden: true # _Warlock
   roles:
   - Chemist
   - ChiefMedicalOfficer
@@ -105,6 +110,7 @@
   description: department-Security-description
   color: "#DE3A3A"
   weight: 20
+  editorHidden: true # _Warlock
   roles:
   - HeadOfSecurity
   - SecurityCadet
@@ -117,6 +123,7 @@
   name: department-Science
   description: department-Science-description
   color: "#D381C9"
+  editorHidden: true # _Warlock
   roles:
   - ResearchDirector
   - Scientist
@@ -127,6 +134,7 @@
   name: department-Silicon
   description: department-Silicon-description
   color: "#D381C9"
+  editorHidden: true # _Warlock
   roles:
   - Borg
   - StationAi
@@ -137,6 +145,7 @@
   description: department-Specific-description
   color: "#9FED58"
   weight: 10
+  editorHidden: true # _Warlock
   roles:
   - Reporter
   - Psychologist
