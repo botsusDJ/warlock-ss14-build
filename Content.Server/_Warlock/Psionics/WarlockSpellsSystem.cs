@@ -341,7 +341,9 @@ public sealed class WarlockSpellsSystem : EntitySystem
             if (_container.IsEntityInContainer(item.Owner))
                 continue;
 
-            if (!TryComp<PhysicsComponent>(item.Owner, out var physics) || physics.BodyType == Robust.Shared.Physics.BodyType.Static)
+            // Поля PhysicsComponent закрыты песочницей, поэтому просто требуем его наличие:
+            // без физики ThrowingSystem всё равно ничего не сделает. Закреплённое отсекаем трансформом.
+            if (!HasComp<PhysicsComponent>(item.Owner))
                 continue;
 
             if (Transform(item.Owner).Anchored)
