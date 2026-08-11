@@ -4,6 +4,8 @@ using Content.Shared._Warlock.Psionics.Components;
 using Content.Shared._Warlock.Religion;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
