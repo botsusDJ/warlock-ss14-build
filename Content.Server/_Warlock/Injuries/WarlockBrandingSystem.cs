@@ -8,9 +8,11 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+// ActorComponent живёт в Robust.Shared.Player, а не в Robust.Server.GameObjects,
+// как было в старых версиях движка.
+using Robust.Shared.Player;
 
 namespace Content.Server._Warlock.Injuries;
 
