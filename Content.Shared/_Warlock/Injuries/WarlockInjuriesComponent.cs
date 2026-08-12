@@ -6,7 +6,9 @@ namespace Content.Shared._Warlock.Injuries;
 /// _Warlock
 /// Летопись тела: что на нём осталось от полученного урона и от чужих намерений.
 ///
-/// Хранится счётчиками, а не списком отдельных ран — так дешевле по сети и проще читать.
+/// Хранится списком отдельных записей, потому что теперь важно не только «сколько»,
+/// но и «где»: перелом в ноге замедляет, а в руке — нет.
+///
 /// Компонент сетевой: переломы и синяки влияют на движение и выносливость,
 /// а это клиент обязан предсказывать, иначе персонажа будет дёргать.
 /// </summary>
@@ -14,22 +16,23 @@ namespace Content.Shared._Warlock.Injuries;
 public sealed partial class WarlockInjuriesComponent : Component
 {
     /// <summary>
-    /// Сколько травм каждого вида сейчас на теле.
+    /// Всё, что сейчас на теле.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public Dictionary<WarlockInjuryType, int> Injuries = new();
-
-    /// <summary>
-    /// Тексты поставленных клейм. Клеймо всегда именное: важно не что оно есть, а чьё оно.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public List<string> Brands = new();
+    [ViewVariables, AutoNetworkedField]
+    public List<WarlockInjury> Injuries = new();
 
     /// <summary>
     /// Потолок на каждый вид травм, чтобы летопись не росла до бесконечности.
+    /// Зубы и глаза считаются отдельно: их и так мало.
     /// </summary>
     [DataField]
     public int MaxPerType = 6;
+
+    /// <summary>
+    /// Сколько зубов вообще можно выбить.
+    /// </summary>
+    [DataField]
+    public int MaxTeeth = 8;
 
     #region Пороги накопления
 
@@ -50,6 +53,19 @@ public sealed partial class WarlockInjuriesComponent : Component
     /// </summary>
     [DataField]
     public float FractureThreshold = 40f;
+
+    /// <summary>
+    /// Шанс выбить зуб, когда сильный тупой удар пришёлся в голову.
+    /// </summary>
+    [DataField]
+    public float ToothChance = 0.35f;
+
+    /// <summary>
+    /// Шанс потерять глаз при переломе черепа. Держится намеренно низким:
+    /// это должно быть событием на всю смену, а не рядовой неприятностью.
+    /// </summary>
+    [DataField]
+    public float EyeChance = 0.04f;
 
     #endregion
 
@@ -84,16 +100,28 @@ public sealed partial class WarlockInjuriesComponent : Component
     #region Механические последствия
 
     /// <summary>
-    /// Насколько каждый перелом замедляет ходьбу и бег.
+    /// Насколько каждый перелом ноги замедляет ходьбу и бег.
     /// </summary>
     [DataField]
-    public float FractureSlowdown = 0.9f;
+    public float LegFractureSlowdown = 0.85f;
+
+    /// <summary>
+    /// Насколько каждый перелом не в ноге режет порог оглушения от усталости.
+    /// </summary>
+    [DataField]
+    public float FractureStaminaPenalty = 0.9f;
 
     /// <summary>
     /// Насколько каждый синяк режет порог оглушения от усталости.
     /// </summary>
     [DataField]
     public float BruiseStaminaPenalty = 0.95f;
+
+    /// <summary>
+    /// Сколько повреждения глаз даёт потеря одного глаза.
+    /// </summary>
+    [DataField]
+    public int EyeDamagePerEye = 3;
 
     #endregion
 }

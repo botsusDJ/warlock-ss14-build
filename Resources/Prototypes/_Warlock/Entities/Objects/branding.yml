@@ -22,6 +22,25 @@
       types:
         Heat: 8
 
+# Наборное клеймо: надпись и место выбираются через меню взаимодействия.
+- type: entity
+  parent: WarlockBaseBrandingIron
+  id: WarlockBrandingIronBlank
+  name: наборное клеймо
+  description: >-
+    Прут со сменными литерами на конце. Что именно выжечь и куда — решает тот, кто держит.
+    Литеры можно переставить, кожу переставить нельзя.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#b0a08a"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-blank
+    adjustable: true
+    delay: 6
+    burn: 12
+
 - type: entity
   parent: WarlockBaseBrandingIron
   id: WarlockBrandingIronUnathi

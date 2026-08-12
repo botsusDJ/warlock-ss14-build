@@ -1,32 +1,58 @@
+using System.Linq;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared._Warlock.Injuries;
 
 /// <summary>
 /// _Warlock
-/// Летопись тела. Ваниль считает урон и смерть — эта система считает следы.
+/// Летопись тела. Ваниль считает урон и смерть — эта система считает следы и помнит,
+/// где именно они остались.
 ///
-/// Ссадины и синяки копятся от ударов и сходят сами. Перелом дорогой: он замедляет,
-/// срастается долго и всегда оставляет шрам. Шрамы и клейма не сходят никогда.
+/// Локационного урона в билде нет, поэтому часть тела выбирается броском с весами:
+/// в торс прилетает чаще всего, в голову заметно реже. Отсюда и редкость выбитых зубов,
+/// а глаз теряется совсем редко — это должно быть событием на смену.
 ///
 /// Смотреть летопись можно только в лицо: под шлемом её не разглядеть.
 /// </summary>
 public sealed partial class WarlockInjuriesSystem : EntitySystem
 {
+    [Dependency] private BlindableSystem _blindable = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
     [Dependency] private SharedStaminaSystem _stamina = default!;
+
+    /// <summary>
+    /// Веса попадания по частям тела. Торс самый крупный, голова самая мелкая.
+    /// </summary>
+    private static readonly (WarlockBodyPart Part, float Weight)[] PartWeights =
+    {
+        (WarlockBodyPart.Torso, 35f),
+        (WarlockBodyPart.Head, 15f),
+        (WarlockBodyPart.LeftArm, 12.5f),
+        (WarlockBodyPart.RightArm, 12.5f),
+        (WarlockBodyPart.LeftLeg, 12.5f),
+        (WarlockBodyPart.RightLeg, 12.5f),
+    };
+
+    /// <summary>
+    /// Травмы, которые не сходят никогда.
+    /// </summary>
+    private static bool IsPermanent(WarlockInjuryType type) => type
+        is WarlockInjuryType.Scar
+        or WarlockInjuryType.Brand
+        or WarlockInjuryType.MissingTooth
+        or WarlockInjuryType.MissingEye;
 
     public override void Initialize()
     {
@@ -40,82 +66,73 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
 
     #region Публичное API
 
-    public int GetCount(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type)
+    public int Count(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return 0;
 
-        return ent.Comp.Injuries.GetValueOrDefault(type);
+        return ent.Comp.Injuries.Count(i => i.Type == type);
     }
 
     /// <summary>
-    /// Добавляет травму. Возвращает false, если по этому виду уже потолок.
+    /// Добавляет травму на указанную часть тела. Возвращает false, если по этому виду уже потолок.
     /// </summary>
-    public bool TryAddInjury(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type, int amount = 1)
+    public bool TryAddInjury(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type, WarlockBodyPart part, string? text = null)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        var current = ent.Comp.Injuries.GetValueOrDefault(type);
-        if (current >= ent.Comp.MaxPerType)
+        var cap = type switch
+        {
+            WarlockInjuryType.MissingTooth => ent.Comp.MaxTeeth,
+            // Глаза ровно два, и второй отнимать нельзя: слепой персонаж — это уже не травма,
+            // а конец игры за него.
+            WarlockInjuryType.MissingEye => 1,
+            _ => ent.Comp.MaxPerType,
+        };
+
+        if (Count(ent, type) >= cap)
             return false;
 
-        ent.Comp.Injuries[type] = Math.Min(ent.Comp.MaxPerType, current + amount);
+        ent.Comp.Injuries.Add(new WarlockInjury(type, part, text));
         OnInjuriesChanged((ent, ent.Comp));
         return true;
     }
 
     /// <summary>
-    /// Снимает травму. Шрамы и клейма этим не убрать — они на то и вечные.
+    /// Снимает одну травму указанного вида. Вечные травмы этим не убрать.
     /// </summary>
-    public bool TryRemoveInjury(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type, int amount = 1)
+    public bool TryRemoveInjury(Entity<WarlockInjuriesComponent?> ent, WarlockInjuryType type)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
+        if (!Resolve(ent, ref ent.Comp, false) || IsPermanent(type))
             return false;
 
-        if (type is WarlockInjuryType.Scar or WarlockInjuryType.Brand)
+        var index = ent.Comp.Injuries.FindIndex(i => i.Type == type);
+        if (index < 0)
             return false;
 
-        var current = ent.Comp.Injuries.GetValueOrDefault(type);
-        if (current <= 0)
-            return false;
-
-        var left = current - amount;
-
-        if (left <= 0)
-            ent.Comp.Injuries.Remove(type);
-        else
-            ent.Comp.Injuries[type] = left;
-
+        ent.Comp.Injuries.RemoveAt(index);
         OnInjuriesChanged((ent, ent.Comp));
         return true;
     }
 
     /// <summary>
-    /// Ставит именное клеймо. Снять нельзя.
+    /// Ставит именное клеймо на выбранное место. Снять нельзя.
     /// </summary>
-    public void AddBrand(Entity<WarlockInjuriesComponent?> ent, string brand)
+    public void AddBrand(Entity<WarlockInjuriesComponent?> ent, string brand, WarlockBodyPart part)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return;
-
-        ent.Comp.Brands.Add(brand);
-        ent.Comp.Injuries[WarlockInjuryType.Brand] = ent.Comp.Brands.Count;
-
-        OnInjuriesChanged((ent, ent.Comp));
+        TryAddInjury(ent, WarlockInjuryType.Brand, part, brand);
     }
 
     /// <summary>
-    /// Заживляет всё, что вообще способно зажить. Шрамы и клейма остаются.
+    /// Заживляет всё, что вообще способно зажить. Шрамы, клейма, зубы и глаза остаются.
     /// </summary>
     public void HealAll(Entity<WarlockInjuriesComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        ent.Comp.Injuries.Remove(WarlockInjuryType.Abrasion);
-        ent.Comp.Injuries.Remove(WarlockInjuryType.Bruise);
-        ent.Comp.Injuries.Remove(WarlockInjuryType.Fracture);
+        ent.Comp.Injuries.RemoveAll(i => !IsPermanent(i.Type));
         ent.Comp.FractureProgress = 0;
 
         OnInjuriesChanged((ent, ent.Comp));
@@ -129,6 +146,21 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         // неявного приведения нет, только от голого EntityUid.
         _movement.RefreshMovementSpeedModifiers(ent.Owner);
         _stamina.RefreshStaminaCritThreshold(ent.Owner);
+    }
+
+    private WarlockBodyPart RollPart()
+    {
+        var total = PartWeights.Sum(p => p.Weight);
+        var roll = _random.NextFloat() * total;
+
+        foreach (var (part, weight) in PartWeights)
+        {
+            roll -= weight;
+            if (roll <= 0f)
+                return part;
+        }
+
+        return WarlockBodyPart.Torso;
     }
 
     #endregion
@@ -146,14 +178,35 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         var blunt = dict.GetValueOrDefault("Blunt").Float();
         var sharp = dict.GetValueOrDefault("Slash").Float() + dict.GetValueOrDefault("Piercing").Float();
 
-        // Сильный тупой удар ломает кость, слабый оставляет синяк.
         if (blunt >= ent.Comp.FractureThreshold)
-            TryAddInjury(ent.Owner, WarlockInjuryType.Fracture);
+        {
+            var part = RollPart();
+            TryAddInjury(ent.Owner, WarlockInjuryType.Fracture, part);
+
+            // Перелом черепа — единственный способ лишиться глаза.
+            if (part == WarlockBodyPart.Head && _random.Prob(ent.Comp.EyeChance))
+                LoseEye(ent);
+        }
         else if (blunt >= ent.Comp.BruiseThreshold)
-            TryAddInjury(ent.Owner, WarlockInjuryType.Bruise);
+        {
+            var part = RollPart();
+            TryAddInjury(ent.Owner, WarlockInjuryType.Bruise, part);
+
+            // Крепкий удар в челюсть стоит зуба.
+            if (part == WarlockBodyPart.Head && _random.Prob(ent.Comp.ToothChance))
+                TryAddInjury(ent.Owner, WarlockInjuryType.MissingTooth, WarlockBodyPart.Head);
+        }
 
         if (sharp >= ent.Comp.AbrasionThreshold)
-            TryAddInjury(ent.Owner, WarlockInjuryType.Abrasion);
+            TryAddInjury(ent.Owner, WarlockInjuryType.Abrasion, RollPart());
+    }
+
+    private void LoseEye(Entity<WarlockInjuriesComponent> ent)
+    {
+        if (!TryAddInjury(ent.Owner, WarlockInjuryType.MissingEye, WarlockBodyPart.Head))
+            return;
+
+        _blindable.AdjustEyeDamage(ent.Owner, ent.Comp.EyeDamagePerEye);
     }
 
     #endregion
@@ -170,36 +223,38 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
             return;
         }
 
-        var wrote = false;
-
-        foreach (var type in new[]
-                 {
-                     WarlockInjuryType.Abrasion,
-                     WarlockInjuryType.Bruise,
-                     WarlockInjuryType.Fracture,
-                     WarlockInjuryType.Scar,
-                 })
-        {
-            var count = ent.Comp.Injuries.GetValueOrDefault(type);
-            if (count <= 0)
-                continue;
-
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString(GetInjuryLoc(type, count)));
-            wrote = true;
-        }
-
-        foreach (var brand in ent.Comp.Brands)
-        {
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString("warlock-injuries-brand", ("brand", Loc.GetString(brand))));
-            wrote = true;
-        }
-
-        if (!wrote)
+        if (ent.Comp.Injuries.Count == 0)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("warlock-injuries-none"));
+            return;
+        }
+
+        // Группируем по «вид + место», чтобы вместо шести строк про синяки
+        // получилась одна с указанием, где именно их шесть.
+        var groups = ent.Comp.Injuries
+            .Where(i => i.Type != WarlockInjuryType.Brand)
+            .GroupBy(i => (i.Type, i.Part))
+            .OrderBy(g => g.Key.Type)
+            .ThenBy(g => g.Key.Part);
+
+        foreach (var group in groups)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString(
+                GetInjuryLoc(group.Key.Type, group.Count()),
+                ("part", Loc.GetString(GetPartLoc(group.Key.Part))),
+                ("count", group.Count())));
+        }
+
+        // Клейма пишем каждое отдельно: у них своя надпись и своё место.
+        foreach (var brand in ent.Comp.Injuries.Where(i => i.Type == WarlockInjuryType.Brand))
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString(
+                "warlock-injuries-brand",
+                ("part", Loc.GetString(GetPartLoc(brand.Part))),
+                ("brand", brand.Text is { } t ? Loc.GetString(t) : Loc.GetString("warlock-brand-unreadable"))));
         }
     }
 
@@ -208,6 +263,13 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
     /// </summary>
     private static string GetInjuryLoc(WarlockInjuryType type, int count)
     {
+        // У зубов и глаз тяжести нет: они либо есть, либо нет.
+        if (type == WarlockInjuryType.MissingTooth)
+            return "warlock-injuries-tooth";
+
+        if (type == WarlockInjuryType.MissingEye)
+            return "warlock-injuries-eye";
+
         var severity = count switch
         {
             <= 1 => "light",
@@ -226,27 +288,50 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         return $"warlock-injuries-{name}-{severity}";
     }
 
+    public static string GetPartLoc(WarlockBodyPart part)
+    {
+        return part switch
+        {
+            WarlockBodyPart.Head => "warlock-body-part-head",
+            WarlockBodyPart.Torso => "warlock-body-part-torso",
+            WarlockBodyPart.LeftArm => "warlock-body-part-left-arm",
+            WarlockBodyPart.RightArm => "warlock-body-part-right-arm",
+            WarlockBodyPart.LeftLeg => "warlock-body-part-left-leg",
+            _ => "warlock-body-part-right-leg",
+        };
+    }
+
     #endregion
 
     #region Механические последствия
 
     private void OnRefreshSpeed(Entity<WarlockInjuriesComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
-        var fractures = ent.Comp.Injuries.GetValueOrDefault(WarlockInjuryType.Fracture);
-        if (fractures <= 0)
+        // Замедляет только сломанная нога. Рука в переломе бегать не мешает.
+        var legs = ent.Comp.Injuries.Count(i =>
+            i.Type == WarlockInjuryType.Fracture &&
+            i.Part is WarlockBodyPart.LeftLeg or WarlockBodyPart.RightLeg);
+
+        if (legs <= 0)
             return;
 
-        var modifier = MathF.Pow(ent.Comp.FractureSlowdown, fractures);
-        args.ModifySpeed(modifier);
+        args.ModifySpeed(MathF.Pow(ent.Comp.LegFractureSlowdown, legs));
     }
 
     private void OnRefreshStamina(Entity<WarlockInjuriesComponent> ent, ref RefreshStaminaCritThresholdEvent args)
     {
-        var bruises = ent.Comp.Injuries.GetValueOrDefault(WarlockInjuryType.Bruise);
-        if (bruises <= 0)
-            return;
+        var bruises = Count(ent.Owner, WarlockInjuryType.Bruise);
 
-        args.Modifier *= MathF.Pow(ent.Comp.BruiseStaminaPenalty, bruises);
+        // Переломы не в ногах бегать не мешают, но выматывают.
+        var fractures = ent.Comp.Injuries.Count(i =>
+            i.Type == WarlockInjuryType.Fracture &&
+            i.Part is not (WarlockBodyPart.LeftLeg or WarlockBodyPart.RightLeg));
+
+        if (bruises > 0)
+            args.Modifier *= MathF.Pow(ent.Comp.BruiseStaminaPenalty, bruises);
+
+        if (fractures > 0)
+            args.Modifier *= MathF.Pow(ent.Comp.FractureStaminaPenalty, fractures);
     }
 
     #endregion
@@ -273,18 +358,18 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
 
     /// <summary>
     /// Один шаг заживления. Ссадины сходят быстро, синяки медленнее,
-    /// перелом срастается через несколько шагов и оставляет шрам.
+    /// перелом срастается через несколько шагов и оставляет шрам на том же месте.
     /// </summary>
     private void Heal(Entity<WarlockInjuriesComponent> ent)
     {
-        if (ent.Comp.Injuries.GetValueOrDefault(WarlockInjuryType.Abrasion) > 0)
-            TryRemoveInjury(ent.Owner, WarlockInjuryType.Abrasion);
+        TryRemoveInjury(ent.Owner, WarlockInjuryType.Abrasion);
 
         // Синяк сходит через раз, чтобы держался заметно дольше ссадины.
-        if (ent.Comp.Injuries.GetValueOrDefault(WarlockInjuryType.Bruise) > 0 && _random.Prob(0.5f))
+        if (_random.Prob(0.5f))
             TryRemoveInjury(ent.Owner, WarlockInjuryType.Bruise);
 
-        if (ent.Comp.Injuries.GetValueOrDefault(WarlockInjuryType.Fracture) <= 0)
+        var index = ent.Comp.Injuries.FindIndex(i => i.Type == WarlockInjuryType.Fracture);
+        if (index < 0)
         {
             ent.Comp.FractureProgress = 0;
             return;
@@ -296,9 +381,12 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
             return;
 
         ent.Comp.FractureProgress = 0;
-        TryRemoveInjury(ent.Owner, WarlockInjuryType.Fracture);
 
-        // Сросшаяся кость всегда оставляет след.
-        TryAddInjury(ent.Owner, WarlockInjuryType.Scar);
+        // Сросшаяся кость всегда оставляет след, и след остаётся там же, где был перелом.
+        var part = ent.Comp.Injuries[index].Part;
+        ent.Comp.Injuries.RemoveAt(index);
+        ent.Comp.Injuries.Add(new WarlockInjury(WarlockInjuryType.Scar, part));
+
+        OnInjuriesChanged(ent);
     }
 }
