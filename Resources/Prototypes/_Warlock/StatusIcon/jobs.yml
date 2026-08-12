@@ -157,6 +157,65 @@
   jobName: warlock-job-name-warlock-adept
 
 # ------------------------------------------------------------------------------------------------
+# Королевство Унатхи
+# ------------------------------------------------------------------------------------------------
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiPriestKing
+  icon:
+    sprite: *warlockIcons
+    state: Captain
+  jobName: warlock-job-name-unathi-priest-king
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiKingsClaw
+  icon:
+    sprite: *warlockIcons
+    state: HeadOfSecurity
+  jobName: warlock-job-name-unathi-kings-claw
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiPriestOfThree
+  icon:
+    sprite: *warlockIcons
+    state: Chaplain
+  jobName: warlock-job-name-unathi-priest-of-three
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiElderFang
+  icon:
+    sprite: *warlockIcons
+    state: SeniorOfficer
+  jobName: warlock-job-name-unathi-elder-fang
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiFang
+  icon:
+    sprite: *warlockIcons
+    state: SecurityOfficer
+  jobName: warlock-job-name-unathi-fang
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiNewblood
+  icon:
+    sprite: *warlockIcons
+    state: SecurityCadet
+  jobName: warlock-job-name-unathi-newblood
+
+- type: jobIcon
+  parent: JobIcon
+  id: WarlockJobIconUnathiSlaver
+  icon:
+    sprite: *warlockIcons
+    state: Warden
+  jobName: warlock-job-name-unathi-slaver
+
+# ------------------------------------------------------------------------------------------------
 # Братство Стали
 # ------------------------------------------------------------------------------------------------
 - type: jobIcon

@@ -157,6 +157,8 @@
   - type: ActionGrant
     actions:
     - WarlockActionCycleAttackStrength
+  # _Warlock: летопись тела — синяки, ссадины, переломы, шрамы и клейма.
+  - type: WarlockInjuries
 
 - type: entity
   abstract: true

@@ -118,6 +118,12 @@
   id: MobReptilian
   name: Urist McScales
   components:
+  # _Warlock: крестовый поход объявлен всем унатхам, а не только служащим Королевству.
+  # ActionGrant пушится по наследованию, так что базовые действия гуманоидов сохраняются.
+  - type: ActionGrant
+    actions:
+    - WarlockActionWarCry
+    - WarlockActionBerserk
   - type: Puller
     needsHands: false
   - type: Butcherable

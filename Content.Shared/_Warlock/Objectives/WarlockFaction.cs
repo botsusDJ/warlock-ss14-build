@@ -12,6 +12,7 @@ public enum WarlockFaction : byte
     GuildTechnos = 1,
     GuildWarlock = 2,
     Brotherhood = 3,
+    UnathiKingdom = 4,
 }
 
 /// <summary>

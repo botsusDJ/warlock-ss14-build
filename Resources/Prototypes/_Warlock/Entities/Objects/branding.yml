@@ -1,0 +1,57 @@
+# _Warlock
+# Инструменты клеймения. Спрайт — ванильный сварочник как плейсхолдер.
+#
+# Клеймо ставится долго и на живого, зато не сходит никогда и читается при осмотре.
+# Это единственная травма, которую наносят намеренно.
+
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: WarlockBaseBrandingIron
+  name: клеймо
+  description: Раскалённый прут с оттиском на конце. Оттиск читается по коже потом всю жизнь.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.7
+    damage:
+      types:
+        Heat: 8
+
+- type: entity
+  parent: WarlockBaseBrandingIron
+  id: WarlockBrandingIronUnathi
+  name: клеймо Королевства
+  description: >-
+    Прут с оттиском королевской пасти. Королевство Унатхи ставит его на людей,
+    и человек с таким оттиском перестаёт быть человеком в глазах закона.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#8f6a3a"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-unathi
+    delay: 6
+    burn: 12
+
+- type: entity
+  parent: WarlockBaseBrandingIron
+  id: WarlockBrandingIronBrotherhood
+  name: клеймо Братства
+  description: >-
+    Прут с восемью зубьями на конце. Братство клеймит и рабов, и своих:
+    нашивку можно спороть, клеймо нельзя.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#6f7360"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-brotherhood
+    delay: 6
+    burn: 12

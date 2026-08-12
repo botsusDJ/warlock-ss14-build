@@ -1,0 +1,79 @@
+# _Warlock
+# Алтари трёх богов Королевства Унатхи. Спрайты — плейсхолдеры ванильных алтарей.
+#
+# Три бога намеренно не пересекаются по эффекту: Дьёкт даёт уйти, Атрак даёт драться,
+# Рузут даёт починиться. Молиться всем трём подряд мешает откат каждого алтаря.
+
+- type: entity
+  parent: AltarBase
+  id: WarlockAltarDjokt
+  name: алтарь Дьёкта
+  description: >-
+    Плита с рисунком, который читается по-разному с двух сторон. Дьёкт — бог изощрений,
+    тактики, хитрости и гордости, и он ценит тех, кто ушёл, а не тех, кто устоял.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: yellow
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: yellow
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 0.8
+    color: "#e6d08a"
+  - type: WarlockShrine
+    god: Djokt
+    prayerTime: 6
+    cooldown: 90
+
+- type: entity
+  parent: AltarBase
+  id: WarlockAltarAtrak
+  name: алтарь Атрака
+  description: >-
+    Плита, залитая слоями засохшей крови. Атрак — бог ярости, честного боя, затяжных
+    сражений и жестокости. Он не лечит и не прячет: он вводит в ярость прямо здесь.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: red
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: red
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 1
+    color: "#d84a3a"
+  - type: WarlockShrine
+    god: Atrak
+    prayerTime: 8
+    cooldown: 180
+    rageSeconds: 30
+
+- type: entity
+  parent: AltarBase
+  id: WarlockAltarRuzut
+  name: алтарь Рузута
+  description: >-
+    Плита, обвитая живой лозой, которой здесь неоткуда взяться. Рузут — бог плодородия,
+    обмана, похоти и жизни, и он единственный из трёх чинит тело.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
+  - type: Icon
+    sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+    state: festival
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 1
+    color: "#7fd86a"
+  - type: WarlockShrine
+    god: Ruzut
+    prayerTime: 10
+    cooldown: 150
+    healAmount: 50

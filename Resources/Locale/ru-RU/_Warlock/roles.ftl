@@ -18,6 +18,11 @@ department-WarlockGuildTechnos-description =
     Технологи Союза. Единственные, кто пытается разобрать артефакт на принципы, а не описать
     или обожествить его. Две другие гильдии считают это между кощунством и глупостью.
 
+department-WarlockUnathi = Королевство Унатхи
+department-WarlockUnathi-description =
+    Ящеролюды, отделившиеся от Братства Стали. Исповедуют трёх богов, держат людей в рабстве
+    и ведут крестовый поход, который не собирались объявлять, но и заканчивать не собираются.
+
 department-WarlockBrotherhood = Братство Стали
 department-WarlockBrotherhood-description =
     Рейдерское государство не-псайкеров, поклоняющееся богу-механизму Механтехиону.
@@ -171,5 +176,49 @@ id-card-access-level-warlock-union-command = Совет Союза
 id-card-access-level-warlock-factos = Гильдия Фактос
 id-card-access-level-warlock-technos = Гильдия Технос
 id-card-access-level-warlock-guild-warlock = Гильдия Варлок
+id-card-access-level-warlock-unathi = Королевство Унатхи
+id-card-access-level-warlock-unathi-command = Двор Короля
 id-card-access-level-warlock-brotherhood = Братство Стали
 id-card-access-level-warlock-brotherhood-command = Командование Братства
+
+## ================================================================================================
+## Королевство Унатхи
+## ================================================================================================
+warlock-job-supervisors-three-gods = Дьёкту, Атраку и Рузуту
+warlock-job-supervisors-priest-king = Королю-Жрецу
+warlock-job-supervisors-kings-claw = Когтю Короля
+warlock-job-supervisors-elder-fang = Старшему Клыку
+
+warlock-job-name-unathi-priest-king = Король-Жрец
+warlock-job-description-unathi-priest-king =
+    Говорит со всеми тремя богами сразу, и это единственное, что удерживает Королевство
+    от раскола на три отдельных культа. Крестовый поход объявил он.
+
+warlock-job-name-unathi-kings-claw = Коготь Короля
+warlock-job-description-unathi-kings-claw =
+    Рука, которой Король бьёт. Ведёт поход в поле и отвечает за него лично —
+    Атрак не принимает оправданий.
+
+warlock-job-name-unathi-priest-of-three = Жрец Трёх
+warlock-job-description-unathi-priest-of-three =
+    Держит все три алтаря и решает, чью просьбу сегодня понесут богам.
+    Чаще всего отвечает Рузут, потому что чаще всего просят жизни.
+
+warlock-job-name-unathi-elder-fang = Старший Клык
+warlock-job-description-unathi-elder-fang =
+    Ведёт десяток и отвечает за него перед Когтем. Клыки, которые доживают до старшинства,
+    считаются отмеченными Атраком.
+
+warlock-job-name-unathi-fang = Клык
+warlock-job-description-unathi-fang =
+    Воин Королевства. Поход объявлен всем, но ходит в него он.
+
+warlock-job-name-unathi-newblood = Новобратец
+warlock-job-description-unathi-newblood =
+    Взят в Королевство недавно и ещё не заслужил панциря. Заслужить можно только в бою,
+    и Атрак это видит.
+
+warlock-job-name-unathi-slaver = Надсмотрщик рабов
+warlock-job-description-unathi-slaver =
+    Следит за людьми, взятыми в собственность, и ставит клейма. В Королевстве это не
+    считают низкой работой: рабов положено пересчитывать, а пересчитывать некому больше.

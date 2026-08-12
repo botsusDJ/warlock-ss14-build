@@ -72,6 +72,60 @@
     powerMultiplier: 1.6
     timeMultiplier: 0.6
 
+# ------------------------------------------------------------------------------------------------
+# Три бога Королевства Унатхи
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: BaseItem
+  id: WarlockFetishDjokt
+  name: фетиш Дьёкта
+  description: Костяная фигурка с двумя лицами. Какое из них главное, зависит от того, кто спрашивает.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+    state: icon
+    color: "#e6d08a"
+  - type: WarlockHolySymbol
+    god: Djokt
+    powerMultiplier: 1.6
+    timeMultiplier: 0.6
+
+- type: entity
+  parent: BaseItem
+  id: WarlockFetishAtrak
+  name: фетиш Атрака
+  description: Клык на жиле, вымоченный в крови. Атрак принимает только то, что взято в честном бою.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+    state: icon
+    color: "#d84a3a"
+  - type: WarlockHolySymbol
+    god: Atrak
+    powerMultiplier: 1.6
+    timeMultiplier: 0.6
+
+- type: entity
+  parent: BaseItem
+  id: WarlockFetishRuzut
+  name: фетиш Рузута
+  description: Связка семян и высохшей лозы. Рузут — бог жизни, и потому же бог обмана.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+    state: icon
+    color: "#7fd86a"
+  - type: WarlockHolySymbol
+    god: Ruzut
+    powerMultiplier: 1.6
+    timeMultiplier: 0.6
+
 - type: entity
   parent: ClothingNeckBase
   id: WarlockSymbolKass

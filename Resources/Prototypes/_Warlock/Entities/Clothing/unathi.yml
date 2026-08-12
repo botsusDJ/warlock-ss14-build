@@ -1,0 +1,114 @@
+# _Warlock
+# Снаряжение Королевства Унатхи. Отделились от Братства Стали и объявили крестовый поход,
+# держат людей в рабстве. Эстетика — чешуя, кость и трофейное железо.
+# Спрайты — плейсхолдеры из ванильных наборов.
+
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformUnathi
+  name: чешуйчатый доспех Королевства
+  description: >-
+    Кожаная основа, нашитые пластины и чужие нашивки поверх. Королевство не прячет,
+    с кого что снято.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    layers:
+    - state: icon
+      color: "#7a8f5c"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#7a8f5c"
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterUnathiScales
+  name: пластинчатый панцирь
+  description: >-
+    Панцирь из перекрытых пластин. Гнётся хуже брони Братства, но и снимают его
+    обычно вместе с носителем.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/bone_armor.rsi
+    layers:
+    - state: icon
+      color: "#8f9a6c"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/bone_armor.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#8f9a6c"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.75
+        Piercing: 0.85
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadUnathiHelm
+  name: костяной шлем
+  description: >-
+    Шлем из черепа кого-то крупного. Закрывает лицо целиком — и это, по мнению Королевства,
+    его главное достоинство.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+    layers:
+    - state: icon
+      color: "#a8a08c"
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/bone_helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#a8a08c"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterUnathiRoyal
+  name: мантия Короля-Жреца
+  description: >-
+    Шкура, шитая золотом, с оттисками всех трёх богов. Носит её один, и все знают, кто.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
+    layers:
+    - state: icon
+      color: "#d8c06a"
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#d8c06a"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: WarlockUniformUnathiSlaver
+  name: одеяние надсмотрщика
+  description: >-
+    Простая роба с петлями под цепи и клеймо. Надсмотрщик не воюет — он следит,
+    и Королевство не считает это низким занятием.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    layers:
+    - state: icon
+      color: "#6a5c48"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#6a5c48"

@@ -48,6 +48,21 @@
   - WarlockJobTechnosAdept
 
 - type: department
+  id: WarlockUnathi
+  name: department-WarlockUnathi
+  description: department-WarlockUnathi-description
+  color: "#7a8f5c"
+  weight: 15
+  roles:
+  - WarlockJobUnathiPriestKing
+  - WarlockJobUnathiKingsClaw
+  - WarlockJobUnathiPriestOfThree
+  - WarlockJobUnathiElderFang
+  - WarlockJobUnathiFang
+  - WarlockJobUnathiNewblood
+  - WarlockJobUnathiSlaver
+
+- type: department
   id: WarlockBrotherhood
   name: department-WarlockBrotherhood
   description: department-WarlockBrotherhood-description

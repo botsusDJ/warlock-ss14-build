@@ -51,4 +51,16 @@ public sealed partial class WarlockShrineComponent : Component
     /// </summary>
     [DataField]
     public float RepairAmount = 40f;
+
+    /// <summary>
+    /// Атрак: на сколько секунд молитва вводит в ярость.
+    /// </summary>
+    [DataField]
+    public float RageSeconds = 30f;
+
+    /// <summary>
+    /// Рузут: сколько урона заживляет молитва.
+    /// </summary>
+    [DataField]
+    public float HealAmount = 50f;
 }

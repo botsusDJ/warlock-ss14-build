@@ -35,16 +35,10 @@
   description: Длинная опись, пришитая к плащу. Каждая строка — находка, у которой был владелец.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
-    layers:
-    - state: icon
-      color: "#e0d2b4"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#e0d2b4"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_robe.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -92,16 +86,10 @@
   description: Плащ с медными вставками вдоль швов. Их назначение объясняют по-разному и всегда неубедительно.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
-    layers:
-    - state: icon
-      color: "#b8916a"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#b8916a"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_robe.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -151,16 +139,10 @@
     этот силуэт означал власть. Сейчас — только раскол.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
-    layers:
-    - state: icon
-      color: "#cfe4ff"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#cfe4ff"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_robe.rsi
 
 - type: entity
   parent: ClothingHeadBase

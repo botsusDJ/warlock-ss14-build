@@ -1,0 +1,205 @@
+# _Warlock
+# Королевство Унатхи — ящеролюды, отделившиеся от Братства Стали.
+# Исповедуют трёх богов (Дьёкт, Атрак, Рузут), держат людей в рабстве и ведут крестовый поход.
+#
+# Все роли только для унатхов. Электроники своей нет: вместо КПК — костяная бирка с допуском.
+
+# ------------------------------------------------------------------------------------------------
+# 1. Король-Жрец
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiPriestKing
+  name: warlock-job-name-unathi-priest-king
+  description: warlock-job-description-unathi-priest-king
+  playTimeTracker: WarlockJobUnathiPriestKing
+  startingGear: WarlockGearUnathiPriestKing
+  icon: WarlockJobIconUnathiPriestKing
+  supervisors: warlock-job-supervisors-three-gods
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+  - WarlockUnathiCommand
+
+- type: startingGear
+  id: WarlockGearUnathiPriestKing
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    outerClothing: WarlockOuterUnathiRoyal
+    head: WarlockHeadUnathiHelm
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockFetishDjokt
+    - WarlockFetishAtrak
+    - WarlockFetishRuzut
+
+# ------------------------------------------------------------------------------------------------
+# 2. Коготь Короля
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiKingsClaw
+  name: warlock-job-name-unathi-kings-claw
+  description: warlock-job-description-unathi-kings-claw
+  playTimeTracker: WarlockJobUnathiKingsClaw
+  startingGear: WarlockGearUnathiKingsClaw
+  icon: WarlockJobIconUnathiKingsClaw
+  supervisors: warlock-job-supervisors-priest-king
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+  - WarlockUnathiCommand
+
+- type: startingGear
+  id: WarlockGearUnathiKingsClaw
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    outerClothing: WarlockOuterUnathiScales
+    head: WarlockHeadUnathiHelm
+    shoes: ClothingShoesBootsCombat
+  storage:
+    back:
+    - WarlockFetishAtrak
+
+# ------------------------------------------------------------------------------------------------
+# 3. Жрец Трёх
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiPriestOfThree
+  name: warlock-job-name-unathi-priest-of-three
+  description: warlock-job-description-unathi-priest-of-three
+  playTimeTracker: WarlockJobUnathiPriestOfThree
+  startingGear: WarlockGearUnathiPriestOfThree
+  icon: WarlockJobIconUnathiPriestOfThree
+  supervisors: warlock-job-supervisors-priest-king
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+  - WarlockUnathiCommand
+
+- type: startingGear
+  id: WarlockGearUnathiPriestOfThree
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    head: WarlockHeadUnathiHelm
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockFetishRuzut
+
+# ------------------------------------------------------------------------------------------------
+# 4. Старший Клык
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiElderFang
+  name: warlock-job-name-unathi-elder-fang
+  description: warlock-job-description-unathi-elder-fang
+  playTimeTracker: WarlockJobUnathiElderFang
+  startingGear: WarlockGearUnathiElderFang
+  icon: WarlockJobIconUnathiElderFang
+  supervisors: warlock-job-supervisors-kings-claw
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+
+- type: startingGear
+  id: WarlockGearUnathiElderFang
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    outerClothing: WarlockOuterUnathiScales
+    head: WarlockHeadUnathiHelm
+    shoes: ClothingShoesBootsCombat
+
+# ------------------------------------------------------------------------------------------------
+# 5. Клык
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiFang
+  name: warlock-job-name-unathi-fang
+  description: warlock-job-description-unathi-fang
+  playTimeTracker: WarlockJobUnathiFang
+  startingGear: WarlockGearUnathiFang
+  icon: WarlockJobIconUnathiFang
+  supervisors: warlock-job-supervisors-elder-fang
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+
+- type: startingGear
+  id: WarlockGearUnathiFang
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    outerClothing: WarlockOuterUnathiScales
+    shoes: ClothingShoesBootsCombat
+
+# ------------------------------------------------------------------------------------------------
+# 6. Новобратец
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiNewblood
+  name: warlock-job-name-unathi-newblood
+  description: warlock-job-description-unathi-newblood
+  playTimeTracker: WarlockJobUnathiNewblood
+  startingGear: WarlockGearUnathiNewblood
+  icon: WarlockJobIconUnathiNewblood
+  supervisors: warlock-job-supervisors-elder-fang
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+
+- type: startingGear
+  id: WarlockGearUnathiNewblood
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathi
+    shoes: ClothingShoesColorBlack
+
+# ------------------------------------------------------------------------------------------------
+# 7. Надсмотрщик рабов
+# ------------------------------------------------------------------------------------------------
+- type: job
+  id: WarlockJobUnathiSlaver
+  name: warlock-job-name-unathi-slaver
+  description: warlock-job-description-unathi-slaver
+  playTimeTracker: WarlockJobUnathiSlaver
+  startingGear: WarlockGearUnathiSlaver
+  icon: WarlockJobIconUnathiSlaver
+  supervisors: warlock-job-supervisors-kings-claw
+  requirements:
+  - !type:SpeciesRequirement
+    species:
+    - Reptilian
+  access:
+  - WarlockUnathi
+
+- type: startingGear
+  id: WarlockGearUnathiSlaver
+  equipment:
+    id: WarlockTagUnathi
+    jumpsuit: WarlockUniformUnathiSlaver
+    shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockBrandingIronUnathi

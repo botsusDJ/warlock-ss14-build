@@ -46,6 +46,20 @@
 
 - type: entity
   parent: WarlockBaseObjectiveTerminal
+  id: WarlockObjectiveTerminalUnathi
+  name: терминал похода
+  description: >-
+    Консоль, снятая с Братства ещё во время раскола. Королевство её не чинило и не красило,
+    только выцарапало поверх экрана три знака.
+  suffix: Warlock, Унатхи
+  components:
+  - type: Sprite
+    color: "#7a8f5c"
+  - type: WarlockObjectiveTerminal
+    faction: UnathiKingdom
+
+- type: entity
+  parent: WarlockBaseObjectiveTerminal
   id: WarlockObjectiveTerminalBrotherhood
   name: терминал приказов Братства
   description: >-

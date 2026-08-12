@@ -33,6 +33,20 @@
   id: WarlockBrotherhoodCommand
   name: id-card-access-level-warlock-brotherhood-command
 
+- type: accessLevel
+  id: WarlockUnathi
+  name: id-card-access-level-warlock-unathi
+
+- type: accessLevel
+  id: WarlockUnathiCommand
+  name: id-card-access-level-warlock-unathi-command
+
+- type: accessGroup
+  id: WarlockUnathi
+  tags:
+  - WarlockUnathi
+  - WarlockUnathiCommand
+
 - type: accessGroup
   id: WarlockUnion
   tags:

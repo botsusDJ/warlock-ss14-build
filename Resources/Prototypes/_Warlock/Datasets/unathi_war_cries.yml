@@ -1,0 +1,8 @@
+# _Warlock
+# Что унатх орёт, когда идёт крестовый поход. Смесь имён трёх богов и походной ругани.
+
+- type: localizedDataset
+  id: WarlockUnathiWarCries
+  values:
+    prefix: warlock-unathi-war-cry-
+    count: 12

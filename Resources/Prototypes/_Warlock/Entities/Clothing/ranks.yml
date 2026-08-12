@@ -15,16 +15,10 @@
     до самой смерти, а потом её дописывает преемник.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
-    layers:
-    - state: icon
-      color: "#f2e2b8"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/labcoat_sci.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#f2e2b8"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord_robe.rsi
 
 - type: entity
   parent: WarlockOuterGuildTechnos
@@ -35,16 +29,10 @@
     Считается, что это и есть доказательство права носить её.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
-    layers:
-    - state: icon
-      color: "#d8b070"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/labcoat_robo.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#d8b070"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord_robe.rsi
 
 - type: entity
   parent: WarlockOuterGuildWarlock
@@ -55,16 +43,10 @@
     Братства в главный склад её силуэт означает уже не власть, а вопрос.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
-    layers:
-    - state: icon
-      color: "#eaf4ff"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord_robe.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#eaf4ff"
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord_robe.rsi
 
 # ------------------------------------------------------------------------------------------------
 # Командные вещи Братства Стали

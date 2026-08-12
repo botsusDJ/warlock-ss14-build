@@ -59,6 +59,28 @@
 - type: playTimeTracker
   id: WarlockJobWarlockAdept
 
+# Королевство Унатхи
+- type: playTimeTracker
+  id: WarlockJobUnathiPriestKing
+
+- type: playTimeTracker
+  id: WarlockJobUnathiKingsClaw
+
+- type: playTimeTracker
+  id: WarlockJobUnathiPriestOfThree
+
+- type: playTimeTracker
+  id: WarlockJobUnathiElderFang
+
+- type: playTimeTracker
+  id: WarlockJobUnathiFang
+
+- type: playTimeTracker
+  id: WarlockJobUnathiNewblood
+
+- type: playTimeTracker
+  id: WarlockJobUnathiSlaver
+
 # Братство Стали
 - type: playTimeTracker
   id: WarlockJobBrotherhoodLordCommander

@@ -1,7 +1,9 @@
 using Content.Server._Warlock.Religion.Components;
+using Content.Shared._Warlock.Injuries;
 using Content.Shared._Warlock.Psionics;
 using Content.Shared._Warlock.Psionics.Components;
 using Content.Shared._Warlock.Religion;
+using Content.Shared._Warlock.Unathi;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -37,6 +39,8 @@ public sealed partial class WarlockReligionSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private WarlockInjuriesSystem _injuries = default!;
     [Dependency] private WarlockPsionicsSystem _psionics = default!;
 
     public override void Initialize()
@@ -116,7 +120,70 @@ public sealed partial class WarlockReligionSystem : EntitySystem
             case WarlockGod.Mechantechion:
                 AnswerMechantechion(ent, user, power);
                 break;
+
+            case WarlockGod.Djokt:
+                AnswerDjokt(ent, user, power);
+                break;
+
+            case WarlockGod.Atrak:
+                AnswerAtrak(ent, user, power);
+                break;
+
+            case WarlockGod.Ruzut:
+                AnswerRuzut(ent, user, power);
+                break;
         }
+    }
+
+    /// <summary>
+    /// Дьёкт — бог изощрений и хитрости. Силы не даёт: снимает усталость,
+    /// чтобы молящийся мог уйти и вернуться на своих условиях.
+    /// </summary>
+    private void AnswerDjokt(Entity<WarlockShrineComponent> ent, EntityUid user, float power)
+    {
+        if (!TryComp<StaminaComponent>(user, out var stamina))
+        {
+            _popup.PopupEntity(Loc.GetString("warlock-shrine-djokt-silent"), ent, user, PopupType.MediumCaution);
+            return;
+        }
+
+        // Отрицательное значение снимает усталость, система сама зажимает результат в ноль.
+        _stamina.TakeStaminaDamage(user, -stamina.StaminaDamage * power, stamina, visual: false);
+
+        _popup.PopupEntity(Loc.GetString("warlock-shrine-djokt-answer"), ent, user, PopupType.Medium);
+    }
+
+    /// <summary>
+    /// Атрак — бог ярости и честного боя. Не лечит и не прячет: вводит в ярость здесь и сейчас,
+    /// вместе со всей её ценой.
+    /// </summary>
+    private void AnswerAtrak(Entity<WarlockShrineComponent> ent, EntityUid user, float power)
+    {
+        if (HasComp<WarlockBerserkComponent>(user))
+        {
+            _popup.PopupEntity(Loc.GetString("warlock-shrine-atrak-already"), ent, user, PopupType.MediumCaution);
+            return;
+        }
+
+        var berserk = EnsureComp<WarlockBerserkComponent>(user);
+        berserk.EndAt = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.RageSeconds * power);
+        Dirty(user, berserk);
+
+        _stamina.RefreshStaminaCritThreshold(user);
+
+        _popup.PopupEntity(Loc.GetString("warlock-shrine-atrak-answer"), ent, user, PopupType.LargeCaution);
+    }
+
+    /// <summary>
+    /// Рузут — бог плодородия и жизни. Единственный, кто чинит тело: заживляет раны
+    /// и всё то, что вообще способно зажить. Шрамы и клейма он не трогает — это уже не раны.
+    /// </summary>
+    private void AnswerRuzut(Entity<WarlockShrineComponent> ent, EntityUid user, float power)
+    {
+        _damageable.HealEvenly(user, -ent.Comp.HealAmount * power, origin: ent.Owner);
+        _injuries.HealAll(user);
+
+        _popup.PopupEntity(Loc.GetString("warlock-shrine-ruzut-answer"), ent, user, PopupType.Medium);
     }
 
     /// <summary>

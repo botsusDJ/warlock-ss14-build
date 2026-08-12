@@ -1,5 +1,6 @@
 using Content.Shared._Warlock.Combat.Components;
 using Content.Shared._Warlock.Combat.Events;
+using Content.Shared._Warlock.Unathi;
 using Content.Shared.Alert;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -104,15 +105,22 @@ public sealed partial class WarlockAttackStrengthSystem : EntitySystem
 
     private void OnGetMeleeDamage(Entity<MeleeWeaponComponent> ent, ref GetMeleeDamageEvent args)
     {
-        if (!TryComp<WarlockAttackStrengthComponent>(args.User, out var strength))
-            return;
+        var modifier = 1f;
 
-        var modifier = strength.Strength switch
+        if (TryComp<WarlockAttackStrengthComponent>(args.User, out var strength))
         {
-            WarlockAttackStrength.Weak => strength.WeakDamage,
-            WarlockAttackStrength.Strong => strength.StrongDamage,
-            _ => 1f,
-        };
+            modifier *= strength.Strength switch
+            {
+                WarlockAttackStrength.Weak => strength.WeakDamage,
+                WarlockAttackStrength.Strong => strength.StrongDamage,
+                _ => 1f,
+            };
+        }
+
+        // Берсеркство унатхов живёт здесь же, а не в своей системе: пара
+        // MeleeWeaponComponent + GetMeleeDamageEvent допускает одну подписку на весь билд.
+        if (TryComp<WarlockBerserkComponent>(args.User, out var berserk))
+            modifier *= berserk.DamageModifier;
 
         if (MathHelper.CloseTo(modifier, 1f))
             return;

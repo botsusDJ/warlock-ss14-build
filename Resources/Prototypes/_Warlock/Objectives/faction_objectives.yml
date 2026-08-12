@@ -108,11 +108,42 @@
   weight: 1.5
 
 # ================================================================================================
+# Ролевые цели Королевства Унатхи
+# ================================================================================================
+- type: warlockFactionObjective
+  id: WarlockObjectiveUnathiCrusade
+  factions: [ UnathiKingdom ]
+  title: warlock-objective-unathi-crusade-title
+  description: warlock-objective-unathi-crusade-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveUnathiSlaveRaid
+  factions: [ UnathiKingdom ]
+  title: warlock-objective-unathi-slave-raid-title
+  description: warlock-objective-unathi-slave-raid-desc
+  weight: 2
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveUnathiProveGod
+  factions: [ UnathiKingdom ]
+  title: warlock-objective-unathi-prove-god-title
+  description: warlock-objective-unathi-prove-god-desc
+  weight: 1.5
+
+- type: warlockFactionObjective
+  id: WarlockObjectiveUnathiRevenge
+  factions: [ UnathiKingdom ]
+  title: warlock-objective-unathi-revenge-title
+  description: warlock-objective-unathi-revenge-desc
+  weight: 1.5
+
+# ================================================================================================
 # Отслеживаемые: сдать трофеи в терминал
 # ================================================================================================
 - type: warlockFactionObjective
   id: WarlockObjectiveStealArtefacts
-  factions: [ GuildFactos, GuildTechnos, GuildWarlock, Brotherhood ]
+  factions: [ GuildFactos, GuildTechnos, GuildWarlock, Brotherhood, UnathiKingdom ]
   title: warlock-objective-steal-artefacts-title
   description: warlock-objective-steal-artefacts-desc
   weight: 1
@@ -154,7 +185,7 @@
 
 - type: warlockFactionObjective
   id: WarlockObjectiveKillArchmageBishop
-  factions: [ GuildFactos, GuildTechnos, Brotherhood ]
+  factions: [ GuildFactos, GuildTechnos, Brotherhood, UnathiKingdom ]
   title: warlock-objective-kill-bishop-title
   description: warlock-objective-kill-bishop-desc
   weight: 1
@@ -163,7 +194,7 @@
 
 - type: warlockFactionObjective
   id: WarlockObjectiveKillArtarchmage
-  factions: [ GuildTechnos, GuildWarlock, Brotherhood ]
+  factions: [ GuildTechnos, GuildWarlock, Brotherhood, UnathiKingdom ]
   title: warlock-objective-kill-artarchmage-title
   description: warlock-objective-kill-artarchmage-desc
   weight: 1
@@ -172,7 +203,7 @@
 
 - type: warlockFactionObjective
   id: WarlockObjectiveKillArchtechnomage
-  factions: [ GuildFactos, GuildWarlock, Brotherhood ]
+  factions: [ GuildFactos, GuildWarlock, Brotherhood, UnathiKingdom ]
   title: warlock-objective-kill-archtechnomage-title
   description: warlock-objective-kill-archtechnomage-desc
   weight: 1

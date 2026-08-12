@@ -1,0 +1,44 @@
+# _Warlock
+# Два действия унатхов. Выдаются самой расе: крестовый поход объявлен всем ящерам,
+# а не только тем, кто пошёл служить Королевству.
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionWarCry
+  name: Боевой Клич
+  description: >-
+    Проорать в голос что-то из походного. Слышно всем рядом, и у чужих сбивается дыхание.
+    Своих клич не задевает.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 20
+    checkConsciousness: true
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: repulse
+  - type: InstantAction
+    event: !type:WarlockWarCryEvent
+      radius: 5
+      staminaDamage: 15
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionBerserk
+  name: Священная Ярость
+  description: >-
+    Двадцать пять секунд бить в полтора раза сильнее, получать на четверть меньше
+    и почти не уставать. Когда отпустит, вся отложенная усталость придёт разом.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 180
+    checkConsciousness: true
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: InstantAction
+    event: !type:WarlockBerserkEvent
+      duration: 25

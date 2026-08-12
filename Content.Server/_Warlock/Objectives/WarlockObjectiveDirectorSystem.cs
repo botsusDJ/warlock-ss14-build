@@ -1,12 +1,13 @@
 using System.Linq;
 using Content.Server._Warlock.Objectives.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Events;
+using Content.Shared.Chat;
 using Content.Shared._Warlock.Objectives;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
-using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Tag;
@@ -32,9 +33,9 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ChatSystem _chat = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
     [Dependency] private TagSystem _tag = default!;
 
@@ -145,36 +146,32 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
         if (GetObjective(ent.Comp.Faction) is not { } state
             || !_proto.TryIndex<WarlockFactionObjectivePrototype>(state.Objective, out var proto))
         {
-            _popup.PopupEntity(Loc.GetString("warlock-objective-terminal-empty"), ent, args.User);
+            Announce(ent, Loc.GetString("warlock-objective-terminal-empty"));
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString(proto.Title), ent, args.User, PopupType.Medium);
-        _popup.PopupEntity(Loc.GetString(proto.Description), ent, args.User);
+        Announce(ent, Loc.GetString(proto.Title));
+        Announce(ent, Loc.GetString(proto.Description));
 
-        // Отдельной строкой показываем счётчик — только там, где есть что считать.
+        // Отдельной строкой зачитываем счётчик — только там, где есть что считать.
         switch (proto.Tracking)
         {
             case WarlockObjectiveTracking.Deliver:
-                _popup.PopupEntity(
+                Announce(ent,
                     Loc.GetString("warlock-objective-progress-deliver",
                         ("current", state.Progress),
-                        ("total", proto.DeliverCount)),
-                    ent,
-                    args.User);
+                        ("total", proto.DeliverCount)));
                 break;
 
             case WarlockObjectiveTracking.Assassinate:
-                _popup.PopupEntity(
+                Announce(ent,
                     Loc.GetString(state.Complete
                         ? "warlock-objective-progress-assassinate-done"
-                        : "warlock-objective-progress-assassinate-pending"),
-                    ent,
-                    args.User);
+                        : "warlock-objective-progress-assassinate-pending"));
                 break;
 
             case WarlockObjectiveTracking.None:
-                _popup.PopupEntity(Loc.GetString("warlock-objective-progress-roleplay"), ent, args.User);
+                Announce(ent, Loc.GetString("warlock-objective-progress-roleplay"));
                 break;
         }
     }
@@ -198,7 +195,7 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
 
         if (state.Complete)
         {
-            _popup.PopupEntity(Loc.GetString("warlock-objective-already-complete"), ent, args.User);
+            Announce(ent, Loc.GetString("warlock-objective-already-complete"));
             return;
         }
 
@@ -210,16 +207,24 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
         if (state.Progress >= proto.DeliverCount)
         {
             state.Complete = true;
-            _popup.PopupEntity(Loc.GetString("warlock-objective-completed"), ent, args.User, PopupType.Large);
+            Announce(ent, Loc.GetString("warlock-objective-completed"));
             return;
         }
 
-        _popup.PopupEntity(
+        Announce(ent,
             Loc.GetString("warlock-objective-progress-deliver",
                 ("current", state.Progress),
-                ("total", proto.DeliverCount)),
-            ent,
-            args.User);
+                ("total", proto.DeliverCount)));
+    }
+
+    /// <summary>
+    /// Терминал не рисует всплывашку, а зачитывает строку вслух в локальный чат.
+    /// Слышат все рядом — включая тех, кому эту цель знать не полагалось.
+    /// Это не недосмотр, это и есть колхоз: своей защищённой связи ни у кого нет.
+    /// </summary>
+    private void Announce(EntityUid terminal, string message)
+    {
+        _chat.TrySendInGameICMessage(terminal, message, InGameICChatType.Speak, hideChat: false);
     }
 
     #endregion
