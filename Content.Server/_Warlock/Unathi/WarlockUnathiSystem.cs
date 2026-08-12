@@ -131,7 +131,7 @@ public sealed partial class WarlockUnathiSystem : EntitySystem
         args.Modifier *= ent.Comp.StaminaModifier;
     }
 
-    private void OnBerserkDamaged(Entity<WarlockBerserkComponent> ent, DamageModifyEvent args)
+    private void OnBerserkDamaged(Entity<WarlockBerserkComponent> ent, ref DamageModifyEvent args)
     {
         // Ярость не отменяет урон, она его приглушает.
         args.Damage *= ent.Comp.ResistModifier;

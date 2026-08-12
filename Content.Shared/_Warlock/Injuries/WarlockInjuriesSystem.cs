@@ -124,7 +124,10 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
     private void OnInjuriesChanged(Entity<WarlockInjuriesComponent> ent)
     {
         Dirty(ent);
-        _movement.RefreshMovementSpeedModifiers(ent);
+
+        // Оба метода ждут Entity со своим компонентом, а не с нашим: между разными Entity<T>
+        // неявного приведения нет, только от голого EntityUid.
+        _movement.RefreshMovementSpeedModifiers(ent.Owner);
         _stamina.RefreshStaminaCritThreshold(ent.Owner);
     }
 
