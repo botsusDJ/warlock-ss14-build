@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server._Warlock.Artefacts.Components;
+using Content.Shared._Warlock.Artefacts.Components;
 using Content.Shared._Warlock.Injuries;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -9,8 +10,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
@@ -37,6 +38,7 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -218,15 +220,12 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
 
         var uniform = Spawn(ent.Comp.SlaveUniform, Transform(victim).Coordinates);
 
-        if (_inventory.TryUnequip(victim, "jumpsuit", silent: true, force: true)
-            && _inventory.TryEquip(victim, uniform, "jumpsuit", silent: true, force: true))
-        {
-            // Переодели.
-        }
-        else
-        {
+        // Снимаем прежнюю робу, если она была: у голого TryUnequip вернёт false,
+        // и это не повод оставлять раба без формы — одеваем в любом случае.
+        _inventory.TryUnequip(victim, "jumpsuit", silent: true, force: true);
+
+        if (!_inventory.TryEquip(victim, uniform, "jumpsuit", silent: true, force: true))
             QueueDel(uniform);
-        }
 
         _injuries.AddBrand(victim, ent.Comp.Brand, WarlockBodyPart.Torso);
 
@@ -251,7 +250,8 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
 
         foreach (var hit in args.HitEntities)
         {
-            if (!TryComp<MobStateComponent>(hit, out var state) || state.CurrentState != MobState.Dead)
+            // Поля MobStateComponent закрыты песочницей, состояние спрашиваем у системы.
+            if (!_mobState.IsDead(hit))
                 continue;
 
             Feed(ent, args.User);
@@ -266,6 +266,10 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
     {
         ent.Comp.Kills++;
         ent.Comp.LastKill = _timing.CurTime;
+
+        // Счётчик убийств читает общая WarlockAttackStrengthSystem, в том числе на клиенте, —
+        // без Dirty предсказание урона разъедется с сервером.
+        Dirty(ent);
 
         _damageable.HealEvenly(user, -ent.Comp.HealOnKill, origin: ent.Owner);
 

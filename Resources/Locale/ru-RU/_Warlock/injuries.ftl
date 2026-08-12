@@ -1,28 +1,42 @@
 # _Warlock — летопись тела
 
 ## ================================================================================================
+## Части тела
+## ================================================================================================
+warlock-body-part-head = голова
+warlock-body-part-torso = торс
+warlock-body-part-left-arm = левая рука
+warlock-body-part-right-arm = правая рука
+warlock-body-part-left-leg = левая нога
+warlock-body-part-right-leg = правая нога
+
+## ================================================================================================
 ## Осмотр
 ## ================================================================================================
 warlock-injuries-hidden-by-helmet = Лица не видно под шлемом — что там на нём, не разобрать.
 warlock-injuries-none = Кожа чистая. Ни следа.
 
-warlock-injuries-abrasion-light = На коже свежая ссадина.
-warlock-injuries-abrasion-medium = Кожа исчерчена ссадинами.
-warlock-injuries-abrasion-heavy = Живого места нет — сплошные ссадины.
+warlock-injuries-abrasion-light = Свежая ссадина: { $part }.
+warlock-injuries-abrasion-medium = Ссадины, и не одна: { $part }.
+warlock-injuries-abrasion-heavy = Живого места нет, сплошные ссадины: { $part }.
 
-warlock-injuries-bruise-light = Наливается синяк.
-warlock-injuries-bruise-medium = Тело в синяках разной свежести.
-warlock-injuries-bruise-heavy = Сплошной кровоподтёк, старое поверх нового.
+warlock-injuries-bruise-light = Наливается синяк: { $part }.
+warlock-injuries-bruise-medium = Синяки разной свежести: { $part }.
+warlock-injuries-bruise-heavy = Сплошной кровоподтёк, старое поверх нового: { $part }.
 
-warlock-injuries-fracture-light = Что-то сломано — движения даются с трудом.
-warlock-injuries-fracture-medium = Несколько переломов. Стоит с трудом.
-warlock-injuries-fracture-heavy = Переломан весь. Держится непонятно на чём.
+warlock-injuries-fracture-light = Перелом: { $part }. Двигается с трудом.
+warlock-injuries-fracture-medium = Переломано в нескольких местах: { $part }.
+warlock-injuries-fracture-heavy = Раздроблено: { $part }. Держится непонятно на чём.
 
-warlock-injuries-scar-light = Старый шрам, давно затянувшийся.
-warlock-injuries-scar-medium = Несколько шрамов — кости срастались не раз.
-warlock-injuries-scar-heavy = Шрам на шраме. Эту летопись читать долго.
+warlock-injuries-scar-light = Старый шрам: { $part }.
+warlock-injuries-scar-medium = Несколько шрамов: { $part }.
+warlock-injuries-scar-heavy = Шрам на шраме: { $part }. Эту летопись читать долго.
 
-warlock-injuries-brand = Выжжено клеймо: { $brand }.
+warlock-injuries-tooth = Не хватает зубов: { $count }.
+warlock-injuries-eye = Один глаз выбит. Смотрит вторым, и щурится.
+
+warlock-injuries-brand = Клеймо, { $part }: «{ $brand }».
+warlock-brand-unreadable = не разобрать
 
 ## ================================================================================================
 ## Клеймение
@@ -32,5 +46,14 @@ warlock-branding-start-victim = К вам прижали раскалённое 
 warlock-branding-done = Клеймо ложится. Это уже не смыть.
 warlock-branding-done-victim = Кожа шипит. Это останется навсегда.
 
+warlock-branding-examine = Выжжет «{ $brand }», место: { $part }.
+warlock-branding-verb-text = Набрать надпись
+warlock-branding-dialog-title = Наборное клеймо
+warlock-branding-dialog-prompt = Что выжечь?
+warlock-branding-text-set = Литеры переставлены: «{ $brand }».
+warlock-branding-part-set = Клеймить будете сюда: { $part }.
+
+warlock-brand-blank = пусто
 warlock-brand-unathi = королевская пасть
 warlock-brand-brotherhood = восемь зубьев Механтехиона
+warlock-brand-collar = собственность Королевства

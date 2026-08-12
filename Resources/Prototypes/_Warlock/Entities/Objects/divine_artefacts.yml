@@ -1,0 +1,148 @@
+# _Warlock
+# Артефакты живых культов: Механтехиона и трёх богов Королевства Унатхи.
+#
+# В отличие от реликвий вымершей расы, эти сделаны теми, кто ещё жив, и оттого злее.
+# Почти каждый берёт плату с владельца, и почти от каждого нельзя отказаться, когда уже взял.
+# Спрайты — плейсхолдеры.
+
+# ================================================================================================
+# Механтехион
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactMechantechionNail
+  name: Гвоздь Механтехиона
+  description: >-
+    Кованый костыль с рубцами по всей длине. Механтехион не терпит чужих богов в железе:
+    гвоздь расклёпывает любой артефакт в труху. Даром он этого не делает.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+    color: "#8a7a4a"
+  - type: MeleeWeapon
+    attackRate: 0.8
+    damage:
+      types:
+        Piercing: 10
+  - type: WarlockArtefactEater
+    tag: WarlockArtefact
+    delay: 5
+    uses: 3
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactRelentlessCog
+  name: Неотступный Шестерён
+  description: >-
+    Зубчатое колесо, которое не лежит спокойно. Тронувшего его оно запоминает навсегда
+    и с тех пор идёт за ним — не быстро, но и не отставая.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: nano_mani
+    color: "#c9a06a"
+  - type: PointLight
+    enabled: true
+    radius: 1.2
+    energy: 0.5
+    color: "#c9a06a"
+  - type: WarlockRelentless
+    slack: 1.5
+    speed: 7
+    tickInterval: 1.2
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactRepairWorm
+  name: Ремонтный Червь
+  description: >-
+    Сегментированная железная личинка. Пока при вас, она латает ваши раны — но Механтехиону
+    нужен ремонт, а не здоровье. Если чинить станет нечего, червь найдёт себе работу сам.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_laser
+    color: "#9aa8b8"
+  - type: WarlockRepairWorm
+    tickInterval: 45
+    idleTicksBeforeHarm: 2
+
+# ================================================================================================
+# Королевство Унатхи
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactSubjugationCollar
+  name: Ошейник Покорности
+  description: >-
+    Гладкое кольцо без замка и без шва. Надетое, оно снимает с носителя всё, что тот считал
+    своим, и оставляет клеймо. Королевство называет это законной процедурой.
+  # ClothingNeckBase сюда не годится: он тянет за собой Edible и ToolRefinable,
+  # и ошейник, который нельзя снять, можно было бы съесть или распустить на тряпки.
+  # Всё нужное объявлено вручную.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+    state: icon
+    color: "#8f6a3a"
+  - type: Clothing
+    slots: [ neck ]
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#8f6a3a"
+  - type: WarlockSubjugationCollar
+    slaveUniform: WarlockUniformBrotherhoodSlave
+    brand: warlock-brand-collar
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactAtrakFang
+  name: Клык Атрака
+  description: >-
+    Зуб размером с предплечье, насаженный на жилу. Атрак принимает только кровь:
+    каждое убийство этим клыком затягивает ваши раны, а долгое затишье он берёт с вас сам.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    state: icon
+    color: "#d84a3a"
+  - type: MeleeWeapon
+    attackRate: 1.1
+    damage:
+      types:
+        Slash: 14
+  - type: WarlockAtrakFang
+    damagePerKill: 0.12
+    maxBonus: 1.5
+    healOnKill: 25
+    hungerDelay: 120
+    hungerDamage: 4
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactRuzutSeed
+  name: Семя Рузута
+  description: >-
+    Тяжёлое семя в сухой оболочке. Рузут — бог жизни, и он честно заживляет всё,
+    что способно зажить. Он же бог обмана, и потому всегда отращивает что-нибудь лишнее.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple.rsi
+    state: seed
+    color: "#7fd86a"
+  - type: WarlockRuzutSeed
+    heal: 60

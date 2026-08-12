@@ -1,3 +1,4 @@
+using Content.Shared._Warlock.Artefacts.Components;
 using Content.Shared._Warlock.Combat.Components;
 using Content.Shared._Warlock.Combat.Events;
 using Content.Shared._Warlock.Unathi;
@@ -121,6 +122,11 @@ public sealed partial class WarlockAttackStrengthSystem : EntitySystem
         // MeleeWeaponComponent + GetMeleeDamageEvent допускает одну подписку на весь билд.
         if (TryComp<WarlockBerserkComponent>(args.User, out var berserk))
             modifier *= berserk.DamageModifier;
+
+        // По той же причине здесь считается и голод Клыка Атрака. Прибавка висит на
+        // самом оружии, а не на бойце: клык помнит свои убийства и при смене хозяина.
+        if (TryComp<WarlockAtrakFangComponent>(ent.Owner, out var fang))
+            modifier *= 1f + MathF.Min(fang.Kills * fang.DamagePerKill, fang.MaxBonus);
 
         if (MathHelper.CloseTo(modifier, 1f))
             return;
