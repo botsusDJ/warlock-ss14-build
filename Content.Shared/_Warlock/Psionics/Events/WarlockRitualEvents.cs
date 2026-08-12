@@ -40,26 +40,45 @@ public sealed partial class WarlockCursedGraspEvent : InstantActionEvent
 }
 
 /// <summary>
-/// _Warlock — «Печать Отбрасывания».
-/// Невидимая печать, которая ждёт шага и швыряет наступившего прочь.
+/// _Warlock — «Телекинетическая Хватка».
+/// Одно заклинание на два движения: первое применение поднимает цель и держит её при себе,
+/// второе швыряет туда, куда указали.
+///
+/// Держать дорого и недолго. Это приём в упор, а не способ утащить пленника через отсек:
+/// захват срывается по времени, по расстоянию и по пустому резерву.
 /// </summary>
-public sealed partial class WarlockWardOfHurlingEvent : WorldTargetActionEvent
+public sealed partial class WarlockTelekineticGraspEvent : WorldTargetActionEvent
 {
+    /// <summary>
+    /// Сколько секунд захват держится сам по себе.
+    /// </summary>
     [DataField]
-    public EntProtoId Rune = "WarlockRuneHurling";
+    public float HoldSeconds = 8f;
 
+    /// <summary>
+    /// Сколько энергии уходит каждую секунду удержания.
+    /// </summary>
     [DataField]
-    public SoundSpecifier? Sound;
-}
+    public float UpkeepPerSecond = 4f;
 
-/// <summary>
-/// _Warlock — «Печать Гнили».
-/// Та же невидимая печать, но вместо броска она вскрывается взрывом и травит всё вокруг.
-/// </summary>
-public sealed partial class WarlockWardOfBlightEvent : WorldTargetActionEvent
-{
+    /// <summary>
+    /// С какой силой жертву подтягивает к техномагу.
+    /// </summary>
     [DataField]
-    public EntProtoId Rune = "WarlockRuneBlight";
+    public float PullSpeed = 6f;
+
+    /// <summary>
+    /// С какой силой её потом швыряют.
+    /// </summary>
+    [DataField]
+    public float ThrowStrength = 14f;
+
+    /// <summary>
+    /// Сколько тупого урона добавляет само сдавливание при броске.
+    /// Урон от встречи со стеной ваниль считает сама.
+    /// </summary>
+    [DataField]
+    public float CrushDamage = 8f;
 
     [DataField]
     public SoundSpecifier? Sound;

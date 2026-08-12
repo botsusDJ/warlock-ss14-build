@@ -124,4 +124,20 @@ public sealed partial class WarlockInjuriesComponent : Component
     public int EyeDamagePerEye = 3;
 
     #endregion
+
+    #region Речь
+
+    /// <summary>
+    /// Со скольких выбитых зубов начинается шепелявость.
+    /// </summary>
+    [DataField]
+    public int LispThreshold = 3;
+
+    /// <summary>
+    /// Со скольких выбитых зубов речь становится по-настоящему кашей.
+    /// </summary>
+    [DataField]
+    public int HeavyLispThreshold = 6;
+
+    #endregion
 }

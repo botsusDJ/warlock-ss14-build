@@ -248,15 +248,44 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
         if (!args.IsHit || args.HitEntities.Count == 0)
             return;
 
+        // MeleeHitEvent приходит ДО того, как урон применён, поэтому здесь ещё видно
+        // состояние цели до удара. Запоминаем, кто был жив, и проверяем их в конце тика:
+        // засчитываем только переход живой → мёртвый, иначе клык кормился бы с трупов.
         foreach (var hit in args.HitEntities)
         {
-            // Поля MobStateComponent закрыты песочницей, состояние спрашиваем у системы.
-            if (!_mobState.IsDead(hit))
+            if (hit == args.User || _mobState.IsDead(hit))
                 continue;
 
-            Feed(ent, args.User);
-            break;
+            _fangWatch.Add((ent, args.User, hit));
         }
+    }
+
+    /// <summary>
+    /// Цели, которые были живы в момент замаха. Проверяются в конце того же тика.
+    /// </summary>
+    private readonly List<(Entity<WarlockAtrakFangComponent> Fang, EntityUid User, EntityUid Victim)> _fangWatch = new();
+
+    /// <summary>
+    /// Досчитываем убийства после того, как урон применился.
+    /// </summary>
+    private void ResolveFangKills()
+    {
+        if (_fangWatch.Count == 0)
+            return;
+
+        foreach (var (fang, user, victim) in _fangWatch)
+        {
+            if (TerminatingOrDeleted(fang.Owner) || TerminatingOrDeleted(victim))
+                continue;
+
+            // Поля MobStateComponent закрыты песочницей, состояние спрашиваем у системы.
+            if (!_mobState.IsDead(victim))
+                continue;
+
+            Feed(fang, user);
+        }
+
+        _fangWatch.Clear();
     }
 
     /// <summary>
@@ -334,6 +363,9 @@ public sealed partial class WarlockDivineArtefactSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        // Удары этого тика уже применены — можно считать, кого добили.
+        ResolveFangKills();
 
         var now = _timing.CurTime;
 

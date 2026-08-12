@@ -74,3 +74,95 @@
     brand: warlock-brand-brotherhood
     delay: 6
     burn: 12
+
+# ================================================================================================
+# Магические клейма
+#
+# Реликвии вымершей расы, а не кузнечная работа: железо холодное, а след остаётся в человеке,
+# а не на нём. Каждое отнимает ровно одну возможность и не трогает остальные — так три клейма
+# остаются тремя разными наказаниями, а не одним «персонаж больше не играет».
+#
+# Ставятся тем же прижиманием к телу и по тем же шести местам. Заряды считаны:
+# три клейма на всю смену, и потом прут рассыпается.
+# ================================================================================================
+- type: entity
+  parent: [ WarlockBaseArtefact, WarlockBaseBrandingIron ]
+  abstract: true
+  id: WarlockBaseMagicBrandingIron
+  name: магическое клеймо
+  components:
+  - type: Item
+    size: Normal
+  - type: MeleeWeapon
+    attackRate: 0.7
+    damage:
+      types:
+        Heat: 8
+  # Холодное. Жара нет вообще: жжёт не железо.
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 0.6
+
+- type: entity
+  parent: WarlockBaseMagicBrandingIron
+  id: WarlockBrandingIronShackles
+  name: клеймо Оков
+  description: >-
+    Прут с оттиском разомкнутого кольца. Оттиск ложится на кожу и смыкается уже под ней.
+    Заклеймённый ходит и говорит, но руки его больше ему не принадлежат.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#7a8fd8"
+  - type: PointLight
+    color: "#7a8fd8"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-shackles
+    delay: 8
+    burn: 0
+    effect: Shackles
+    uses: 3
+
+- type: entity
+  parent: WarlockBaseMagicBrandingIron
+  id: WarlockBrandingIronRoots
+  name: клеймо Корней
+  description: >-
+    Прут с оттиском сплетённых жил. Из клейма вниз уходит то, чего не видно,
+    и заклеймённый остаётся стоять там, где стоял. Драться ему никто не мешает.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#6ad87f"
+  - type: PointLight
+    color: "#6ad87f"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-roots
+    delay: 8
+    burn: 0
+    effect: Roots
+    uses: 3
+
+- type: entity
+  parent: WarlockBaseMagicBrandingIron
+  id: WarlockBrandingIronAshes
+  name: клеймо Пепла
+  description: >-
+    Прут с оттиском пустого круга. После него человек цел и здоров, но любое усилие
+    валит его с ног, будто он не спал трое суток и уже отработал смену.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    state: icon
+    color: "#8a8378"
+  - type: PointLight
+    color: "#8a8378"
+  - type: WarlockBrandingIron
+    brand: warlock-brand-ashes
+    delay: 8
+    burn: 0
+    effect: Ashes
+    uses: 3

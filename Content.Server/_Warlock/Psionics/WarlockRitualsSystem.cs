@@ -17,13 +17,13 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -80,8 +80,7 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
 
         SubscribeLocalEvent<WarlockMirrorEchoEvent>(OnMirrorEcho);
         SubscribeLocalEvent<WarlockCursedGraspEvent>(OnCursedGrasp);
-        SubscribeLocalEvent<WarlockWardOfHurlingEvent>(OnWardOfHurling);
-        SubscribeLocalEvent<WarlockWardOfBlightEvent>(OnWardOfBlight);
+        SubscribeLocalEvent<WarlockTelekineticGraspEvent>(OnTelekineticGrasp);
         SubscribeLocalEvent<WarlockRiteOfBulwarkEvent>(OnRiteOfBulwark);
         SubscribeLocalEvent<WarlockRelicScentEvent>(OnRelicScent);
         SubscribeLocalEvent<WarlockWitheringTouchEvent>(OnWitheringTouch);
@@ -90,7 +89,6 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
         SubscribeLocalEvent<WarlockGiftHarvestEvent>(OnGiftHarvest);
 
         SubscribeLocalEvent<WarlockCursedGraspComponent, DidEquipHandEvent>(OnCursedGraspPickup);
-        SubscribeLocalEvent<WarlockRuneComponent, StepTriggeredOffEvent>(OnRuneStepped);
         SubscribeLocalEvent<WarlockHollowedComponent, RefreshStaminaCritThresholdEvent>(OnHollowedStamina);
         SubscribeLocalEvent<WarlockFalseBrotherComponent, ComponentShutdown>(OnDisguiseShutdown);
     }
@@ -195,91 +193,168 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
 
     #endregion
 
-    #region 3-4. Печати
+    #region 3. Телекинетическая Хватка
 
-    private void OnWardOfHurling(WarlockWardOfHurlingEvent args)
+    /// <summary>
+    /// Хватка и бросок одним заклинанием. Первое применение поднимает цель в воздух
+    /// и держит её при техномаге, второе — швыряет туда, куда указали.
+    ///
+    /// Держать долго нельзя: захват сам срывается, а всё это время техномаг тратит
+    /// резерв каждую секунду. Это не способ утащить пленника через полкарты,
+    /// а короткий грязный приём в упор.
+    /// </summary>
+    private void OnTelekineticGrasp(WarlockTelekineticGraspEvent args)
     {
         if (args.Handled)
             return;
 
-        args.Handled = true;
-        PlaceRune(args.Rune, args.Target, args.Performer, args.Sound);
-    }
+        var performer = args.Performer;
+        var target = args.Target;
 
-    private void OnWardOfBlight(WarlockWardOfBlightEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        args.Handled = true;
-        PlaceRune(args.Rune, args.Target, args.Performer, args.Sound);
-    }
-
-    private void PlaceRune(EntProtoId proto, EntityCoordinates coords, EntityUid performer, SoundSpecifier? sound)
-    {
-        var rune = Spawn(proto, coords);
-
-        if (TryComp<WarlockRuneComponent>(rune, out var runeComp))
-            runeComp.Caster = performer;
-
-        _audio.PlayPvs(sound, performer);
-        _popup.PopupEntity(Loc.GetString("warlock-spell-ward-placed"), performer, performer);
-    }
-
-    private void OnRuneStepped(Entity<WarlockRuneComponent> ent, ref StepTriggeredOffEvent args)
-    {
-        var tripper = args.Tripper;
-
-        // Своя печать хозяина не трогает — иначе ловушку невозможно поставить и уйти.
-        if (ent.Comp.Caster == tripper)
-            return;
-
-        switch (ent.Comp.Effect)
+        // Уже что-то держим — значит это бросок, а не захват.
+        if (TryComp<WarlockTelekineticGripComponent>(performer, out var grip) && grip.Held is { } held)
         {
-            case WarlockRuneEffect.Hurling:
-            {
-                var origin = _transform.GetWorldPosition(ent);
-                var direction = _transform.GetWorldPosition(tripper) - origin;
-
-                if (direction.LengthSquared() < 0.01f)
-                    direction = new Vector2(1f, 0f);
-
-                _throwing.TryThrow(
-                    tripper,
-                    direction.Normalized() * ent.Comp.ThrowDistance,
-                    ent.Comp.ThrowStrength,
-                    ent.Owner);
-
-                _popup.PopupEntity(Loc.GetString("warlock-rune-hurled"), tripper, tripper, PopupType.LargeCaution);
-                break;
-            }
-
-            case WarlockRuneEffect.Blight:
-            {
-                var coords = _transform.GetMapCoordinates(ent);
-
-                _explosion.QueueExplosion(
-                    coords,
-                    ent.Comp.ExplosionType,
-                    ent.Comp.ExplosionIntensity,
-                    2f,
-                    ent.Comp.ExplosionIntensity,
-                    ent.Comp.Caster,
-                    maxTileBreak: 0);
-
-                var poison = new DamageSpecifier { DamageDict = { ["Poison"] = ent.Comp.PoisonDamage } };
-
-                foreach (var mob in _lookup.GetEntitiesInRange<MobStateComponent>(Transform(ent).Coordinates, ent.Comp.PoisonRadius))
-                {
-                    _damageable.TryChangeDamage(mob.Owner, poison, origin: ent.Comp.Caster);
-                }
-
-                _popup.PopupEntity(Loc.GetString("warlock-rune-blighted"), tripper, tripper, PopupType.LargeCaution);
-                break;
-            }
+            args.Handled = true;
+            Hurl((performer, grip), held, target, args);
+            return;
         }
 
-        QueueDel(ent);
+        // Ни якорь, ни стену не поднять.
+        if (Transform(target).Anchored || !HasComp<PhysicsComponent>(target))
+        {
+            _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-invalid"), performer, performer, PopupType.MediumCaution);
+            return;
+        }
+
+        if (target == performer)
+            return;
+
+        args.Handled = true;
+
+        var comp = EnsureComp<WarlockTelekineticGripComponent>(performer);
+        comp.Held = target;
+        comp.Expires = _timing.CurTime + TimeSpan.FromSeconds(args.HoldSeconds);
+        comp.NextTick = _timing.CurTime;
+        comp.UpkeepPerSecond = args.UpkeepPerSecond;
+        comp.Speed = args.PullSpeed;
+
+        _audio.PlayPvs(args.Sound, performer);
+
+        _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-caught"), target, performer);
+        _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-caught-victim"), target, target, PopupType.LargeCaution);
+    }
+
+    /// <summary>
+    /// Швыряет удерживаемое в указанную точку и отпускает захват.
+    /// </summary>
+    private void Hurl(
+        Entity<WarlockTelekineticGripComponent> ent,
+        EntityUid held,
+        EntityCoordinates target,
+        WarlockTelekineticGraspEvent args)
+    {
+        Release(ent);
+
+        if (TerminatingOrDeleted(held))
+            return;
+
+        var from = _transform.GetMapCoordinates(held);
+        var to = _transform.ToMapCoordinates(target);
+
+        if (from.MapId != to.MapId)
+            return;
+
+        var direction = to.Position - from.Position;
+
+        if (direction.LengthSquared() < 0.01f)
+            direction = new Vector2(1f, 0f);
+
+        _throwing.TryThrow(held, direction, args.ThrowStrength, ent.Owner);
+
+        // Бросок сам по себе бьёт слабо: физический урон от удара об стену считает ваниль,
+        // а заклинание добавляет только то, что делает захват — сдавливание.
+        if (args.CrushDamage > 0f)
+        {
+            _damageable.TryChangeDamage(
+                held,
+                new DamageSpecifier { DamageDict = { ["Blunt"] = args.CrushDamage } },
+                origin: ent.Owner);
+        }
+
+        _audio.PlayPvs(args.Sound, ent.Owner);
+        _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-hurled"), held, ent.Owner);
+    }
+
+    /// <summary>
+    /// Отпускает захват и снимает компонент: висеть пустым ему незачем.
+    /// </summary>
+    private void Release(Entity<WarlockTelekineticGripComponent> ent)
+    {
+        ent.Comp.Held = null;
+        RemCompDeferred<WarlockTelekineticGripComponent>(ent);
+    }
+
+    /// <summary>
+    /// Пока захват держится, жертва подтягивается к техномагу и висит рядом,
+    /// а резерв утекает. Срывается по времени, по нехватке энергии или по расстоянию.
+    /// </summary>
+    private void UpdateGrips()
+    {
+        var now = _timing.CurTime;
+        var query = EntityQueryEnumerator<WarlockTelekineticGripComponent>();
+
+        while (query.MoveNext(out var uid, out var grip))
+        {
+            if (grip.Held is not { } held || TerminatingOrDeleted(held))
+            {
+                Release((uid, grip));
+                continue;
+            }
+
+            if (now >= grip.Expires)
+            {
+                _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-slipped"), uid, uid);
+                Release((uid, grip));
+                continue;
+            }
+
+            if (now < grip.NextTick)
+                continue;
+
+            grip.NextTick = now + TimeSpan.FromSeconds(1);
+
+            if (!_psionics.TryUseEnergy(uid, grip.UpkeepPerSecond))
+            {
+                _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-slipped"), uid, uid);
+                Release((uid, grip));
+                continue;
+            }
+
+            var here = _transform.GetMapCoordinates(held);
+            var there = _transform.GetMapCoordinates(uid);
+
+            if (here.MapId != there.MapId)
+            {
+                Release((uid, grip));
+                continue;
+            }
+
+            var delta = there.Position - here.Position;
+
+            // Слишком далеко — захват рвётся сам. Дотащить пленника через отсек нельзя.
+            if (delta.Length() > grip.MaxDistance)
+            {
+                _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-slipped"), uid, uid);
+                Release((uid, grip));
+                continue;
+            }
+
+            // Совсем близко не дёргаем, иначе жертва будет биться о техномага.
+            if (delta.Length() <= 1.2f)
+                continue;
+
+            _throwing.TryThrow(held, delta, grip.Speed, uid, playSound: false);
+        }
     }
 
     #endregion
@@ -654,6 +729,8 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        UpdateGrips();
 
         var now = _timing.CurTime;
 

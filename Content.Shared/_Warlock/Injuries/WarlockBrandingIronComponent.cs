@@ -56,4 +56,17 @@ public sealed partial class WarlockBrandingIronComponent : Component
     /// </summary>
     [DataField]
     public float Burn = 12f;
+
+    /// <summary>
+    /// Что клеймо делает сверх надписи. У обычных — ничего.
+    /// </summary>
+    [DataField]
+    public WarlockBrandEffect Effect = WarlockBrandEffect.None;
+
+    /// <summary>
+    /// Сколько раз магическим клеймом ещё можно воспользоваться.
+    /// Отрицательное значение — без ограничений: так живут обычные клейма.
+    /// </summary>
+    [DataField]
+    public int Uses = -1;
 }

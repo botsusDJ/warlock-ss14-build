@@ -32,6 +32,7 @@ public sealed partial class WarlockBrandingSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private WarlockInjuriesSystem _injuries = default!;
+    [Dependency] private WarlockMagicBrandSystem _magic = default!;
 
     private static readonly SoundPathSpecifier BrandSound = new("/Audio/Items/welder_drop.ogg");
 
@@ -201,6 +202,44 @@ public sealed partial class WarlockBrandingSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("warlock-branding-done"), target, args.User);
         _popup.PopupEntity(Loc.GetString("warlock-branding-done-victim"), target, target, PopupType.LargeCaution);
+
+        if (ent.Comp.Effect == WarlockBrandEffect.None)
+            return;
+
+        // Магическое клеймо кладёт приговор поверх надписи. Снять его нельзя ничем:
+        // ни хирургией, ни Семенем Рузута, ни смертью с последующим клонированием.
+        _magic.Apply(target, ent.Comp.Effect);
+
+        _popup.PopupEntity(
+            Loc.GetString(GetEffectMessage(ent.Comp.Effect)),
+            target,
+            target,
+            PopupType.LargeCaution);
+
+        // Заряды считаем только у магических: обычным клеймом можно клеймить хоть весь отсек.
+        if (ent.Comp.Uses < 0)
+            return;
+
+        ent.Comp.Uses--;
+
+        if (ent.Comp.Uses > 0)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("warlock-brand-magic-spent"), target, args.User, PopupType.Medium);
+        QueueDel(ent);
+    }
+
+    /// <summary>
+    /// Что жертва чувствует, когда клеймо оказывается не просто железом.
+    /// </summary>
+    private static string GetEffectMessage(WarlockBrandEffect effect)
+    {
+        return effect switch
+        {
+            WarlockBrandEffect.Shackles => "warlock-brand-shackles-applied",
+            WarlockBrandEffect.Roots => "warlock-brand-roots-applied",
+            _ => "warlock-brand-ashes-applied",
+        };
     }
 
     #endregion

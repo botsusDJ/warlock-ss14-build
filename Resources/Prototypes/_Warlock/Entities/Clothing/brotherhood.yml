@@ -62,16 +62,22 @@
   name: шлем Братства Стали
   description: Тяжёлый шлем с восемью зубьями на лобовой пластине — знаком Механтехиона.
   components:
+  # Свой спрайт. Красить больше не надо — цвет уже в самой графике.
   - type: Sprite
-    sprite: Clothing/Head/Helmets/merc_helmet.rsi
-    layers:
-    - state: icon
-      color: "#6f7360"
+    sprite: _Warlock/Clothing/Head/Helmets/brotherhood.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Head/Helmets/merc_helmet.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
+    sprite: _Warlock/Clothing/Head/Helmets/brotherhood.rsi
+  # inhandVisuals живёт на Item, а не на Clothing. Рук ещё нет — берём ванильный шлем.
+  - type: Item
+    inhandVisuals:
+      left:
+      - sprite: Clothing/Head/Helmets/merc_helmet.rsi
+        state: inhand-left
+        color: "#6f7360"
+      right:
+      - sprite: Clothing/Head/Helmets/merc_helmet.rsi
+        state: inhand-right
         color: "#6f7360"
   - type: Armor
     modifiers:

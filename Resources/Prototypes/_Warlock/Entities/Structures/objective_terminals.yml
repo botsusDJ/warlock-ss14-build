@@ -10,6 +10,14 @@
   id: WarlockBaseObjectiveTerminal
   name: терминал целей
   description: Приземистая консоль с одной строкой на экране. Строку меняют раз в смену.
+  components:
+  # Без Speech терминал нем: SpeechSystem широковещательно отменяет SpeakAttemptEvent
+  # всему, у чего этого компонента нет, и зачитывание молча проваливается.
+  - type: Speech
+    speechVerb: Robotic
+  # Читать задание можно и в темноте, и на обесточенной базе: колхоз не зависит от APC.
+  - type: ApcPowerReceiver
+    needsPower: false
 
 - type: entity
   parent: WarlockBaseObjectiveTerminal

@@ -86,17 +86,18 @@
   name: шлем командира Братства
   description: Лобовая пластина спилена и залита заново — так делают, когда шлем меняет владельца.
   components:
+  # Тот же спрайт, что у рядового шлема, но подкрашен в командирскую латунь.
   - type: Sprite
-    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    sprite: _Warlock/Clothing/Head/Helmets/brotherhood.rsi
     layers:
     - state: icon
-      color: "#8a7a4a"
+      color: "#d8b26a"
   - type: Clothing
-    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+    sprite: _Warlock/Clothing/Head/Helmets/brotherhood.rsi
     clothingVisuals:
       head:
       - state: equipped-HELMET
-        color: "#8a7a4a"
+        color: "#d8b26a"
   - type: Armor
     modifiers:
       coefficients:

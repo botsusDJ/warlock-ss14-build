@@ -142,66 +142,47 @@ public sealed partial class WarlockBulwarkedComponent : Component
 }
 
 /// <summary>
-/// _Warlock — какую печать оставил техномаг и что она сделает наступившему.
+/// _Warlock — что техномаг сейчас держит телекинезом.
+///
+/// Висит на самом техномаге, а не на жертве: держащий может быть только один,
+/// и это же даёт бесплатную проверку «уже держу — значит бросаю».
 /// </summary>
 [RegisterComponent]
-public sealed partial class WarlockRuneComponent : Component
-{
-    [DataField]
-    public WarlockRuneEffect Effect = WarlockRuneEffect.Hurling;
-
-    /// <summary>
-    /// Кто поставил печать. На него самого она не срабатывает.
-    /// </summary>
-    [DataField]
-    public EntityUid? Caster;
-
-    /// <summary>
-    /// Сила броска для печати отбрасывания.
-    /// </summary>
-    [DataField]
-    public float ThrowStrength = 14f;
-
-    /// <summary>
-    /// Дальность броска в тайлах.
-    /// </summary>
-    [DataField]
-    public float ThrowDistance = 10f;
-
-    /// <summary>
-    /// Мощность взрыва печати гнили.
-    /// </summary>
-    [DataField]
-    public float ExplosionIntensity = 12f;
-
-    [DataField]
-    public ProtoId<ExplosionPrototype> ExplosionType = "Default";
-
-    /// <summary>
-    /// Радиус, в котором печать гнили травит живое.
-    /// </summary>
-    [DataField]
-    public float PoisonRadius = 3f;
-
-    /// <summary>
-    /// Сколько яда получает каждый в радиусе.
-    /// </summary>
-    [DataField]
-    public float PoisonDamage = 35f;
-}
-
-/// <summary>
-/// _Warlock — что делает печать при срабатывании.
-/// </summary>
-public enum WarlockRuneEffect : byte
+public sealed partial class WarlockTelekineticGripComponent : Component
 {
     /// <summary>
-    /// Швыряет наступившего далеко прочь.
+    /// Кого держим. Пусто — компонент тут же снимается.
     /// </summary>
-    Hurling = 0,
+    [DataField]
+    public EntityUid? Held;
 
     /// <summary>
-    /// Вскрывается взрывом и травит всё живое рядом.
+    /// Когда захват сорвётся сам.
     /// </summary>
-    Blight = 1,
+    [DataField]
+    public TimeSpan Expires;
+
+    /// <summary>
+    /// Следующее списание энергии.
+    /// </summary>
+    [DataField]
+    public TimeSpan NextTick;
+
+    /// <summary>
+    /// Сколько энергии уходит за секунду удержания.
+    /// </summary>
+    [DataField]
+    public float UpkeepPerSecond = 4f;
+
+    /// <summary>
+    /// С какой силой жертву подтягивает.
+    /// </summary>
+    [DataField]
+    public float Speed = 6f;
+
+    /// <summary>
+    /// Дальше этого захват рвётся. Утащить пленника через отсек нельзя.
+    /// </summary>
+    [DataField]
+    public float MaxDistance = 8f;
 }

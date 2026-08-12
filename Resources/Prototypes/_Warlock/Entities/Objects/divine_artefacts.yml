@@ -66,10 +66,17 @@
   components:
   - type: Item
     size: Tiny
+    # Иконка своя, а рук ещё не нарисовали — в руках пока лом.
+    inhandVisuals:
+      left:
+      - sprite: Objects/Tools/crowbar.rsi
+        state: inhand-left
+      right:
+      - sprite: Objects/Tools/crowbar.rsi
+        state: inhand-right
   - type: Sprite
-    sprite: Objects/Misc/stock_parts.rsi
-    state: micro_laser
-    color: "#9aa8b8"
+    sprite: _Warlock/Objects/Artefacts/repair_worm.rsi
+    state: icon
   - type: WarlockRepairWorm
     tickInterval: 45
     idleTicksBeforeHarm: 2
@@ -114,10 +121,17 @@
   components:
   - type: Item
     size: Normal
+    # Иконка своя, а рук ещё не нарисовали — в руках пока обычный нож.
+    inhandVisuals:
+      left:
+      - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+        state: inhand-left
+      right:
+      - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+        state: inhand-right
   - type: Sprite
-    sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+    sprite: _Warlock/Objects/Weapons/Melee/atrak_fang.rsi
     state: icon
-    color: "#d84a3a"
   - type: MeleeWeapon
     attackRate: 1.1
     damage:

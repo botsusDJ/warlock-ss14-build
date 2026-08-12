@@ -1,10 +1,17 @@
 using System.Linq;
+using System.Text;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
+using Content.Shared.Speech;
+using Content.Shared.Standing;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,7 +37,10 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private StandingStateSystem _standing = default!;
 
     /// <summary>
     /// Веса попадания по частям тела. Торс самый крупный, голова самая мелкая.
@@ -62,6 +72,13 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         SubscribeLocalEvent<WarlockInjuriesComponent, HealthBeingExaminedEvent>(OnHealthExamined);
         SubscribeLocalEvent<WarlockInjuriesComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<WarlockInjuriesComponent, RefreshStaminaCritThresholdEvent>(OnRefreshStamina);
+
+        // Выбитые зубы слышно.
+        SubscribeLocalEvent<WarlockInjuriesComponent, AccentGetEvent>(OnAccent);
+
+        // Сломанные конечности мешают жить: руки не держат, ноги не носят.
+        SubscribeLocalEvent<WarlockInjuriesComponent, PickupAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<WarlockInjuriesComponent, StandAttemptEvent>(OnStandAttempt);
     }
 
     #region Публичное API
@@ -146,6 +163,8 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         // неявного приведения нет, только от голого EntityUid.
         _movement.RefreshMovementSpeedModifiers(ent.Owner);
         _stamina.RefreshStaminaCritThreshold(ent.Owner);
+
+        ApplyLimbConsequences(ent);
     }
 
     private WarlockBodyPart RollPart()
@@ -213,16 +232,39 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
 
     #region Осмотр
 
-    private void OnHealthExamined(Entity<WarlockInjuriesComponent> ent, ref HealthBeingExaminedEvent args)
+    /// <summary>
+    /// Какая одежда закрывает какое место. Хватает любого занятого слота из списка:
+    /// клеймо на торсе не видно и под комбинезоном, и под мантией поверх него.
+    /// </summary>
+    private static readonly Dictionary<WarlockBodyPart, string[]> CoveringSlots = new()
     {
-        // Под шлемом лица не видно, а следы читают именно по лицу.
-        if (_inventory.TryGetSlotEntity(ent.Owner, "head", out _))
+        [WarlockBodyPart.Head] = new[] { "head", "mask" },
+        [WarlockBodyPart.Torso] = new[] { "jumpsuit", "outerClothing" },
+        [WarlockBodyPart.LeftArm] = new[] { "jumpsuit", "outerClothing", "gloves" },
+        [WarlockBodyPart.RightArm] = new[] { "jumpsuit", "outerClothing", "gloves" },
+        [WarlockBodyPart.LeftLeg] = new[] { "jumpsuit", "outerClothing", "shoes" },
+        [WarlockBodyPart.RightLeg] = new[] { "jumpsuit", "outerClothing", "shoes" },
+    };
+
+    /// <summary>
+    /// Закрыто ли это место одеждой.
+    /// </summary>
+    private bool IsCovered(EntityUid uid, WarlockBodyPart part)
+    {
+        if (!CoveringSlots.TryGetValue(part, out var slots))
+            return false;
+
+        foreach (var slot in slots)
         {
-            args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString("warlock-injuries-hidden-by-helmet"));
-            return;
+            if (_inventory.TryGetSlotEntity(uid, slot, out _))
+                return true;
         }
 
+        return false;
+    }
+
+    private void OnHealthExamined(Entity<WarlockInjuriesComponent> ent, ref HealthBeingExaminedEvent args)
+    {
         if (ent.Comp.Injuries.Count == 0)
         {
             args.Message.PushNewline();
@@ -230,9 +272,21 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
             return;
         }
 
+        // Одежда прячет следы: под шлемом не читается лицо, под комбинезоном — торс и конечности.
+        // Клеймо на плече — это метка, которую можно скрыть, надев рукав, и это намеренно.
+        var visible = ent.Comp.Injuries.Where(i => !IsCovered(ent.Owner, i.Part)).ToList();
+        var hidden = ent.Comp.Injuries.Count - visible.Count;
+
+        if (visible.Count == 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("warlock-injuries-all-covered"));
+            return;
+        }
+
         // Группируем по «вид + место», чтобы вместо шести строк про синяки
         // получилась одна с указанием, где именно их шесть.
-        var groups = ent.Comp.Injuries
+        var groups = visible
             .Where(i => i.Type != WarlockInjuryType.Brand)
             .GroupBy(i => (i.Type, i.Part))
             .OrderBy(g => g.Key.Type)
@@ -248,13 +302,20 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         }
 
         // Клейма пишем каждое отдельно: у них своя надпись и своё место.
-        foreach (var brand in ent.Comp.Injuries.Where(i => i.Type == WarlockInjuryType.Brand))
+        foreach (var brand in visible.Where(i => i.Type == WarlockInjuryType.Brand))
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString(
                 "warlock-injuries-brand",
                 ("part", Loc.GetString(GetPartLoc(brand.Part))),
                 ("brand", brand.Text is { } t ? Loc.GetString(t) : Loc.GetString("warlock-brand-unreadable"))));
+        }
+
+        // Про скрытое сообщаем фактом, без подробностей: видно, что одежда что-то закрывает.
+        if (hidden > 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("warlock-injuries-partly-covered"));
         }
     }
 
@@ -317,6 +378,148 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
 
         args.ModifySpeed(MathF.Pow(ent.Comp.LegFractureSlowdown, legs));
     }
+
+    /// <summary>
+    /// Сломана ли рука с этой стороны. Средние руки (у кого их больше двух)
+    /// считаем целыми: сопоставить их с левой или правой всё равно нечем.
+    /// </summary>
+    private bool IsArmBroken(WarlockInjuriesComponent comp, HandLocation location)
+    {
+        var part = location switch
+        {
+            HandLocation.Left => WarlockBodyPart.LeftArm,
+            HandLocation.Right => WarlockBodyPart.RightArm,
+            _ => (WarlockBodyPart?) null,
+        };
+
+        return part is { } p && comp.Injuries.Any(i => i.Type == WarlockInjuryType.Fracture && i.Part == p);
+    }
+
+    /// <summary>
+    /// Сколько ног сломано. Две — это уже не хромота, а лежачее положение.
+    /// </summary>
+    private static int BrokenLegs(WarlockInjuriesComponent comp) => comp.Injuries.Count(i =>
+        i.Type == WarlockInjuryType.Fracture &&
+        i.Part is WarlockBodyPart.LeftLeg or WarlockBodyPart.RightLeg);
+
+    /// <summary>
+    /// Сломанной рукой ничего не поднять. Если целых рук не осталось — не поднять вообще ничем.
+    /// </summary>
+    private void OnPickupAttempt(Entity<WarlockInjuriesComponent> ent, ref PickupAttemptEvent args)
+    {
+        if (args.Cancelled || !TryComp<HandsComponent>(ent, out var hands))
+            return;
+
+        // Проверяем именно активную руку: именно в неё ваниль и кладёт поднятое.
+        if (hands.ActiveHandId is not { } active || !hands.Hands.TryGetValue(active, out var hand))
+            return;
+
+        if (!IsArmBroken(ent.Comp, hand.Location))
+            return;
+
+        args.Cancel();
+
+        if (args.ShowPopup)
+            _popup.PopupClient(Loc.GetString("warlock-injuries-arm-broken"), ent, ent);
+    }
+
+    /// <summary>
+    /// На двух сломанных ногах не встают.
+    /// </summary>
+    private void OnStandAttempt(Entity<WarlockInjuriesComponent> ent, ref StandAttemptEvent args)
+    {
+        if (BrokenLegs(ent.Comp) >= 2)
+            args.Cancel();
+    }
+
+    /// <summary>
+    /// Проверяет, не изменился ли расклад по конечностям, и приводит тело в соответствие:
+    /// сломанная рука роняет всё, что держала, на двух сломанных ногах персонаж падает.
+    /// </summary>
+    private void ApplyLimbConsequences(Entity<WarlockInjuriesComponent> ent)
+    {
+        // Ронять предметы и валить наземь имеет право только сервер: на клиенте
+        // это разъедется с предсказанием и предмет будет прыгать из руки на пол и обратно.
+        if (!_net.IsServer)
+            return;
+
+        if (TryComp<HandsComponent>(ent, out var hands))
+        {
+            foreach (var (id, hand) in hands.Hands)
+            {
+                if (!IsArmBroken(ent.Comp, hand.Location))
+                    continue;
+
+                if (_hands.TryGetHeldItem((ent.Owner, hands), id, out _))
+                    _hands.TryDrop((ent.Owner, hands), id, checkActionBlocker: false);
+            }
+        }
+
+        if (BrokenLegs(ent.Comp) >= 2 && !_standing.IsDown(ent.Owner))
+            _standing.Down(ent.Owner);
+    }
+
+    #endregion
+
+    #region Речь
+
+    /// <summary>
+    /// Без зубов не выговорить свистящие. Чем больше дыр, тем меньше внятного.
+    /// </summary>
+    private void OnAccent(Entity<WarlockInjuriesComponent> ent, ref AccentGetEvent args)
+    {
+        var teeth = Count(ent.Owner, WarlockInjuryType.MissingTooth);
+
+        if (teeth < ent.Comp.LispThreshold)
+            return;
+
+        args.Message = Lisp(args.Message, teeth >= ent.Comp.HeavyLispThreshold);
+    }
+
+    /// <summary>
+    /// Шепелявость. На лёгкой стадии уходят только свистящие, на тяжёлой ещё и взрывные
+    /// губные — их без передних зубов тоже не собрать.
+    /// </summary>
+    public static string Lisp(string message, bool heavy)
+    {
+        var sb = new StringBuilder(message.Length);
+
+        foreach (var c in message)
+        {
+            var replaced = c switch
+            {
+                'с' => 'ш',
+                'С' => 'Ш',
+                'з' => 'ж',
+                'З' => 'Ж',
+                'ц' => 'ч',
+                'Ц' => 'Ч',
+                _ => c,
+            };
+
+            if (heavy)
+            {
+                replaced = replaced switch
+                {
+                    'ч' => 'щ',
+                    'Ч' => 'Щ',
+                    'т' => 'ф',
+                    'Т' => 'Ф',
+                    'д' => 'в',
+                    'Д' => 'В',
+                    _ => replaced,
+                };
+            }
+
+            sb.Append(replaced);
+        }
+
+        return sb.ToString();
+    }
+
+    #endregion
+
+    #region Механические последствия, часть вторая
 
     private void OnRefreshStamina(Entity<WarlockInjuriesComponent> ent, ref RefreshStaminaCritThresholdEvent args)
     {

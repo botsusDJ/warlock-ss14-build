@@ -142,7 +142,14 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
             return;
 
         args.Handled = true;
+        ReadOut(ent);
+    }
 
+    /// <summary>
+    /// Зачитать задание фракции вслух. Вызывается и с пустой руки, и с предметом в руке.
+    /// </summary>
+    private void ReadOut(Entity<WarlockObjectiveTerminalComponent> ent)
+    {
         if (GetObjective(ent.Comp.Faction) is not { } state
             || !_proto.TryIndex<WarlockFactionObjectivePrototype>(state.Objective, out var proto))
         {
@@ -181,17 +188,25 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
         if (args.Handled)
             return;
 
+        args.Handled = true;
+
+        // Клик чем угодно, что терминалу не сдают, — это просто «прочитать задание».
+        // Раньше такой клик молча проваливался: InteractUsing не откатывается в ActivateInWorld,
+        // так что карта или КПК в руке гарантированно означали пустой экран.
         if (GetObjective(ent.Comp.Faction) is not { } state
             || !_proto.TryIndex<WarlockFactionObjectivePrototype>(state.Objective, out var proto))
+        {
+            ReadOut(ent);
             return;
+        }
 
-        if (proto.Tracking != WarlockObjectiveTracking.Deliver || proto.DeliverTag is not { } tag)
+        if (proto.Tracking != WarlockObjectiveTracking.Deliver
+            || proto.DeliverTag is not { } tag
+            || !_tag.HasTag(args.Used, tag))
+        {
+            ReadOut(ent);
             return;
-
-        if (!_tag.HasTag(args.Used, tag))
-            return;
-
-        args.Handled = true;
+        }
 
         if (state.Complete)
         {
@@ -221,10 +236,20 @@ public sealed partial class WarlockObjectiveDirectorSystem : EntitySystem
     /// Терминал не рисует всплывашку, а зачитывает строку вслух в локальный чат.
     /// Слышат все рядом — включая тех, кому эту цель знать не полагалось.
     /// Это не недосмотр, это и есть колхоз: своей защищённой связи ни у кого нет.
+    ///
+    /// ignoreActionBlocker обязателен. SpeechSystem широковещательно отменяет SpeakAttemptEvent
+    /// всему, у чего нет включённого SpeechComponent, а SendEntitySpeak на этом молча выходит —
+    /// именно поэтому терминал раньше не выдавал ни строчки. Speech на прототипе тоже стоит,
+    /// но полагаться только на него не стоит: снимут компонент — терминал снова онемеет.
     /// </summary>
     private void Announce(EntityUid terminal, string message)
     {
-        _chat.TrySendInGameICMessage(terminal, message, InGameICChatType.Speak, hideChat: false);
+        _chat.TrySendInGameICMessage(
+            terminal,
+            message,
+            InGameICChatType.Speak,
+            ChatTransmitRange.Normal,
+            ignoreActionBlocker: true);
     }
 
     #endregion

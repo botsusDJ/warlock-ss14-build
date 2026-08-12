@@ -27,19 +27,16 @@
 - type: entity
   parent: ClothingNeckBase
   id: WarlockSymbolMechantechion
-  name: знак Механтехиона
+  name: цепь Механтехиона
   description: Шестерня с восемью зубьями на цепи. Носится поверх формы и снимается только с трупа.
   components:
+  # Свой спрайт. Цвет уже в графике, красить не надо.
   - type: Sprite
-    sprite: Clothing/Neck/Misc/bling.rsi
+    sprite: _Warlock/Clothing/Neck/symbol_mechantechion.rsi
     state: icon
-    color: "#c98a4a"
   - type: Clothing
+    sprite: _Warlock/Clothing/Neck/symbol_mechantechion.rsi
     slots: [ neck ]
-    clothingVisuals:
-      neck:
-      - state: equipped-NECK
-        color: "#c98a4a"
   - type: WarlockHolySymbol
     god: Mechantechion
     powerMultiplier: 1.3

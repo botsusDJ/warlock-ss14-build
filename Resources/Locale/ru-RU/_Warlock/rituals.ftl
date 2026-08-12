@@ -3,8 +3,7 @@
 ## Реплики при касте
 warlock-speech-ritual-echo-copy = ВСПОМНИ, ЧЕМ ТЫ БЫЛО!
 warlock-speech-ritual-grasp = ПУСТЬ НИЧТО НЕ ДАЁТСЯ МНЕ В РУКИ!
-warlock-speech-ritual-ward-hurling = ЗДЕСЬ НЕ ПРОЙТИ!
-warlock-speech-ritual-ward-blight = ЗДЕСЬ ГНИЁТ!
+warlock-speech-ritual-telekinesis = ТЫ НЕ КАСАЕШЬСЯ ПОЛА!
 warlock-speech-ritual-bulwark = СТОЙ, ПОКА СТОЮ Я... И ДОЛЬШЕ!
 warlock-speech-ritual-scent = ГДЕ ВЫ, ДЕТИ КАССА?
 warlock-speech-ritual-wither = ОТДАЙ, ТЕБЕ УЖЕ НЕ НУЖНО!
@@ -19,10 +18,12 @@ warlock-spell-echo-copy = Вещи вокруг вспоминают себя. �
 warlock-spell-grasp-start = Ладони немеют. Тридцать секунд ничего не дастся вам в руки.
 warlock-spell-grasp-burst = Предмет рвётся у вас в пальцах, и рана затягивается.
 
-## 3-4. Печати
-warlock-spell-ward-placed = Печать ложится на пол и исчезает из виду.
-warlock-rune-hurled = Пол выбрасывает вас прочь.
-warlock-rune-blighted = Под ногой что-то вскрывается, и воздух становится ядовитым.
+## 3. Телекинетическая Хватка
+warlock-spell-telekinesis-invalid = Это не поднять: оно держится за мир крепче вас.
+warlock-spell-telekinesis-caught = Цель отрывается от пола и повисает.
+warlock-spell-telekinesis-caught-victim = Пола под ногами больше нет. Вас держат.
+warlock-spell-telekinesis-hurled = Хватка разжимается броском.
+warlock-spell-telekinesis-slipped = Хватка срывается.
 
 ## 5. Литания Укрепления
 warlock-spell-bulwark-invalid = Литания цепляется только за закреплённый механизм.

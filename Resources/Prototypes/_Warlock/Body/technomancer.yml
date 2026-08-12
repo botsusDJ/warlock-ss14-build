@@ -78,8 +78,7 @@
     # Второй круг — ритуалы. Дороже и почти всегда с последствиями.
     - WarlockActionMirrorEcho
     - WarlockActionCursedGrasp
-    - WarlockActionWardOfHurling
-    - WarlockActionWardOfBlight
+    - WarlockActionTelekineticGrasp
     - WarlockActionRiteOfBulwark
     - WarlockActionRelicScent
     - WarlockActionWitheringTouch
