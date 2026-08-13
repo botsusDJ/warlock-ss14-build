@@ -417,16 +417,19 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
             return;
 
         // Проверяем именно активную руку: именно в неё ваниль и кладёт поднятое.
-        if (hands.ActiveHandId is not { } active || !hands.Hands.TryGetValue(active, out var hand))
+        // Словарь Hands напрямую не трогаем — песочница даёт на него только чтение,
+        // а любой вызов метода на нём считается за Execute и валит сборку с RA0002.
+        if (hands.ActiveHandId is not { } active
+            || !_hands.TryGetHand((uid, hands), active, out var hand))
             return;
 
-        if (!IsArmBroken(comp, hand.Location))
+        if (!IsArmBroken(comp, hand.Value.Location))
             return;
 
         args.Cancel();
 
         if (args.ShowPopup)
-            _popup.PopupClient(Loc.GetString("warlock-injuries-arm-broken"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("warlock-injuries-arm-broken"), uid, uid);
     }
 
     /// <summary>
@@ -451,9 +454,14 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
 
         if (TryComp<HandsComponent>(ent, out var hands))
         {
-            foreach (var (id, hand) in hands.Hands)
+            // Список рук берём через систему, а не перебором словаря Hands:
+            // песочница даёт на него только чтение, и даже foreach по нему — это Execute.
+            foreach (var id in _hands.EnumerateHands((ent.Owner, hands)))
             {
-                if (!IsArmBroken(ent.Comp, hand.Location))
+                if (!_hands.TryGetHand((ent.Owner, hands), id, out var hand))
+                    continue;
+
+                if (!IsArmBroken(ent.Comp, hand.Value.Location))
                     continue;
 
                 if (_hands.TryGetHeldItem((ent.Owner, hands), id, out _))

@@ -120,7 +120,7 @@ public sealed partial class WarlockMagicBrandSystem : EntitySystem
         args.Cancel();
 
         if (args.ShowPopup)
-            _popup.PopupClient(Loc.GetString("warlock-brand-shackles-blocked"), uid, uid);
+            _popup.PopupEntity(Loc.GetString("warlock-brand-shackles-blocked"), uid, uid);
     }
 
     private void OnUseAttempt(EntityUid uid, WarlockMagicBrandComponent comp, UseAttemptEvent args)
