@@ -34,6 +34,7 @@
     shoes: ClothingShoesColorBlack
   storage:
     back:
+    - WarlockGrimoireFactos
     - WarlockArtefactFateDie
 
 # ------------------------------------------------------------------------------------------------
@@ -66,6 +67,7 @@
     shoes: ClothingShoesColorBlack
   storage:
     back:
+    - WarlockGrimoireFactos
     - WarlockArtefactGuildUrn
 
 # ------------------------------------------------------------------------------------------------
@@ -95,6 +97,9 @@
     outerClothing: WarlockOuterGuildFactos
     head: WarlockHeadGuildFactos
     shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockGrimoireFactos
 
 # ------------------------------------------------------------------------------------------------
 # 4. Чародей
@@ -122,6 +127,9 @@
     jumpsuit: WarlockUniformGuildFactos
     head: WarlockHeadGuildFactos
     shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockGrimoireFactos
 
 # ------------------------------------------------------------------------------------------------
 # 5. Маг
@@ -149,6 +157,9 @@
     jumpsuit: WarlockUniformGuildFactos
     head: WarlockHeadGuildFactos
     shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockGrimoireFactos
 
 # ------------------------------------------------------------------------------------------------
 # 6. Адепт
@@ -174,3 +185,6 @@
     id: WarlockPdaFactos
     jumpsuit: WarlockUniformGuildFactos
     shoes: ClothingShoesColorBlack
+  storage:
+    back:
+    - WarlockGrimoireFactos

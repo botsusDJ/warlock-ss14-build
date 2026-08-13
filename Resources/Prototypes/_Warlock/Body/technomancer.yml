@@ -66,25 +66,12 @@
   id: WarlockMobTechnomancer
   name: Urist McPsi
   components:
+  # Дар есть у каждого техномага — а вот заклинаний нет ни одного.
+  #
+  # Раньше раса выдавала все пятнадцать сразу, и выбор был только в том, какое нажать.
+  # Теперь всё берётся из гримуара гильдии за очки, которых заведомо меньше, чем строк
+  # в книге: техномаг без работы — просто человек с резервом и без единого приёма.
   - type: WarlockPsionic
-  - type: ActionGrant
-    actions:
-    # Первый круг — тактические заклинания.
-    - WarlockActionLitanyOfUnmaking
-    - WarlockActionChoirOfSteel
-    - WarlockActionDeadgodEcho
-    - WarlockActionBorrowedBreath
-    - WarlockActionSharedFate
-    # Второй круг — ритуалы. Дороже и почти всегда с последствиями.
-    - WarlockActionMirrorEcho
-    - WarlockActionCursedGrasp
-    - WarlockActionTelekineticGrasp
-    - WarlockActionRiteOfBulwark
-    - WarlockActionRelicScent
-    - WarlockActionWitheringTouch
-    - WarlockActionPyreAura
-    - WarlockActionFalseBrother
-    - WarlockActionGiftHarvest
 
 - type: entity
   parent: WarlockMobTechnomancerBase

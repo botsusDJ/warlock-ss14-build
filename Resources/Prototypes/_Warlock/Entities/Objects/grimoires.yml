@@ -1,0 +1,74 @@
+# _Warlock
+# Гримуары трёх гильдий. Единственный источник псайкерства в билде: раса не даёт ничего.
+#
+# Книга — расходник, а не библиотека. Шесть очков, каждое заклинание стоит от одного до четырёх,
+# на нуле книга рассыпается. Поэтому её можно дать соседу дочитать — но тогда себе останется
+# меньше, и это осознанное решение, а не мелочь.
+
+- type: entity
+  parent: BaseItem
+  abstract: true
+  id: WarlockBaseGrimoire
+  name: гримуар
+  description: >-
+    Книга без страниц: знаки проступают на развороте сами и гаснут, когда их прочитали.
+    Прочесть можно ровно столько, сколько в ней осталось.
+  components:
+  # Рук у книг нет и в ваниле: books.rsi не содержит ни одного состояния inhand.
+  - type: Item
+    size: Normal
+  - type: UserInterface
+    interfaces:
+      enum.WarlockGrimoireUiKey.Key:
+        type: WarlockGrimoireBoundUserInterface
+  - type: ActivatableUI
+    key: enum.WarlockGrimoireUiKey.Key
+  # Гримуар — тоже реликвия Союза, и Гвоздь Механтехиона это подтвердит.
+  - type: Tag
+    tags:
+    - WarlockArtefact
+
+- type: entity
+  parent: WarlockBaseGrimoire
+  id: WarlockGrimoireWarlock
+  name: красный гримуар Варлока
+  description: >-
+    Переплёт цвета запёкшейся крови. Гильдия Варлок не изучает артефакты, а молится им,
+    и её книга читается как служебник, а не как справочник.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Books/warlock_spellbook.rsi
+    state: icon
+  - type: WarlockGrimoire
+    guild: GuildWarlock
+    points: 6
+
+- type: entity
+  parent: WarlockBaseGrimoire
+  id: WarlockGrimoireTechnos
+  name: белый гримуар Техноса
+  description: >-
+    Белый переплёт с вытравленными допусками. Технос единственные, кто пытается разобрать
+    дар на принципы, и записывают его как регламент.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Books/technos_spellbook.rsi
+    state: icon
+  - type: WarlockGrimoire
+    guild: GuildTechnos
+    points: 6
+
+- type: entity
+  parent: WarlockBaseGrimoire
+  id: WarlockGrimoireFactos
+  name: фиолетовый гримуар Фактоса
+  description: >-
+    Фиолетовый переплёт, распухший от вклеек. Фактос описывают всё, включая то,
+    как именно им далось каждое заклинание.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Books/factos_spellbook.rsi
+    state: icon
+  - type: WarlockGrimoire
+    guild: GuildFactos
+    points: 6

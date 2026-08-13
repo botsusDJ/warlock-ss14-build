@@ -1,0 +1,245 @@
+# _Warlock
+# Каталог гримуаров: что лежит в книгах, в каком разделе, почём и кому.
+#
+# Заклинания больше не выдаются расой — всё покупается здесь за очки. Очков заведомо
+# меньше, чем строк в книге, так что выбор настоящий: взяв боевое, вы не возьмёте ролевое.
+#
+# Раздел определяет доступ, а не силу:
+#   рядовые и боевые  — открыты любому члену гильдии;
+#   капелланские      — только жрецам, ритуалистам и тем, кто выше;
+#   командирские      — только лордам и архимагам.
+# Чужак с краденой книгой прочтёт два верхних раздела и упрётся в два нижних.
+#
+# Поле guilds пустое означает «во всех трёх книгах». У гильдий разная специализация,
+# поэтому дорогие и характерные вещи лежат не у всех.
+
+# ================================================================================================
+# Рядовые — бытовое псайкерство, доступно всем
+# ================================================================================================
+- type: warlockSpellEntry
+  id: WarlockSpellRelicScent
+  action: WarlockActionRelicScent
+  section: Common
+  cost: 1
+
+- type: warlockSpellEntry
+  id: WarlockSpellDustReading
+  action: WarlockActionDustReading
+  section: Common
+  cost: 1
+
+- type: warlockSpellEntry
+  id: WarlockSpellBeckon
+  action: WarlockActionBeckon
+  section: Common
+  cost: 1
+
+- type: warlockSpellEntry
+  id: WarlockSpellDeadgodEcho
+  action: WarlockActionDeadgodEcho
+  section: Common
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellBorrowedBreath
+  action: WarlockActionBorrowedBreath
+  section: Common
+  cost: 2
+
+# Эхо-Копия множит вещи — это Фактос с их описями и Технос с их разборкой.
+- type: warlockSpellEntry
+  id: WarlockSpellMirrorEcho
+  action: WarlockActionMirrorEcho
+  section: Common
+  cost: 2
+  guilds: [ GuildFactos, GuildTechnos ]
+
+# Литания Расщепления разбирает механизм на части. Технос — по профилю.
+- type: warlockSpellEntry
+  id: WarlockSpellLitanyOfUnmaking
+  action: WarlockActionLitanyOfUnmaking
+  section: Common
+  cost: 2
+  guilds: [ GuildTechnos ]
+
+# ================================================================================================
+# Боевые — тоже открыты всем: гильдия хочет, чтобы её умели защищать
+# ================================================================================================
+- type: warlockSpellEntry
+  id: WarlockSpellVoidSpear
+  action: WarlockActionVoidSpear
+  section: Combat
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellChoirOfSteel
+  action: WarlockActionChoirOfSteel
+  section: Combat
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellRepulseWave
+  action: WarlockActionRepulseWave
+  section: Combat
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellSwapPlaces
+  action: WarlockActionSwapPlaces
+  section: Combat
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellTelekineticGrasp
+  action: WarlockActionTelekineticGrasp
+  section: Combat
+  cost: 3
+
+- type: warlockSpellEntry
+  id: WarlockSpellGlassSkin
+  action: WarlockActionGlassSkin
+  section: Combat
+  cost: 3
+
+- type: warlockSpellEntry
+  id: WarlockSpellWitheringTouch
+  action: WarlockActionWitheringTouch
+  section: Combat
+  cost: 3
+
+- type: warlockSpellEntry
+  id: WarlockSpellImplosion
+  action: WarlockActionImplosion
+  section: Combat
+  cost: 4
+
+# Погребальный Костёр не различает своих и чужих. Варлок с их фанатизмом — да, остальные нет.
+- type: warlockSpellEntry
+  id: WarlockSpellPyreAura
+  action: WarlockActionPyreAura
+  section: Combat
+  cost: 4
+  guilds: [ GuildWarlock ]
+
+# ================================================================================================
+# Капелланские — жрецам, ритуалистам и всем, кто выше них
+# ================================================================================================
+- type: warlockSpellEntry
+  id: WarlockSpellSharedFate
+  action: WarlockActionSharedFate
+  section: Chaplain
+  cost: 3
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellCursedGrasp
+  action: WarlockActionCursedGrasp
+  section: Chaplain
+  cost: 3
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellGiftHarvest
+  action: WarlockActionGiftHarvest
+  section: Chaplain
+  cost: 4
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellFalseBrother
+  action: WarlockActionFalseBrother
+  section: Chaplain
+  cost: 3
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+# ================================================================================================
+# Командирские — только лордам и архимагам
+# ================================================================================================
+- type: warlockSpellEntry
+  id: WarlockSpellGuildVoice
+  action: WarlockActionGuildVoice
+  section: Command
+  cost: 3
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellGuildMark
+  action: WarlockActionGuildMark
+  section: Command
+  cost: 2
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellSilenceCircle
+  action: WarlockActionSilenceCircle
+  section: Command
+  cost: 4
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellRiteOfBulwark
+  action: WarlockActionRiteOfBulwark
+  section: Command
+  cost: 4
+  guilds: [ GuildTechnos ]
+  jobs:
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat

@@ -1,0 +1,77 @@
+# _Warlock
+# Что остаётся на полу после стратегических заклинаний. Оба живут сами и уходят по таймеру:
+# отозвать их нельзя, и в этом весь риск — метку увидят и чужие.
+
+# ------------------------------------------------------------------------------------------------
+# Метка Гильдии — видимый знак, точка сбора на полсмены
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  id: WarlockGuildMark
+  name: знак гильдии
+  description: >-
+    Светящийся оттиск, вжатый прямо в пол. Держится долго и виден всем без разбора —
+    в том числе тем, кому знать о встрече не полагалось.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Magic/Cult/rune.rsi
+    state: cult1
+    color: "#a9e6ff"
+    drawdepth: FloorObjects
+    noRot: true
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 1.2
+    color: "#a9e6ff"
+    netsync: false
+  # Полсмены. Снять нельзя ничем — только дождаться.
+  - type: TimedDespawn
+    lifetime: 900
+
+# ------------------------------------------------------------------------------------------------
+# Круг Тишины — глушилка без корпуса и без батареи
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  id: WarlockSilenceCircle
+  name: круг тишины
+  description: Воздух внутри круга глохнет. Рация в нём шипит и не передаёт ничего.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Magic/Cult/rune.rsi
+    state: cult3
+    color: "#6a6a78"
+    drawdepth: FloorObjects
+    noRot: true
+  - type: PointLight
+    enabled: true
+    radius: 3
+    energy: 0.8
+    color: "#6a6a78"
+    netsync: false
+  # Ванильная глушилка питается от батареи и включается вручную.
+  # Этой ни то ни другое не нужно: она горит ровно минуту и гаснет вместе с заклинанием.
+  - type: RadioJammer
+    settings:
+    - wattage: 0
+      range: 6
+      message: radio-jammer-component-set-message-low
+      name: radio-jammer-component-setting-low
+  # activated: true — ItemToggleSystem поднимает ItemToggledEvent прямо на MapInit,
+  # так что круг начинает глушить сразу после спавна, без чьего-либо клика.
+  # onUse: false — и выключить его тоже никто не сможет.
+  - type: ItemToggle
+    activated: true
+    onUse: false
+    onActivate: false
+  - type: TimedDespawn
+    lifetime: 60

@@ -1,0 +1,281 @@
+# _Warlock
+# Третий круг — заклинания из гримуаров гильдий. Не выдаются расой: каждое покупается
+# в книге за очки, и на все очков не хватит ни у кого.
+#
+# Разбиты по назначению, а не по силе. Ни одно не является «улучшенной версией» другого:
+# каждое умеет ровно одну вещь, которую иначе не сделать. Иконки — плейсхолдеры.
+
+# ================================================================================================
+# Ролевые
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionDustReading
+  name: Чтение Праха
+  description: >-
+    Положить руку на тело или вещь и услышать последнее, что с ней случилось.
+    Ничего не лечит и никого не бьёт — просто говорит правду о том, от чего человек умер.
+  components:
+  - type: Action
+    useDelay: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: jaunt
+  - type: TargetAction
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:WarlockDustReadingEvent
+  - type: WarlockPsiCost
+    cost: 10
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-dust
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionGuildVoice
+  name: Голос Гильдии
+  description: >-
+    Одна фраза, которую услышат все свои по гильдии, где бы они ни были.
+    Радио у Союза нет, и это единственная связь через полстанции — по фразе за раз.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: InstantAction
+    event: !type:WarlockGuildVoiceEvent
+      maxLength: 120
+  - type: WarlockPsiCost
+    cost: 20
+
+# ================================================================================================
+# Телекинетические
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionBeckon
+  name: Отпирающий Жест
+  description: >-
+    Предмет в указанной точке сам ложится вам в свободную руку. Прикрученное, живое
+    и лежащее в чужих карманах не поддаётся.
+  components:
+  - type: Action
+    useDelay: 8
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: item_recall
+  - type: TargetAction
+    interactOnMiss: false
+    range: 8
+  - type: WorldTargetAction
+    event: !type:WarlockBeckonEvent
+      radius: 0.4
+  - type: WarlockPsiCost
+    cost: 8
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-beckon
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionRepulseWave
+  name: Волна Отторжения
+  description: >-
+    Всё незакреплённое вокруг разлетается прочь. Толпу это не убьёт, но разомкнёт —
+    и часто этого достаточно, чтобы уйти живым.
+  components:
+  - type: Action
+    useDelay: 30
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: repulse
+  - type: InstantAction
+    event: !type:WarlockRepulseWaveEvent
+      radius: 4
+      strength: 12
+  - type: WarlockPsiCost
+    cost: 25
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-repulse
+
+# ================================================================================================
+# Стратегические
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionGuildMark
+  name: Метка Гильдии
+  description: >-
+    Ставит на пол знак, который держится полсмены, и сообщает своим, где он появился.
+    Способ назначить точку сбора там, где нет ни радио, ни карты.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
+  - type: TargetAction
+    interactOnMiss: false
+    range: 3
+  - type: WorldTargetAction
+    event: !type:WarlockGuildMarkEvent
+      mark: WarlockGuildMark
+  - type: WarlockPsiCost
+    cost: 15
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-mark
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionSilenceCircle
+  name: Круг Тишины
+  description: >-
+    Пятно, внутри которого не работает ни одна рация. Ставится и через минуту уходит само.
+    Ваши переговоры это не спасает: Союз и так говорит вслух.
+  components:
+  - type: Action
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/rumble.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: knock
+  - type: TargetAction
+    interactOnMiss: false
+    range: 5
+  - type: WorldTargetAction
+    event: !type:WarlockSilenceCircleEvent
+      circle: WarlockSilenceCircle
+  - type: WarlockPsiCost
+    cost: 30
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-silence
+
+# ================================================================================================
+# Тактические
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionSwapPlaces
+  name: Смена Мест
+  description: >-
+    Вы и цель мгновенно меняетесь местами. Ни урона, ни оглушения — только то,
+    что теперь вы стоите там, где стоял он, а он там, где стояли вы.
+  components:
+  - type: Action
+    useDelay: 25
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: blink
+  - type: TargetAction
+    range: 8
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:WarlockSwapPlacesEvent
+  - type: WarlockPsiCost
+    cost: 20
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-swap
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionGlassSkin
+  name: Стеклянная Кожа
+  description: >-
+    Шесть секунд по вам нельзя попасть ничем — и всё это время вы не можете сойти с места.
+    Пережить залп получится, воспользоваться передышкой нет.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: shield
+  - type: InstantAction
+    event: !type:WarlockGlassSkinEvent
+      duration: 6
+  - type: WarlockPsiCost
+    cost: 35
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-glass
+
+# ================================================================================================
+# Атакующие
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionVoidSpear
+  name: Копьё Пустоты
+  description: >-
+    Узкий прокол на расстоянии. Брони почти не замечает, зато бьёт строго по одному
+    и требует видеть цель.
+  components:
+  - type: Action
+    useDelay: 12
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: magicmissile
+  - type: TargetAction
+    range: 9
+  - type: EntityTargetAction
+    canTargetSelf: false
+    event: !type:WarlockVoidSpearEvent
+      damage: 26
+  - type: WarlockPsiCost
+    cost: 22
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-spear
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionImplosion
+  name: Схлопывание
+  description: >-
+    В указанной точке пространство собирается внутрь: всё вокруг стаскивает к центру и мнёт.
+    Бьёт слабее прямого удара, зато по всем сразу и ломает строй.
+  components:
+  - type: Action
+    useDelay: 45
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/rumble.ogg
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: fireball
+  - type: TargetAction
+    interactOnMiss: false
+    range: 7
+  - type: WorldTargetAction
+    event: !type:WarlockImplosionEvent
+      radius: 3.5
+      pullStrength: 10
+      damage: 14
+  - type: WarlockPsiCost
+    cost: 40
+  - type: SpeakOnAction
+    sentence: warlock-speech-grimoire-implosion

@@ -46,17 +46,12 @@
   name: капюшон гильдии Фактос
   description: Глухой капюшон описчика. Смотреть на артефакт полагается только через прорезь.
   components:
+  # Свой спрайт. Цвет уже в графике, красить не надо.
   - type: Sprite
-    sprite: Clothing/Head/Hoods/chaplain.rsi
-    layers:
-    - state: icon
-      color: "#d8c39a"
+    sprite: _Warlock/Clothing/Head/Hoods/factos.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Head/Hoods/chaplain.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        color: "#d8c39a"
+    sprite: _Warlock/Clothing/Head/Hoods/factos.rsi
 
 # ------------------------------------------------------------------------------------------------
 # Гильдия Технос
@@ -97,17 +92,12 @@
   name: капюшон гильдии Технос
   description: Капюшон с откидным светофильтром. Разбирать находку полагается вслепую.
   components:
+  # Свой спрайт. Цвет уже в графике, красить не надо.
   - type: Sprite
-    sprite: Clothing/Head/Hoods/rad.rsi
-    layers:
-    - state: icon
-      color: "#9aa8b8"
+    sprite: _Warlock/Clothing/Head/Hoods/technos.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Head/Hoods/rad.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        color: "#9aa8b8"
+    sprite: _Warlock/Clothing/Head/Hoods/technos.rsi
 
 # ------------------------------------------------------------------------------------------------
 # Гильдия Варлок
@@ -150,14 +140,9 @@
   name: капюшон гильдии Варлок
   description: Капюшон без прорези для глаз. Тем, у кого белые глаза, прорезь и не нужна.
   components:
+  # Свой спрайт. Цвет уже в графике, красить не надо.
   - type: Sprite
-    sprite: Clothing/Head/Hoods/cult.rsi
-    layers:
-    - state: icon
-      color: "#cfe4ff"
+    sprite: _Warlock/Clothing/Head/Hoods/warlock.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Head/Hoods/cult.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        color: "#cfe4ff"
+    sprite: _Warlock/Clothing/Head/Hoods/warlock.rsi
