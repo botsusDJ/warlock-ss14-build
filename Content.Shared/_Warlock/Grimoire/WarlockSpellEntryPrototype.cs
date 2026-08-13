@@ -44,7 +44,9 @@ public enum WarlockSpellSection : byte
 /// могло стоять в книгах разных гильдий по разной цене — и чтобы новое добавлялось
 /// одним YAML-блоком, без правки кода.
 /// </summary>
-[Prototype("warlockSpellEntry")]
+// Имя в YAML — warlockSpellEntry. Явно его писать не надо: Robust выводит его из имени
+// класса сам, а дубликат ловится анализатором как RA0042.
+[Prototype]
 public sealed partial class WarlockSpellEntryPrototype : IPrototype
 {
     [IdDataField]

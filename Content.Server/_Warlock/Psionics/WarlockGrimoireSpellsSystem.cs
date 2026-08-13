@@ -9,6 +9,7 @@ using Content.Shared._Warlock.Psionics.Components;
 using Content.Shared._Warlock.Psionics.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -95,12 +96,24 @@ public sealed partial class WarlockGrimoireSpellsSystem : EntitySystem
         }
 
         // Самый крупный вид полученного урона и есть история этой вещи или тела.
+        //
+        // Перебираем руками, а не через LINQ: ключ DamageDict — это ProtoId<DamageTypePrototype>,
+        // невыводимая структура. FirstOrDefault вернул бы не null, а пустой ProtoId, и «чистое»
+        // тело было бы не отличить от тела с уроном нулевого типа.
         var damage = _damageable.GetAllDamage((target, null));
-        var worst = damage.DamageDict
-            .Where(kv => kv.Value > 0)
-            .OrderByDescending(kv => kv.Value)
-            .Select(kv => kv.Key)
-            .FirstOrDefault();
+        string? worst = null;
+        var best = 0f;
+
+        foreach (var (type, value) in damage.DamageDict)
+        {
+            var amount = value.Float();
+
+            if (amount <= best)
+                continue;
+
+            best = amount;
+            worst = type.Id;
+        }
 
         if (worst == null)
         {
