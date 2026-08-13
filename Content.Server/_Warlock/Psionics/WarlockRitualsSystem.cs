@@ -209,25 +209,26 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
             return;
 
         var performer = args.Performer;
-        var target = args.Target;
+
+        // У WorldTargetActionEvent поле Target — это КООРДИНАТЫ, а не сущность.
+        // Поле Entity заполняется, только если у прототипа действия есть ещё и
+        // EntityTargetAction, а он ломает клик по пустому полу — а бросать по полу надо.
+        // Поэтому цель захвата ищем сами по точке клика.
+        var coords = args.Target;
 
         // Уже что-то держим — значит это бросок, а не захват.
         if (TryComp<WarlockTelekineticGripComponent>(performer, out var grip) && grip.Held is { } held)
         {
             args.Handled = true;
-            Hurl((performer, grip), held, target, args);
+            Hurl((performer, grip), held, coords, args);
             return;
         }
 
-        // Ни якорь, ни стену не поднять.
-        if (Transform(target).Anchored || !HasComp<PhysicsComponent>(target))
+        if (FindGrabTarget(performer, coords) is not { } target)
         {
             _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-invalid"), performer, performer, PopupType.MediumCaution);
             return;
         }
-
-        if (target == performer)
-            return;
 
         args.Handled = true;
 
@@ -242,6 +243,36 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-caught"), target, performer);
         _popup.PopupEntity(Loc.GetString("warlock-spell-telekinesis-caught-victim"), target, target, PopupType.LargeCaution);
+    }
+
+    /// <summary>
+    /// Что именно поднимать в точке клика. Живое приоритетнее: если на тайле лежит труп
+    /// и стоит человек, хватать надо человека.
+    /// </summary>
+    private EntityUid? FindGrabTarget(EntityUid performer, EntityCoordinates coords)
+    {
+        EntityUid? fallback = null;
+
+        foreach (var candidate in _lookup.GetEntitiesInRange(coords, 0.4f))
+        {
+            if (candidate == performer || TerminatingOrDeleted(candidate))
+                continue;
+
+            // Ни стену, ни прикрученный шкаф не поднять — и вообще ничего без физики.
+            if (Transform(candidate).Anchored || !HasComp<PhysicsComponent>(candidate))
+                continue;
+
+            // Содержимое чужих карманов и ящиков телекинезом не выдёргивается.
+            if (_container.IsEntityInContainer(candidate))
+                continue;
+
+            if (HasComp<MobStateComponent>(candidate))
+                return candidate;
+
+            fallback ??= candidate;
+        }
+
+        return fallback;
     }
 
     /// <summary>
