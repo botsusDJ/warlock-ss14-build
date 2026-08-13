@@ -469,9 +469,13 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
         args.Handled = true;
 
         var scent = EnsureComp<WarlockRelicScentComponent>(args.Performer);
-        scent.EndAt = _timing.CurTime + TimeSpan.FromSeconds(args.Duration);
-        scent.NextTick = TimeSpan.Zero;
         scent.Radius = args.Radius;
+        scent.NextTick = TimeSpan.Zero;
+        scent.EndAt = _timing.CurTime + TimeSpan.FromSeconds(args.Duration);
+
+        // Срок считается подсказками. Так «минута» — это ровно двадцать всплывашек,
+        // и заклинание не может пережить свой срок, что бы ни случилось с часами.
+        scent.TicksLeft = Math.Max(1, (int) MathF.Ceiling(args.Duration / scent.TickInterval));
 
         _audio.PlayPvs(args.Sound, args.Performer);
         _popup.PopupEntity(Loc.GetString("warlock-spell-scent-start"), args.Performer, args.Performer);
@@ -480,6 +484,13 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
     private void TickRelicScent(Entity<WarlockRelicScentComponent> ent)
     {
         ent.Comp.NextTick = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.TickInterval);
+        ent.Comp.TicksLeft--;
+
+        if (ent.Comp.TicksLeft <= 0)
+        {
+            EndRelicScent(ent);
+            return;
+        }
 
         var origin = _transform.GetWorldPosition(ent);
 
@@ -492,6 +503,11 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
                 continue;
 
             if (candidate.Owner == ent.Owner)
+                continue;
+
+            // Своё чутьё не нащупывает: артефакт в руке, в кармане или в рюкзаке носителя
+            // не подсказка, а помеха — он всегда ближайший и забивает собой всё остальное.
+            if (IsCarriedBy(candidate.Owner, ent.Owner))
                 continue;
 
             var distance = (_transform.GetWorldPosition(candidate.Owner) - origin).Length();
@@ -516,6 +532,37 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
                 ("distance", (int) closestDistance)),
             ent.Owner,
             ent.Owner);
+    }
+
+    /// <summary>
+    /// Чутьё гаснет. Отдельным сообщением, чтобы игрок видел, что оно кончилось,
+    /// а не гадал, почему подсказки прекратились.
+    /// </summary>
+    private void EndRelicScent(Entity<WarlockRelicScentComponent> ent)
+    {
+        RemCompDeferred<WarlockRelicScentComponent>(ent);
+        _popup.PopupEntity(Loc.GetString("warlock-spell-scent-end"), ent.Owner, ent.Owner);
+    }
+
+    /// <summary>
+    /// Лежит ли предмет на этом носителе — в руке, в кармане, в рюкзаке или в коробке в рюкзаке.
+    /// Идём вверх по цепочке родителей: контейнеры вкладываются друг в друга, и одной
+    /// проверки «в контейнере ли» недостаточно.
+    /// </summary>
+    private bool IsCarriedBy(EntityUid item, EntityUid carrier)
+    {
+        var parent = _transform.GetParentUid(item);
+
+        // Ограничитель на случай испорченной иерархии: до карты цепочка всегда короткая.
+        for (var depth = 0; depth < 16 && parent.IsValid(); depth++)
+        {
+            if (parent == carrier)
+                return true;
+
+            parent = _transform.GetParentUid(parent);
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -781,9 +828,10 @@ public sealed partial class WarlockRitualsSystem : EntitySystem
         var scents = EntityQueryEnumerator<WarlockRelicScentComponent>();
         while (scents.MoveNext(out var uid, out var scent))
         {
-            if (now >= scent.EndAt)
+            // Подстраховка по часам: основной счёт идёт подсказками внутри TickRelicScent.
+            if (scent.TicksLeft <= 0 || now >= scent.EndAt)
             {
-                RemCompDeferred<WarlockRelicScentComponent>(uid);
+                EndRelicScent((uid, scent));
                 continue;
             }
 

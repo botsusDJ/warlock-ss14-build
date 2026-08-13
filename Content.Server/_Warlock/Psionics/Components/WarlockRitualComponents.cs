@@ -46,6 +46,16 @@ public sealed partial class WarlockRelicScentComponent : Component
     [DataField]
     public TimeSpan NextTick;
 
+    /// <summary>
+    /// Сколько подсказок осталось.
+    ///
+    /// Срок жизни считается подсказками, а не только часами: счётчик уменьшается ровно там,
+    /// где показывается всплывашка, и промахнуться мимо конца невозможно. EndAt оставлен
+    /// подстраховкой на случай, если носителя заморозят и тики перестанут идти.
+    /// </summary>
+    [DataField]
+    public int TicksLeft;
+
     [DataField]
     public float TickInterval = 3f;
 

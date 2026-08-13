@@ -108,14 +108,22 @@ public sealed class WarlockGrimoireWindow : DefaultWindow
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             HorizontalExpand = true,
+            // Без этого колонка текста требует себе всю длину описания одной строкой
+            // и выдавливает кнопку за край окна.
+            HorizontalAlignment = HAlignment.Stretch,
         };
 
         text.AddChild(new Label { Text = entry.Name });
-        text.AddChild(new Label
+
+        // Описание — RichTextLabel, а не Label: обычный Label переносить строки не умеет
+        // и растягивает ряд ровно на длину текста. Этот переносит по ширине колонки.
+        var description = new RichTextLabel
         {
-            Text = entry.Description,
-            FontColorOverride = Color.DarkGray,
-        });
+            HorizontalExpand = true,
+        };
+
+        description.SetMessage(entry.Description, defaultColor: Color.DarkGray);
+        text.AddChild(description);
 
         // Причина отказа важнее самой кнопки: игрок должен понимать, почему нельзя.
         string label;
@@ -139,12 +147,17 @@ public sealed class WarlockGrimoireWindow : DefaultWindow
             enabled = true;
         }
 
+        // Кнопка не растягивается и не сжимается: ширина фиксирована, место под неё
+        // резервируется первым, а переносить приходится описанию.
         var button = new Button
         {
             Text = label,
             Disabled = !enabled,
             MinWidth = 110,
+            HorizontalExpand = false,
+            HorizontalAlignment = HAlignment.Right,
             VerticalAlignment = VAlignment.Center,
+            Margin = new Thickness(8, 0, 0, 0),
         };
 
         var id = entry.Id;

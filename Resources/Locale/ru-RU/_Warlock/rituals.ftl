@@ -35,6 +35,7 @@ warlock-spell-bulwark-price = Что-то уходит из вас насовс�
 warlock-spell-scent-start = Дар вытягивается вширь, нащупывая чужие вещи.
 warlock-spell-scent-found = Реликвия: { $direction }, около { $distance } м.
 warlock-spell-scent-nothing = Пусто. Ни одной реликвии в пределах чутья.
+warlock-spell-scent-end = Дар втягивается обратно. Чутьё погасло.
 
 warlock-direction-north = север
 warlock-direction-northeast = северо-восток
