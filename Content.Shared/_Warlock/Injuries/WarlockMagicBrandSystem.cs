@@ -1,4 +1,7 @@
 using Content.Shared.ActionBlocker;
+// RefreshStaminaCritThresholdEvent живёт в Damage.Events, а сама SharedStaminaSystem —
+// в Damage.Systems. Нужны оба пространства имён.
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -104,28 +107,33 @@ public sealed partial class WarlockMagicBrandSystem : EntitySystem
 
     #region Оковы
 
-    private void OnPickupAttempt(Entity<WarlockMagicBrandComponent> ent, ref PickupAttemptEvent args)
+    // Все четыре обработчика ниже — по значению и в старой форме (uid, comp, args).
+    // Это обычные классы-события, и ваниль слушает их именно так: AdminFrozenSystem,
+    // SharedCuffableSystem, SharedBuckleSystem. Robust требует, чтобы все подписчики
+    // одного события были одного вида, и на несовпадении ref/по значению падает при старте.
+
+    private void OnPickupAttempt(EntityUid uid, WarlockMagicBrandComponent comp, PickupAttemptEvent args)
     {
-        if (args.Cancelled || !ent.Comp.Effects.Contains(WarlockBrandEffect.Shackles))
+        if (args.Cancelled || !comp.Effects.Contains(WarlockBrandEffect.Shackles))
             return;
 
         args.Cancel();
 
         if (args.ShowPopup)
-            _popup.PopupClient(Loc.GetString("warlock-brand-shackles-blocked"), ent, ent);
+            _popup.PopupClient(Loc.GetString("warlock-brand-shackles-blocked"), uid, uid);
     }
 
-    private void OnUseAttempt(Entity<WarlockMagicBrandComponent> ent, ref UseAttemptEvent args)
+    private void OnUseAttempt(EntityUid uid, WarlockMagicBrandComponent comp, UseAttemptEvent args)
     {
-        if (args.Cancelled || !ent.Comp.Effects.Contains(WarlockBrandEffect.Shackles))
+        if (args.Cancelled || !comp.Effects.Contains(WarlockBrandEffect.Shackles))
             return;
 
         args.Cancel();
     }
 
-    private void OnAttackAttempt(Entity<WarlockMagicBrandComponent> ent, ref AttackAttemptEvent args)
+    private void OnAttackAttempt(EntityUid uid, WarlockMagicBrandComponent comp, AttackAttemptEvent args)
     {
-        if (args.Cancelled || !ent.Comp.Effects.Contains(WarlockBrandEffect.Shackles))
+        if (args.Cancelled || !comp.Effects.Contains(WarlockBrandEffect.Shackles))
             return;
 
         args.Cancel();
@@ -135,9 +143,9 @@ public sealed partial class WarlockMagicBrandSystem : EntitySystem
 
     #region Корни
 
-    private void OnMoveAttempt(Entity<WarlockMagicBrandComponent> ent, ref UpdateCanMoveEvent args)
+    private void OnMoveAttempt(EntityUid uid, WarlockMagicBrandComponent comp, UpdateCanMoveEvent args)
     {
-        if (args.Cancelled || !ent.Comp.Effects.Contains(WarlockBrandEffect.Roots))
+        if (args.Cancelled || !comp.Effects.Contains(WarlockBrandEffect.Roots))
             return;
 
         args.Cancel();

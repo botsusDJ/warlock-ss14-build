@@ -402,33 +402,39 @@ public sealed partial class WarlockInjuriesSystem : EntitySystem
         i.Type == WarlockInjuryType.Fracture &&
         i.Part is WarlockBodyPart.LeftLeg or WarlockBodyPart.RightLeg);
 
+    // Обработчики ниже намеренно НЕ по ref и НЕ через Entity<T>.
+    // Эти события — обычные классы, и ваниль слушает их по значению
+    // (AdminFrozenSystem, SharedCuffableSystem, SharedBuckleSystem).
+    // Robust требует, чтобы все подписчики одного события были одного вида,
+    // и на несовпадении падает при старте.
+
     /// <summary>
-    /// Сломанной рукой ничего не поднять. Если целых рук не осталось — не поднять вообще ничем.
+    /// Сломанной рукой ничего не поднять. Целой — можно: переключись на неё.
     /// </summary>
-    private void OnPickupAttempt(Entity<WarlockInjuriesComponent> ent, ref PickupAttemptEvent args)
+    private void OnPickupAttempt(EntityUid uid, WarlockInjuriesComponent comp, PickupAttemptEvent args)
     {
-        if (args.Cancelled || !TryComp<HandsComponent>(ent, out var hands))
+        if (args.Cancelled || !TryComp<HandsComponent>(uid, out var hands))
             return;
 
         // Проверяем именно активную руку: именно в неё ваниль и кладёт поднятое.
         if (hands.ActiveHandId is not { } active || !hands.Hands.TryGetValue(active, out var hand))
             return;
 
-        if (!IsArmBroken(ent.Comp, hand.Location))
+        if (!IsArmBroken(comp, hand.Location))
             return;
 
         args.Cancel();
 
         if (args.ShowPopup)
-            _popup.PopupClient(Loc.GetString("warlock-injuries-arm-broken"), ent, ent);
+            _popup.PopupClient(Loc.GetString("warlock-injuries-arm-broken"), uid, uid);
     }
 
     /// <summary>
     /// На двух сломанных ногах не встают.
     /// </summary>
-    private void OnStandAttempt(Entity<WarlockInjuriesComponent> ent, ref StandAttemptEvent args)
+    private void OnStandAttempt(EntityUid uid, WarlockInjuriesComponent comp, StandAttemptEvent args)
     {
-        if (BrokenLegs(ent.Comp) >= 2)
+        if (BrokenLegs(comp) >= 2)
             args.Cancel();
     }
 
