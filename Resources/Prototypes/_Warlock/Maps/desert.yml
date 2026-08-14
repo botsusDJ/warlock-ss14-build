@@ -1,0 +1,67 @@
+# _Warlock
+# Основная карта: пустыня.
+#
+# Планета целиком под открытым небом, дышать можно везде — воздух берётся из MapAtmosphere,
+# как на любой планетной карте. Внутри баз при этом стоит настоящее оборудование: РТГ,
+# подстанция, щиток, кабельная сеть по всему полу, канистра на порту, распределительная
+# труба вдоль коридора и вентиль в каждой комнате. Свет висит на щитке и гаснет вместе с ним.
+#
+# Что где:
+#   северо-запад  — храм-музей гильдии Варлок: музей с витринами, библиотека, ритуальный зал
+#   юго-запад     — форпост-шахта Технос: забой прямо внутри периметра, мастерская, лаборатория
+#   восток        — остов машины-базы Фактос: половина кормы вскрыта, внутрь нанесло песка
+#   центр         — залежи. Сплошной массив породы с прогрызенными ходами, а в нём две пещеры:
+#                   у фанатиков Касса стражи нет вовсе, у к-хритов остались скарабеи.
+#
+# Мест ровно тридцать, по десять на гильдию:
+#   глава 1, второй 1, дальше по двое на каждую из четырёх оставшихся ролей.
+
+# Прототип станции. Ванильный StandardNanotrasenStation тянет прибытие, эвакуацию, центком,
+# снабжение и экспедиции — ничего этого здесь нет, и подсистемы начнут искать чужие карты.
+- type: entity
+  id: WarlockDesertStation
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationAllEventsEligible
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+
+- type: gameMap
+  id: WarlockDesert
+  mapName: 'Warlock Desert'
+  mapPath: /Maps/_Warlock/desert.yml
+  minPlayers: 0
+  maxPlayers: 30
+  stations:
+    WarlockDesert:
+      stationProto: WarlockDesertStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Пустошь'
+      - type: StationJobs
+        availableJobs:
+          # Гильдия Варлок — десять мест
+          WarlockJobWarlockArchmageBishop: [ 1, 1 ]
+          WarlockJobWarlockHighPriest: [ 1, 1 ]
+          WarlockJobWarlockPriest: [ 2, 2 ]
+          WarlockJobWarlockRitualist: [ 2, 2 ]
+          WarlockJobWarlockMage: [ 2, 2 ]
+          WarlockJobWarlockAdept: [ 2, 2 ]
+
+          # Гильдия Технос — десять мест
+          WarlockJobTechnosArchtechnomage: [ 1, 1 ]
+          WarlockJobTechnosSupremeTechnocrat: [ 1, 1 ]
+          WarlockJobTechnosTechnosorcerer: [ 2, 2 ]
+          WarlockJobTechnosTechnomancer: [ 2, 2 ]
+          WarlockJobTechnosMage: [ 2, 2 ]
+          WarlockJobTechnosAdept: [ 2, 2 ]
+
+          # Гильдия Фактос — десять мест
+          WarlockJobFactosArtarchmage: [ 1, 1 ]
+          WarlockJobFactosGreatSeeker: [ 1, 1 ]
+          WarlockJobFactosSorcerer: [ 2, 2 ]
+          WarlockJobFactosEnchanter: [ 2, 2 ]
+          WarlockJobFactosMage: [ 2, 2 ]
+          WarlockJobFactosAdept: [ 2, 2 ]

@@ -1,16 +1,9 @@
+# _Warlock
+# Пул карт билда. Ванильные станции убраны из ротации — они рассчитаны на Нанотрейзен,
+# которого в билде нет. Сами файлы карт на месте: их можно поднять руками из консоли,
+# а дев- и тест-карты грузятся мимо пула и не затронуты.
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  - Bagel
-  - Box
-  - Elkridge
-  - Fland
-  - Marathon
-  - Oasis
-  - Packed
-  - Plasma
-  - Exo
-  - Snowball
-  - Serpentcrest
-  - Sushi
-  - Tram2
+  - WarlockDesert
+  - WarlockTestingGrounds

@@ -1,0 +1,277 @@
+# _Warlock
+# Лоадауты гильдий Варлок и Фактос.
+#
+# Раньше их в лобби не было вовсе, и на вкладке снаряжения игроку предлагали ванильные
+# церковные рясы — к гильдиям они отношения не имеют и выглядят чужеродно. Здесь свои
+# облачения, капюшоны и мантии, включая лордские.
+#
+# Идентификатор роли задан правилом движка: имя прототипа лоадаута — это «Job» плюс id
+# должности целиком. Отсюда двойной Job в JobWarlockJobWarlockPriest — так и должно быть.
+
+# ================================================================================================
+# Отдельные предметы
+# ================================================================================================
+
+# --- Варлок
+- type: loadout
+  id: WarlockLoadoutWarlockUniform
+  equipment:
+    jumpsuit: WarlockUniformGuildWarlock
+
+- type: loadout
+  id: WarlockLoadoutWarlockHood
+  equipment:
+    head: WarlockHeadGuildWarlock
+
+- type: loadout
+  id: WarlockLoadoutWarlockRobe
+  equipment:
+    outerClothing: WarlockOuterGuildWarlock
+
+- type: loadout
+  id: WarlockLoadoutWarlockLordRobe
+  equipment:
+    outerClothing: WarlockOuterGuildWarlockLord
+
+- type: loadout
+  id: WarlockLoadoutWarlockSymbol
+  equipment:
+    neck: WarlockSymbolKass
+
+# --- Фактос
+- type: loadout
+  id: WarlockLoadoutFactosUniform
+  equipment:
+    jumpsuit: WarlockUniformGuildFactos
+
+- type: loadout
+  id: WarlockLoadoutFactosHood
+  equipment:
+    head: WarlockHeadGuildFactos
+
+- type: loadout
+  id: WarlockLoadoutFactosRobe
+  equipment:
+    outerClothing: WarlockOuterGuildFactos
+
+- type: loadout
+  id: WarlockLoadoutFactosLordRobe
+  equipment:
+    outerClothing: WarlockOuterGuildFactosLord
+
+# --- Общее
+- type: loadout
+  id: WarlockLoadoutShoesBlack
+  equipment:
+    shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: WarlockLoadoutShoesBrown
+  equipment:
+    shoes: ClothingShoesColorBrown
+
+# ================================================================================================
+# Группы выбора
+#
+# minLimit 1 там, где без предмета выходить нельзя: облачение и обувь. Мантия и капюшон
+# необязательны — кто-то предпочтёт ходить в одном комбинезоне.
+# ================================================================================================
+- type: loadoutGroup
+  id: WarlockGroupWarlockUniform
+  name: loadout-group-warlock-uniform
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockUniform
+
+- type: loadoutGroup
+  id: WarlockGroupWarlockHead
+  name: loadout-group-warlock-head
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockHood
+
+- type: loadoutGroup
+  id: WarlockGroupWarlockOuter
+  name: loadout-group-warlock-outer
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockRobe
+
+- type: loadoutGroup
+  id: WarlockGroupWarlockOuterLord
+  name: loadout-group-warlock-outer
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockLordRobe
+  - WarlockLoadoutWarlockRobe
+
+- type: loadoutGroup
+  id: WarlockGroupWarlockNeck
+  name: loadout-group-warlock-neck
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockSymbol
+
+- type: loadoutGroup
+  id: WarlockGroupFactosUniform
+  name: loadout-group-warlock-uniform
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutFactosUniform
+
+- type: loadoutGroup
+  id: WarlockGroupFactosHead
+  name: loadout-group-warlock-head
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutFactosHood
+
+- type: loadoutGroup
+  id: WarlockGroupFactosOuter
+  name: loadout-group-warlock-outer
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutFactosRobe
+
+- type: loadoutGroup
+  id: WarlockGroupFactosOuterLord
+  name: loadout-group-warlock-outer
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutFactosLordRobe
+  - WarlockLoadoutFactosRobe
+
+- type: loadoutGroup
+  id: WarlockGroupShoes
+  name: loadout-group-warlock-shoes
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutShoesBlack
+  - WarlockLoadoutShoesBrown
+
+# ================================================================================================
+# Роли
+# ================================================================================================
+
+# --- Гильдия Варлок
+- type: roleLoadout
+  id: JobWarlockJobWarlockArchmageBishop
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuterLord
+  - WarlockGroupWarlockHead
+  - WarlockGroupWarlockNeck
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobWarlockHighPriest
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuterLord
+  - WarlockGroupWarlockHead
+  - WarlockGroupWarlockNeck
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobWarlockPriest
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuter
+  - WarlockGroupWarlockHead
+  - WarlockGroupWarlockNeck
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobWarlockRitualist
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuter
+  - WarlockGroupWarlockHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobWarlockMage
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuter
+  - WarlockGroupWarlockHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobWarlockAdept
+  groups:
+  - WarlockGroupWarlockUniform
+  - WarlockGroupWarlockOuter
+  - WarlockGroupWarlockHead
+  - WarlockGroupShoes
+  - Trinkets
+
+# --- Гильдия Фактос
+- type: roleLoadout
+  id: JobWarlockJobFactosArtarchmage
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuterLord
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobFactosGreatSeeker
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuterLord
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobFactosSorcerer
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuter
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobFactosEnchanter
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuter
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobFactosMage
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuter
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobFactosAdept
+  groups:
+  - WarlockGroupFactosUniform
+  - WarlockGroupFactosOuter
+  - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets

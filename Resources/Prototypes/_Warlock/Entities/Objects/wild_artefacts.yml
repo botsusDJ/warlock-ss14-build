@@ -224,28 +224,31 @@
 # Ересь по меркам Союза: гильдии молятся артефактам и платят резервом, а эссенция даёт силу
 # без молитвы и без платы. Плата есть — просто отложена, и первые две дозы её не показывают.
 # ================================================================================================
+# Это именно лужа на полу, а не склянка: жижа натекает из-под трупа и остаётся лежать.
+# Поднять её нельзя, пьют прямо с пола — подошёл и щёлкнул пустой рукой.
 - type: entity
-  parent: BaseItem
   id: WarlockPsiEssence
   name: пси-эссенция
   description: >-
     Тягучая жёлтая жижа, натёкшая из-под мёртвого скарабея. Тёплая, светится изнутри
     и пахнет чем-то сладким. Пить её Союз запрещает прямо и без объяснений.
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: Item
-    size: Small
-  # Стеклянный пузырёк плюс отдельный слой «содержимое», подкрашенный в жёлтый:
-  # так жижа видна сквозь стекло, а не заливает его целиком.
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
-    layers:
-    - state: bottle
-    - state: bottle-4
-      color: "#e8c46a"
+    drawdepth: FloorObjects
+    sprite: Fluids/puddle.rsi
+    state: splat3
+    color: "#e8c46a"
   - type: PointLight
     enabled: true
-    radius: 1.5
-    energy: 0.8
+    radius: 1.8
+    energy: 0.9
     color: "#e8c46a"
     netsync: false
   - type: WarlockPsiEssence

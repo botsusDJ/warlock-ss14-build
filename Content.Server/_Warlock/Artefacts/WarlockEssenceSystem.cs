@@ -1,3 +1,4 @@
+using System.Text;
 using Content.Server._Warlock.Artefacts.Components;
 using Content.Server.Chat.Systems;
 using Content.Shared._Warlock.Psionics;
@@ -7,7 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
@@ -63,7 +64,8 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
 
         SubscribeLocalEvent<WarlockEssenceSourceComponent, MobStateChangedEvent>(OnSourceDied);
 
-        SubscribeLocalEvent<WarlockPsiEssenceComponent, UseInHandEvent>(OnDrink);
+        // Лужу не поднимают, её пьют с пола: щелчок пустой рукой по тайлу.
+        SubscribeLocalEvent<WarlockPsiEssenceComponent, InteractHandEvent>(OnDrink);
         SubscribeLocalEvent<WarlockPsiEssenceComponent, ExaminedEvent>(OnEssenceExamined);
 
         SubscribeLocalEvent<WarlockEssenceCorruptionComponent, ExaminedEvent>(OnCorruptionExamined);
@@ -103,7 +105,9 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
         args.PushMarkup(Loc.GetString("warlock-essence-examine"));
     }
 
-    private void OnDrink(Entity<WarlockPsiEssenceComponent> ent, ref UseInHandEvent args)
+    // По значению и в старой форме: InteractHandEvent — обычный класс, и ваниль слушает
+    // его именно так (BinSystem, SecretStashSystem). Несовпадение падает при старте.
+    private void OnDrink(EntityUid uid, WarlockPsiEssenceComponent comp, InteractHandEvent args)
     {
         if (args.Handled)
             return;
@@ -116,11 +120,11 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
         args.Handled = true;
 
         // Выгода приходит сразу и полностью. В этом весь смысл: сомневаться не в чем.
-        _damageable.HealEvenly(user, -ent.Comp.Heal, origin: ent.Owner);
-        _psionics.RestoreEnergy(user, ent.Comp.Energy);
+        _damageable.HealEvenly(user, -comp.Heal, origin: uid);
+        _psionics.RestoreEnergy(user, comp.Energy);
 
         var high = EnsureComp<WarlockEssenceHighComponent>(user);
-        high.EndAt = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.HighDuration);
+        high.EndAt = _timing.CurTime + TimeSpan.FromSeconds(comp.HighDuration);
 
         _movement.RefreshMovementSpeedModifiers(user);
         _stamina.RefreshStaminaCritThreshold(user);
@@ -135,7 +139,7 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
 
         ApplyCorruption((user, corruption));
 
-        QueueDel(ent);
+        QueueDel(uid);
     }
 
     #endregion
@@ -224,17 +228,77 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
     /// </summary>
     private void OnCorruptedAccent(Entity<WarlockEssenceCorruptionComponent> ent, ref AccentGetEvent args)
     {
-        if (ent.Comp.Doses < ent.Comp.BabbleThreshold)
+        var over = ent.Comp.Doses - ent.Comp.BabbleThreshold;
+
+        if (over < 0)
             return;
 
-        // Чем больше выпито, тем чаще наружу лезет улей вместо слов.
-        var chance = MathF.Min(0.25f * (ent.Comp.Doses - ent.Comp.BabbleThreshold + 1), 0.9f);
-
-        if (!_random.Prob(chance))
-            return;
-
-        args.Message = WarlockWildArtefactSystem.Speak(args.Message);
+        args.Message = Chitter(args.Message, over, _random);
     }
+
+    /// <summary>
+    /// Речь насекомого. Ломается не рывком, а по нарастающей, и на каждой ступени
+    /// добавляется своя порча — так по одной фразе в чате видно, сколько человек выпил.
+    ///
+    /// <paramref name="over"/> — сколько доз сверх порога: 0 это третья, 1 четвёртая и так далее.
+    /// </summary>
+    public static string Chitter(string message, int over, IRobustRandom random)
+    {
+        // Ступень 1 — щелчки между словами. Слышно, что человек запинается на согласных.
+        var clicks = MathF.Min(0.20f + 0.12f * over, 0.85f);
+        // Ступень 2 — свистящие уходят в жужжание.
+        var buzz   = over >= 1 ? MathF.Min(0.30f + 0.15f * over, 0.95f) : 0f;
+        // Ступень 3 — слова целиком заменяются стрёкотом.
+        var eat    = over >= 3 ? MathF.Min(0.15f * (over - 2), 0.7f) : 0f;
+
+        var words = message.Split(' ');
+
+        for (var i = 0; i < words.Length; i++)
+        {
+            var w = words[i];
+
+            if (w.Length == 0)
+                continue;
+
+            if (eat > 0f && random.Prob(eat))
+            {
+                words[i] = random.Pick(Chitters);
+                continue;
+            }
+
+            var sb = new StringBuilder(w.Length + 4);
+
+            foreach (var c in w)
+            {
+                var lower = char.ToLowerInvariant(c);
+
+                if (buzz > 0f && (lower == 'с' || lower == 'з' || lower == 'ш' || lower == 'ж')
+                    && random.Prob(buzz))
+                {
+                    // Одна буква превращается в тянущееся жужжание.
+                    sb.Append(char.IsUpper(c) ? "ЩЩ" : "щщ");
+                    continue;
+                }
+
+                sb.Append(c);
+
+                if (random.Prob(clicks) && "аеёиоуыэюя".IndexOf(lower) >= 0)
+                    sb.Append(char.IsUpper(c) ? "К" : "к");
+            }
+
+            words[i] = sb.ToString();
+        }
+
+        return string.Join(' ', words);
+    }
+
+    /// <summary>
+    /// Чем человека подменяет улей, когда слова кончаются.
+    /// </summary>
+    private static readonly string[] Chitters =
+    {
+        "ккри", "щщах", "хррит", "таак", "ккт-ккт", "щщи",
+    };
 
     private void OnCorruptionExamined(Entity<WarlockEssenceCorruptionComponent> ent, ref ExaminedEvent args)
     {

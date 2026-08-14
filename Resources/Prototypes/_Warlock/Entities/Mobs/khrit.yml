@@ -191,7 +191,119 @@
     - WarlockArtefact
 
 # ------------------------------------------------------------------------------------------------
-# Маркер для карты
+# Малый скарабей
+#
+# Скорпион стоит внизу и там один. Наверху, в брошенных ходах, осталась мелочь: панциря
+# на ней вдвое меньше, плеваться она не умеет и берёт только числом. Нужна затем, чтобы
+# вход в жучьи пещеры не был бесплатным, но и не убивал первого же вошедшего.
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  name: скарабей
+  id: WarlockMobKhritScarab
+  parent: [ SimpleSpaceMobBase, BaseMobDestructible ]
+  description: >-
+    Ладонь золотистого панциря на шести ногах. Бегает быстро, кусает мелко и ровно до тех пор,
+    пока его не станет много.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Warlock/Mobs/Khrit/scorpion.rsi
+    scale: 0.6,0.6
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: scorpion
+
+  - type: PointLight
+    enabled: true
+    radius: 1.2
+    energy: 0.8
+    color: "#e8c46a"
+    netsync: false
+
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.0
+    baseSprintSpeed: 4.4
+
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      18: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: scorpion
+      Dead:
+        Base: scorpion
+
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: WarlockKhritCarapace
+
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 200
+
+  - type: NpcFactionMember
+    factions:
+    - WarlockKhrit
+
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Piercing: 4
+        Caustic: 2
+
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    damage:
+      types:
+        Heat: 6
+
+  - type: Butcherable
+    spawned:
+    - id: WarlockKhritCarapacePlate
+      amount: 1
+
+# ------------------------------------------------------------------------------------------------
+# Маркеры для карты
 # ------------------------------------------------------------------------------------------------
 - type: entity
   name: скарабей-скорпион
@@ -207,3 +319,19 @@
   - type: ConditionalSpawner
     prototypes:
     - WarlockMobKhritScorpion
+
+- type: entity
+  name: скарабей
+  suffix: Warlock, спавнер
+  id: WarlockSpawnerKhritScarab
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Warlock/Mobs/Khrit/scorpion.rsi
+      state: scorpion
+      scale: 0.6,0.6
+  - type: ConditionalSpawner
+    prototypes:
+    - WarlockMobKhritScarab
