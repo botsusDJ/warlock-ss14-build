@@ -12,6 +12,21 @@
 # с карты через MapAtmosphere, освещение — от неба, крыш нет. Для полигона этого хватает,
 # для настоящей станции всё это придётся разводить.
 
+# Свой прототип станции вместо StandardNanotrasenStation.
+#
+# Ванильный тянет за собой прибытие, эвакуацию, центком, шаттлы, снабжение и экспедиции —
+# всего этого на полигоне нет, и подсистемы начнут искать несуществующие карты.
+# Здесь оставлено ровно то, без чего раунд не стартует: данные станции и раздача должностей.
+- type: entity
+  id: WarlockTestStation
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationAllEventsEligible
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+
 - type: gameMap
   id: WarlockTestingGrounds
   mapName: 'Warlock Testing Grounds'
@@ -20,7 +35,7 @@
   maxPlayers: 15
   stations:
     WarlockTestingGrounds:
-      stationProto: StandardNanotrasenStation
+      stationProto: WarlockTestStation
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Полигон Варлока'
