@@ -1,0 +1,203 @@
+# _Warlock
+# Скарабеи к-хритов.
+#
+# К-хриты — высокотехнологичные жуки, сверхразвитый улей, соединивший золотую пси-магию
+# с биоструктурой. Они пали за много миллионов лет до Союза, от прислужников Касса,
+# пришедших на планету после них. Улья давно нет, а сторожа остались и до сих пор
+# считают своим всё, до чего дотягиваются.
+#
+# Скорпион — элитный сторож нижних ярусов. Драться с ним кулаками можно, но глупо:
+# панцирь почти не берёт физический урон, зато расходится от кислоты и огня.
+
+- type: entity
+  name: скарабей-скорпион
+  id: WarlockMobKhritScorpion
+  parent: [ SimpleSpaceMobBase, BaseMobDestructible ]
+  description: >-
+    Золотистый панцирь на шести суставчатых ногах, и в шве между пластинами что-то
+    едва заметно светится. Оно не дышит и не устаёт, а хвост держит наготове с тех пор,
+    как улья, который его вырастил, не стало.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Warlock/Mobs/Khrit/scorpion.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: scorpion
+
+  # Свечение в швах панциря. Оно же выдаёт скорпиона в тёмных коридорах —
+  # заметить его раньше, чем он заметит вас, вполне возможно.
+  - type: PointLight
+    enabled: true
+    radius: 2.2
+    energy: 1.4
+    color: "#e8c46a"
+    netsync: false
+
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.4
+    baseSprintSpeed: 3.6
+
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  # Пятьдесят при коэффициенте 0.5 на физику — это ровно двадцать ударов кулаком.
+  # Кислотой и огнём вчетверо быстрее, см. WarlockKhritCarapace.
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: scorpion
+      Dead:
+        Base: scorpion
+
+  # Панцирь. Из-за него сотня порогового урона превращается в два десятка ударов кулаком,
+  # но кислотой и огнём валится втрое быстрее.
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: WarlockKhritCarapace
+
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 800
+
+  - type: NpcFactionMember
+    factions:
+    - WarlockKhrit
+
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Piercing: 9
+        Caustic: 5
+
+  # Кислотный плевок. Перезаряжается сам: боезапас у скарабея биологический.
+  - type: Gun
+    fireRate: 0.6
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: BasicEntityAmmoProvider
+    proto: WarlockBulletKhritAcid
+    capacity: 1
+    count: 1
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 3
+
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 300
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    damage:
+      types:
+        Heat: 6
+
+  - type: Butcherable
+    spawned:
+    - id: WarlockKhritCarapacePlate
+      amount: 2
+
+# ------------------------------------------------------------------------------------------------
+# Кислотный плевок
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  name: кислотный плевок
+  id: WarlockBulletKhritAcid
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Caustic: 12
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+    layers:
+    - state: xeno_toxic
+      color: "#e8c46a"
+  - type: Ammo
+    muzzleFlash: null
+
+# ------------------------------------------------------------------------------------------------
+# Что остаётся от скорпиона
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  name: пластина панциря
+  parent: BaseItem
+  id: WarlockKhritCarapacePlate
+  description: >-
+    Обломок золотистого панциря. На срезе видно, что он не отлит и не выкован,
+    а выращен слоями — и слои до сих пор чуть тёплые.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Materials/ore.rsi
+    state: gold
+  - type: PointLight
+    enabled: true
+    radius: 1.2
+    energy: 0.5
+    color: "#e8c46a"
+    netsync: false
+  - type: Tag
+    tags:
+    - WarlockArtefact
+
+# ------------------------------------------------------------------------------------------------
+# Маркер для карты
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  name: скарабей-скорпион
+  suffix: Warlock, спавнер
+  id: WarlockSpawnerKhritScorpion
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Warlock/Mobs/Khrit/scorpion.rsi
+      state: scorpion
+  - type: ConditionalSpawner
+    prototypes:
+    - WarlockMobKhritScorpion

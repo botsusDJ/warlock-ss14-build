@@ -1,0 +1,232 @@
+# _Warlock
+# Дикие реликвии фанатиков Касса и биотехнологии к-хритов.
+#
+# Фанатики Касса пришли на планету после к-хритов, добили улей и построили своё —
+# вещи, которые что-то отнимают навсегда: голос, зрение, речь, место в мире. Ни одна
+# из них не спрашивает согласия и ни одну нельзя отменить.
+#
+# К-хриты работали иначе. Их вещи полезны и даже честны, но каждая тянет владельца
+# в сторону насекомого: делись раной с соседом, считай своих, обрасти панцирем.
+# Золотое свечение в швах — это и есть их пси-магия, та самая, что пережила улей.
+#
+# Спрайты взяты из ванильной ксеноархеологии намеренно: снаружи это ровно те же камни,
+# которые станция привыкла тащить в лабораторию.
+
+# ================================================================================================
+# Дикие — фанатики Касса
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactKassThroat
+  name: Гортань Касса
+  description: >-
+    Кольцо хряща, засохшее до состояния камня. Взявший его говорит по-прежнему много
+    и по-прежнему то же самое — просто больше никто этого не разбирает.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    state: ano03
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 0.6
+    color: "#b06ad8"
+    netsync: false
+  - type: WarlockKassThroat
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactSecondHeart
+  name: Второе Сердце
+  description: >-
+    Комок мышцы, который не останавливался ни на секунду с тех пор, как его вырезали.
+    Держит на ногах там, где следовало упасть, и всё это время гонит вашу кровь наружу.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    state: ano06
+  - type: PointLight
+    enabled: true
+    radius: 1.6
+    energy: 0.7
+    color: "#d84a4a"
+    netsync: false
+  - type: WarlockSecondHeart
+    tickInterval: 15
+    mend: 12
+    bleed: 8
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactSilenceBell
+  name: Колокол Немоты
+  description: >-
+    Литой колокол без язычка. Звонить в него нечем, и всё же он звонит — один раз,
+    и на минуту вокруг не остаётся ни одного голоса. Вашего в том числе.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    state: ano08
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 0.6
+    color: "#8a8378"
+    netsync: false
+  - type: WarlockSilenceBell
+    radius: 8
+    duration: 60
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactBlindChoir
+  name: Слепой Хор
+  description: >-
+    Гроздь застывших глаз на общем стебле. Смотрит во все стороны сразу и однажды
+    смотрит в ответ — тем, у кого не закрыто лицо, достаётся вдвое больше.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    state: ano11
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 1
+    color: "#ffffff"
+    netsync: false
+  - type: WarlockBlindChoir
+    radius: 6
+    eyeDamage: 8
+
+- type: entity
+  parent: WarlockBaseArtefact
+  id: WarlockArtefactSwapSeal
+  name: Печать Обмена
+  description: >-
+    Плоский диск с оттиском двух фигур, поменявшихся местами. Работает ровно так,
+    как выглядит, и не спрашивает, где вы окажетесь и кто окажется вместо вас.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    state: ano09
+  - type: PointLight
+    enabled: true
+    radius: 1.4
+    energy: 0.7
+    color: "#6a8fd8"
+    netsync: false
+  - type: WarlockSwapSeal
+
+# ================================================================================================
+# К-хриты — золотое свечение улья
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseArtefact
+  abstract: true
+  id: WarlockBaseKhritArtefact
+  description: >-
+    Тёплая на ощупь вещь из золотистого хитина. Она не отлита и не выкована —
+    выращена слоями, и слои до сих пор чуть светятся в швах.
+  components:
+  - type: Item
+    size: Small
+  - type: PointLight
+    enabled: true
+    radius: 1.8
+    energy: 0.9
+    color: "#e8c46a"
+    netsync: false
+
+- type: entity
+  parent: WarlockBaseKhritArtefact
+  id: WarlockArtefactGoldenSwarm
+  name: Золотой Рой
+  description: >-
+    Свёрнутая пластина, внутри которой что-то спит. Улья, отдававшего приказы,
+    не существует несколько миллионов лет — а сторож этого так и не узнал.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano14
+  - type: WarlockGoldenSwarm
+    scarab: WarlockMobKhritScorpion
+    uses: 1
+
+- type: entity
+  parent: WarlockBaseKhritArtefact
+  id: WarlockArtefactTarGland
+  name: Смоляная Железа
+  description: >-
+    Вырванная у скарабея железа, до сих пор полная. Плюётся кислотой три раза,
+    после чего опадает сухой коркой.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano21
+  # Ни кода, ни системы: это ровно то же оружие, что у скорпиона, только с тремя зарядами
+  # и без перезарядки. Кончилось — и осталась сухая корка.
+  - type: Gun
+    fireRate: 0.8
+    useKey: true
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: BasicEntityAmmoProvider
+    proto: WarlockBulletKhritAcid
+    capacity: 3
+    count: 3
+
+- type: entity
+  parent: WarlockBaseKhritArtefact
+  id: WarlockArtefactHiveInHand
+  name: Улей в Ладони
+  description: >-
+    Горсть сот, сросшаяся в шар. Затягивает ваши раны, перекладывая их на ближайшее
+    живое рядом. Улей никогда не лечил — улей перераспределял.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano27
+  - type: WarlockHiveInHand
+    amount: 25
+    radius: 6
+
+- type: entity
+  parent: WarlockBaseKhritArtefact
+  id: WarlockArtefactAmberEye
+  name: Янтарный Глаз
+  description: >-
+    Капля застывшей смолы с чужим зрачком внутри. Считает всё живое вокруг
+    и показывает, откуда ждать первым.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano30
+  - type: WarlockAmberEye
+    radius: 20
+
+- type: entity
+  parent: WarlockBaseKhritArtefact
+  id: WarlockArtefactCarapaceGraft
+  name: Панцирный Нарост
+  description: >-
+    Живой лоскут панциря, который ищет, к чему прирасти. Прирастает намертво:
+    бить вас станет почти бесполезно, а вот кислота и огонь достанут до того, что под ним.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano33
+  - type: WarlockCarapaceGraft
