@@ -218,6 +218,41 @@
   - type: WarlockAmberEye
     radius: 20
 
+# ================================================================================================
+# Пси-эссенция
+#
+# Ересь по меркам Союза: гильдии молятся артефактам и платят резервом, а эссенция даёт силу
+# без молитвы и без платы. Плата есть — просто отложена, и первые две дозы её не показывают.
+# ================================================================================================
+- type: entity
+  parent: BaseItem
+  id: WarlockPsiEssence
+  name: пси-эссенция
+  description: >-
+    Тягучая жёлтая жижа, натёкшая из-под мёртвого скарабея. Тёплая, светится изнутри
+    и пахнет чем-то сладким. Пить её Союз запрещает прямо и без объяснений.
+  components:
+  - type: Item
+    size: Small
+  # Стеклянный пузырёк плюс отдельный слой «содержимое», подкрашенный в жёлтый:
+  # так жижа видна сквозь стекло, а не заливает его целиком.
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    layers:
+    - state: bottle
+    - state: bottle-4
+      color: "#e8c46a"
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 0.8
+    color: "#e8c46a"
+    netsync: false
+  - type: WarlockPsiEssence
+    heal: 45
+    energy: 60
+    highDuration: 45
+
 - type: entity
   parent: WarlockBaseKhritArtefact
   id: WarlockArtefactCarapaceGraft
