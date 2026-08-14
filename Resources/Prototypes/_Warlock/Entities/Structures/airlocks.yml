@@ -1,0 +1,225 @@
+# _Warlock
+# Шлюзы четырёх фракций.
+#
+# Королевство Унатхи здесь отсутствует намеренно: электроники Королевство не делает
+# и обходится обычными дверями. Это не пробел, а различие фракций — на карте у унатхов
+# ставятся ванильные Door, и вскрыть их можно ломом, а не взломом.
+#
+# Каждый шлюз идёт парой: пустой (для маппера, который сам вставит плату) и Locked
+# с уже вложенной электроникой. На карте почти всегда нужен второй.
+#
+# Внутренняя логика доступа повторяет Access/factions.yml:
+#   WarlockUnion            — общие помещения Союза, открыты любой из трёх гильдий;
+#   WarlockFactos/Technos/GuildWarlock — мастерская своей гильдии, чужим закрыта;
+#   WarlockUnionCommand     — покои лордов, открыты только верхушке;
+#   WarlockBrotherhood      — Братство, к Союзу отношения не имеет вообще.
+
+# ================================================================================================
+# Электроника доступа
+# ================================================================================================
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsUnion
+  suffix: Warlock, Союз
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockUnion" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsUnionCommand
+  suffix: Warlock, Союз, командование
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockUnionCommand" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsFactos
+  suffix: Warlock, Фактос
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockFactos" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsTechnos
+  suffix: Warlock, Технос
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockTechnos" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsGuildWarlock
+  suffix: Warlock, Варлок
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockGuildWarlock" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsBrotherhood
+  suffix: Warlock, Братство
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockBrotherhood" ] ]
+
+- type: entity
+  parent: DoorElectronics
+  id: WarlockDoorElectronicsBrotherhoodCommand
+  suffix: Warlock, Братство, командование
+  components:
+  - type: AccessReader
+    access: [ [ "WarlockBrotherhoodCommand" ] ]
+
+# ================================================================================================
+# Техномагический Союз — общие помещения
+#
+# Спрайты ванильные и подобраны по цвету гильдий: у Фактос охра, у Технос сталь,
+# у Варлока белёсый лёд. Своих дверных спрайтов пока нет, они в списке на отрисовку.
+# ================================================================================================
+- type: entity
+  parent: Airlock
+  id: WarlockAirlockUnion
+  name: шлюз Союза
+  suffix: Warlock, Союз
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: WarlockAirlockUnion
+  id: WarlockAirlockUnionLocked
+  suffix: Warlock, Союз, заперт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsUnion ]
+
+- type: entity
+  parent: WarlockAirlockUnion
+  id: WarlockAirlockUnionCommandLocked
+  name: шлюз покоев лорда
+  suffix: Warlock, Союз, командование, заперт
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/command.rsi
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: Wires
+    layoutId: AirlockCommand
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsUnionCommand ]
+
+# ================================================================================================
+# Гильдия Фактос
+# ================================================================================================
+- type: entity
+  parent: Airlock
+  id: WarlockAirlockFactos
+  name: шлюз гильдии Фактос
+  suffix: Warlock, Фактос
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/science.rsi
+  - type: Wires
+    layoutId: AirlockScience
+
+- type: entity
+  parent: WarlockAirlockFactos
+  id: WarlockAirlockFactosLocked
+  suffix: Warlock, Фактос, заперт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsFactos ]
+
+# ================================================================================================
+# Гильдия Технос
+# ================================================================================================
+- type: entity
+  parent: Airlock
+  id: WarlockAirlockTechnos
+  name: шлюз гильдии Технос
+  suffix: Warlock, Технос
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/engineering.rsi
+  - type: Wires
+    layoutId: AirlockEngineering
+
+- type: entity
+  parent: WarlockAirlockTechnos
+  id: WarlockAirlockTechnosLocked
+  suffix: Warlock, Технос, заперт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsTechnos ]
+
+# ================================================================================================
+# Гильдия Варлок
+# ================================================================================================
+- type: entity
+  parent: Airlock
+  id: WarlockAirlockGuildWarlock
+  name: шлюз гильдии Варлок
+  suffix: Warlock, Варлок
+  components:
+  # Отдельного «часовенного» спрайта в ваниле нет, поэтому берём медицинский белый:
+  # он ближе всего к белёсому льду гильдии.
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/medical.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: WarlockAirlockGuildWarlock
+  id: WarlockAirlockGuildWarlockLocked
+  suffix: Warlock, Варлок, заперт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsGuildWarlock ]
+
+# ================================================================================================
+# Братство Стали
+#
+# Братство ставит на проходы то, что снимает с чужих кораблей, поэтому шлюзы у него
+# внешние и глухие. К Союзу доступа нет вообще: это враждебное государство.
+# ================================================================================================
+- type: entity
+  parent: Airlock
+  id: WarlockAirlockBrotherhood
+  name: шлюз Братства Стали
+  suffix: Warlock, Братство
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/security.rsi
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: WarlockAirlockBrotherhood
+  id: WarlockAirlockBrotherhoodLocked
+  suffix: Warlock, Братство, заперт
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsBrotherhood ]
+
+- type: entity
+  parent: WarlockAirlockBrotherhood
+  id: WarlockAirlockBrotherhoodCommandLocked
+  name: шлюз командира Братства
+  suffix: Warlock, Братство, командование, заперт
+  components:
+  - type: WiresPanelSecurity
+    securityLevel: medSecurity
+  - type: ContainerFill
+    containers:
+      board: [ WarlockDoorElectronicsBrotherhoodCommand ]

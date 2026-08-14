@@ -1,0 +1,446 @@
+# _Warlock
+# Спавн-точки всех ролей билда — то, без чего карту не разметить.
+#
+# Каждый маркер привязан к своей должности через SpawnPoint.job_id: игрок, выбравший роль,
+# появится ровно на нём. Если на карте нет ни одной точки под должность, роль в лобби
+# выбрать можно, а зайти нельзя — именно поэтому здесь перечислены все двадцать пять.
+#
+# Иконки взяты из ванильного Markers/jobs.rsi по смыслу: своих маркеров у нас нет,
+# а узнаваемый чужой значок на карте лучше, чем безликий зелёный квадрат.
+
+# ================================================================================================
+# Фактос
+# ================================================================================================
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosArtarchmage
+  name: factos-artarchmage
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosArtarchmage
+  - type: Sprite
+    layers:
+    - state: green
+    - state: rd
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosGreatSeeker
+  name: factos-greatseeker
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosGreatSeeker
+  - type: Sprite
+    layers:
+    - state: green
+    - state: seniorresearcher
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosSorcerer
+  name: factos-sorcerer
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosSorcerer
+  - type: Sprite
+    layers:
+    - state: green
+    - state: scientist
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosEnchanter
+  name: factos-enchanter
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosEnchanter
+  - type: Sprite
+    layers:
+    - state: green
+    - state: scientist
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosMage
+  name: factos-mage
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosMage
+  - type: Sprite
+    layers:
+    - state: green
+    - state: scientist
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointFactosAdept
+  name: factos-adept
+  suffix: Warlock, Фактос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobFactosAdept
+  - type: Sprite
+    layers:
+    - state: green
+    - state: researchassistant
+
+# ================================================================================================
+# Технос
+# ================================================================================================
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosArchtechnomage
+  name: technos-archtechnomage
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosArchtechnomage
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ce
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosSupremeTechnocrat
+  name: technos-technocrat
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosSupremeTechnocrat
+  - type: Sprite
+    layers:
+    - state: green
+    - state: seniorengineer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosTechnosorcerer
+  name: technos-technosorcerer
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosTechnosorcerer
+  - type: Sprite
+    layers:
+    - state: green
+    - state: roboticist
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosTechnomancer
+  name: technos-technomancer
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosTechnomancer
+  - type: Sprite
+    layers:
+    - state: green
+    - state: engineer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosMage
+  name: technos-mage
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosMage
+  - type: Sprite
+    layers:
+    - state: green
+    - state: engineer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointTechnosAdept
+  name: technos-adept
+  suffix: Warlock, Технос
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobTechnosAdept
+  - type: Sprite
+    layers:
+    - state: green
+    - state: technicalassistant
+
+# ================================================================================================
+# Варлок
+# ================================================================================================
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockArchmageBishop
+  name: warlock-archmagebishop
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockArchmageBishop
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ertchaplain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockHighPriest
+  name: warlock-highpriest
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockHighPriest
+  - type: Sprite
+    layers:
+    - state: green
+    - state: chaplain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockPriest
+  name: warlock-priest
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockPriest
+  - type: Sprite
+    layers:
+    - state: green
+    - state: chaplain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockRitualist
+  name: warlock-ritualist
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockRitualist
+  - type: Sprite
+    layers:
+    - state: green
+    - state: librarian
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockMage
+  name: warlock-mage
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockMage
+  - type: Sprite
+    layers:
+    - state: green
+    - state: curator
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointWarlockAdept
+  name: warlock-adept
+  suffix: Warlock, Варлок
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobWarlockAdept
+  - type: Sprite
+    layers:
+    - state: green
+    - state: librarian
+
+# ================================================================================================
+# Королевство Унатхи
+# ================================================================================================
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiPriestKing
+  name: unathi-priestking
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiPriestKing
+  - type: Sprite
+    layers:
+    - state: green
+    - state: captain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiKingsClaw
+  name: unathi-kingsclaw
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiKingsClaw
+  - type: Sprite
+    layers:
+    - state: green
+    - state: hos
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiPriestOfThree
+  name: unathi-priestofthree
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiPriestOfThree
+  - type: Sprite
+    layers:
+    - state: green
+    - state: chaplain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiElderFang
+  name: unathi-elderfang
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiElderFang
+  - type: Sprite
+    layers:
+    - state: green
+    - state: seniorofficer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiFang
+  name: unathi-fang
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiFang
+  - type: Sprite
+    layers:
+    - state: green
+    - state: security_officer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiNewblood
+  name: unathi-newblood
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiNewblood
+  - type: Sprite
+    layers:
+    - state: green
+    - state: security_cadet
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointUnathiSlaver
+  name: unathi-slaver
+  suffix: Warlock, Королевство Унатхи
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobUnathiSlaver
+  - type: Sprite
+    layers:
+    - state: green
+    - state: warden
+
+# ================================================================================================
+# Братство Стали
+# ================================================================================================
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodLordCommander
+  name: brotherhood-lordcommander
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodLordCommander
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ertleader
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodChaplain
+  name: brotherhood-chaplain
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodChaplain
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ertchaplain
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodLieutenant
+  name: brotherhood-lieutenant
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodLieutenant
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ertsecurity
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodSergeant
+  name: brotherhood-sergeant
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodSergeant
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ertsecurity
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodBattleBrother
+  name: brotherhood-battlebrother
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodBattleBrother
+  - type: Sprite
+    layers:
+    - state: green
+    - state: security_officer
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodScavenger
+  name: brotherhood-scavenger
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodScavenger
+  - type: Sprite
+    layers:
+    - state: green
+    - state: miner
+
+- type: entity
+  parent: SpawnPointJobBase
+  id: WarlockSpawnPointBrotherhoodSlave
+  name: brotherhood-slave
+  suffix: Warlock, Братство Стали
+  components:
+  - type: SpawnPoint
+    job_id: WarlockJobBrotherhoodSlave
+  - type: Sprite
+    layers:
+    - state: green
+    - state: prisoner
+

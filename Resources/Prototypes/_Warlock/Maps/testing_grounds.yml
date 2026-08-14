@@ -1,0 +1,35 @@
+# _Warlock
+# Тестовый полигон. Не для отыгрыша — для проверки того, что всё добавленное вообще работает.
+#
+# Карта 400×400: земля, трава, песок и каменные гряды. В левом верхнем углу — комплекс
+# гильдии Варлок на пятнадцать человек. Всё остальное пространство пустое намеренно:
+# там удобно проверять скорпионов, артефакты и заклинания, ничего не ломая.
+#
+# Числа мест сходятся ровно в пятнадцать:
+#   Архимаг-Епископ 1, Верховный Жрец 2, Жрец 3, Ритуалист 3, Маг 3, Адепт 3.
+#
+# Чего на карте намеренно НЕТ: питания, атмосферы в помещениях и труб. Воздух берётся
+# с карты через MapAtmosphere, освещение — от неба, крыш нет. Для полигона этого хватает,
+# для настоящей станции всё это придётся разводить.
+
+- type: gameMap
+  id: WarlockTestingGrounds
+  mapName: 'Warlock Testing Grounds'
+  mapPath: /Maps/_Warlock/testing_grounds.yml
+  minPlayers: 0
+  maxPlayers: 15
+  stations:
+    WarlockTestingGrounds:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Полигон Варлока'
+      - type: StationJobs
+        availableJobs:
+          # Гильдия Варлок — пятнадцать мест
+          WarlockJobWarlockArchmageBishop: [ 1, 1 ]
+          WarlockJobWarlockHighPriest: [ 2, 2 ]
+          WarlockJobWarlockPriest: [ 3, 3 ]
+          WarlockJobWarlockRitualist: [ 3, 3 ]
+          WarlockJobWarlockMage: [ 3, 3 ]
+          WarlockJobWarlockAdept: [ 3, 3 ]
