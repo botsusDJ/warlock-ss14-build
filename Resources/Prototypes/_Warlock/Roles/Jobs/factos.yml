@@ -125,6 +125,7 @@
   equipment:
     id: WarlockPdaFactos
     jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactosRitual
     head: WarlockHeadGuildFactos
     shoes: ClothingShoesColorBlack
   storage:
@@ -155,6 +156,7 @@
   equipment:
     id: WarlockPdaFactos
     jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactos
     head: WarlockHeadGuildFactos
     shoes: ClothingShoesColorBlack
   storage:
@@ -184,6 +186,7 @@
   equipment:
     id: WarlockPdaFactos
     jumpsuit: WarlockUniformGuildFactos
+    outerClothing: WarlockOuterGuildFactosCadet
     shoes: ClothingShoesColorBlack
   storage:
     back:

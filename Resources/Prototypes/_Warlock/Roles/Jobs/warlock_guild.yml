@@ -126,6 +126,7 @@
   equipment:
     id: WarlockPdaWarlock
     jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlockRitual
     head: WarlockHeadGuildWarlock
     shoes: ClothingShoesColorBlack
   storage:
@@ -156,6 +157,7 @@
   equipment:
     id: WarlockPdaWarlock
     jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlock
     head: WarlockHeadGuildWarlock
     shoes: ClothingShoesColorBlack
   storage:
@@ -185,6 +187,7 @@
   equipment:
     id: WarlockPdaWarlock
     jumpsuit: WarlockUniformGuildWarlock
+    outerClothing: WarlockOuterGuildWarlockCadet
     shoes: ClothingShoesColorBlack
   storage:
     back:

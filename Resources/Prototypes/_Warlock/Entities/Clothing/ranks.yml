@@ -15,10 +15,10 @@
     до самой смерти, а потом её дописывает преемник.
   components:
   - type: Sprite
-    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord.rsi
     state: icon
   - type: Clothing
-    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_lord.rsi
 
 - type: entity
   parent: WarlockOuterGuildTechnos
@@ -29,10 +29,10 @@
     Считается, что это и есть доказательство права носить её.
   components:
   - type: Sprite
-    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord.rsi
     state: icon
   - type: Clothing
-    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_lord.rsi
 
 - type: entity
   parent: WarlockOuterGuildWarlock
@@ -43,10 +43,10 @@
     Братства в главный склад её силуэт означает уже не власть, а вопрос.
   components:
   - type: Sprite
-    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord.rsi
     state: icon
   - type: Clothing
-    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord_robe.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_lord.rsi
 
 # ------------------------------------------------------------------------------------------------
 # Командные вещи Братства Стали

@@ -123,6 +123,7 @@
   equipment:
     id: WarlockPdaTechnos
     jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnosRitual
     head: WarlockHeadGuildTechnos
     shoes: ClothingShoesColorBlack
   storage:
@@ -153,6 +154,7 @@
   equipment:
     id: WarlockPdaTechnos
     jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnos
     head: WarlockHeadGuildTechnos
     shoes: ClothingShoesColorBlack
   storage:
@@ -182,6 +184,7 @@
   equipment:
     id: WarlockPdaTechnos
     jumpsuit: WarlockUniformGuildTechnos
+    outerClothing: WarlockOuterGuildTechnosCadet
     shoes: ClothingShoesColorBlack
   storage:
     back:

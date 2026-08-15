@@ -1,12 +1,15 @@
 # _Warlock
-# Лоадауты гильдий Варлок и Фактос.
+# Лоадауты гильдий Варлок, Фактос и Технос.
 #
 # Раньше их в лобби не было вовсе, и на вкладке снаряжения игроку предлагали ванильные
-# церковные рясы — к гильдиям они отношения не имеют и выглядят чужеродно. Здесь свои
-# облачения, капюшоны и мантии, включая лордские.
+# церковные рясы — к гильдиям они отношения не имеют и выглядят чужеродно.
 #
 # Идентификатор роли задан правилом движка: имя прототипа лоадаута — это «Job» плюс id
 # должности целиком. Отсюда двойной Job в JobWarlockJobWarlockPriest — так и должно быть.
+#
+# Логика выбора облачения: ступень, положенная роли, идёт первой в списке и достаётся
+# по умолчанию. Ниже — то, на что роль имеет право поменять. Боевое облачение доступно
+# всем, потому что лезть в пещеры приходится всем.
 
 # ================================================================================================
 # Отдельные предметы
@@ -24,9 +27,24 @@
     head: WarlockHeadGuildWarlock
 
 - type: loadout
+  id: WarlockLoadoutWarlockCadet
+  equipment:
+    outerClothing: WarlockOuterGuildWarlockCadet
+
+- type: loadout
   id: WarlockLoadoutWarlockRobe
   equipment:
     outerClothing: WarlockOuterGuildWarlock
+
+- type: loadout
+  id: WarlockLoadoutWarlockRitual
+  equipment:
+    outerClothing: WarlockOuterGuildWarlockRitual
+
+- type: loadout
+  id: WarlockLoadoutWarlockCombat
+  equipment:
+    outerClothing: WarlockOuterGuildWarlockCombat
 
 - type: loadout
   id: WarlockLoadoutWarlockLordRobe
@@ -50,14 +68,65 @@
     head: WarlockHeadGuildFactos
 
 - type: loadout
+  id: WarlockLoadoutFactosCadet
+  equipment:
+    outerClothing: WarlockOuterGuildFactosCadet
+
+- type: loadout
   id: WarlockLoadoutFactosRobe
   equipment:
     outerClothing: WarlockOuterGuildFactos
 
 - type: loadout
+  id: WarlockLoadoutFactosRitual
+  equipment:
+    outerClothing: WarlockOuterGuildFactosRitual
+
+- type: loadout
+  id: WarlockLoadoutFactosCombat
+  equipment:
+    outerClothing: WarlockOuterGuildFactosCombat
+
+- type: loadout
   id: WarlockLoadoutFactosLordRobe
   equipment:
     outerClothing: WarlockOuterGuildFactosLord
+
+# --- Технос
+- type: loadout
+  id: WarlockLoadoutTechnosUniform
+  equipment:
+    jumpsuit: WarlockUniformGuildTechnos
+
+- type: loadout
+  id: WarlockLoadoutTechnosHood
+  equipment:
+    head: WarlockHeadGuildTechnos
+
+- type: loadout
+  id: WarlockLoadoutTechnosCadet
+  equipment:
+    outerClothing: WarlockOuterGuildTechnosCadet
+
+- type: loadout
+  id: WarlockLoadoutTechnosRobe
+  equipment:
+    outerClothing: WarlockOuterGuildTechnos
+
+- type: loadout
+  id: WarlockLoadoutTechnosRitual
+  equipment:
+    outerClothing: WarlockOuterGuildTechnosRitual
+
+- type: loadout
+  id: WarlockLoadoutTechnosCombat
+  equipment:
+    outerClothing: WarlockOuterGuildTechnosCombat
+
+- type: loadout
+  id: WarlockLoadoutTechnosLordRobe
+  equipment:
+    outerClothing: WarlockOuterGuildTechnosLord
 
 # --- Общее
 - type: loadout
@@ -73,9 +142,11 @@
 # ================================================================================================
 # Группы выбора
 #
-# minLimit 1 там, где без предмета выходить нельзя: облачение и обувь. Мантия и капюшон
-# необязательны — кто-то предпочтёт ходить в одном комбинезоне.
+# minLimit 1 там, где без предмета выходить нельзя: комбинезон, облачение и обувь.
+# Капюшон и символ необязательны — кто-то предпочтёт ходить с открытой головой.
 # ================================================================================================
+
+# --- Варлок
 - type: loadoutGroup
   id: WarlockGroupWarlockUniform
   name: loadout-group-warlock-uniform
@@ -93,21 +164,33 @@
   - WarlockLoadoutWarlockHood
 
 - type: loadoutGroup
+  id: WarlockGroupWarlockOuterCadet
+  name: loadout-group-warlock-outer
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutWarlockCadet
+  - WarlockLoadoutWarlockCombat
+
+- type: loadoutGroup
   id: WarlockGroupWarlockOuter
   name: loadout-group-warlock-outer
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutWarlockRobe
+  - WarlockLoadoutWarlockRitual
+  - WarlockLoadoutWarlockCombat
 
 - type: loadoutGroup
   id: WarlockGroupWarlockOuterLord
   name: loadout-group-warlock-outer
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutWarlockLordRobe
-  - WarlockLoadoutWarlockRobe
+  - WarlockLoadoutWarlockRitual
+  - WarlockLoadoutWarlockCombat
 
 - type: loadoutGroup
   id: WarlockGroupWarlockNeck
@@ -117,6 +200,7 @@
   loadouts:
   - WarlockLoadoutWarlockSymbol
 
+# --- Фактос
 - type: loadoutGroup
   id: WarlockGroupFactosUniform
   name: loadout-group-warlock-uniform
@@ -134,22 +218,81 @@
   - WarlockLoadoutFactosHood
 
 - type: loadoutGroup
+  id: WarlockGroupFactosOuterCadet
+  name: loadout-group-warlock-outer
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutFactosCadet
+  - WarlockLoadoutFactosCombat
+
+- type: loadoutGroup
   id: WarlockGroupFactosOuter
   name: loadout-group-warlock-outer
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutFactosRobe
+  - WarlockLoadoutFactosRitual
+  - WarlockLoadoutFactosCombat
 
 - type: loadoutGroup
   id: WarlockGroupFactosOuterLord
   name: loadout-group-warlock-outer
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutFactosLordRobe
-  - WarlockLoadoutFactosRobe
+  - WarlockLoadoutFactosRitual
+  - WarlockLoadoutFactosCombat
 
+# --- Технос
+- type: loadoutGroup
+  id: WarlockGroupTechnosUniform
+  name: loadout-group-warlock-uniform
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutTechnosUniform
+
+- type: loadoutGroup
+  id: WarlockGroupTechnosHead
+  name: loadout-group-warlock-head
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutTechnosHood
+
+- type: loadoutGroup
+  id: WarlockGroupTechnosOuterCadet
+  name: loadout-group-warlock-outer
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutTechnosCadet
+  - WarlockLoadoutTechnosCombat
+
+- type: loadoutGroup
+  id: WarlockGroupTechnosOuter
+  name: loadout-group-warlock-outer
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutTechnosRobe
+  - WarlockLoadoutTechnosRitual
+  - WarlockLoadoutTechnosCombat
+
+- type: loadoutGroup
+  id: WarlockGroupTechnosOuterLord
+  name: loadout-group-warlock-outer
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - WarlockLoadoutTechnosLordRobe
+  - WarlockLoadoutTechnosRitual
+  - WarlockLoadoutTechnosCombat
+
+# --- Общее
 - type: loadoutGroup
   id: WarlockGroupShoes
   name: loadout-group-warlock-shoes
@@ -216,7 +359,7 @@
   id: JobWarlockJobWarlockAdept
   groups:
   - WarlockGroupWarlockUniform
-  - WarlockGroupWarlockOuter
+  - WarlockGroupWarlockOuterCadet
   - WarlockGroupWarlockHead
   - WarlockGroupShoes
   - Trinkets
@@ -271,7 +414,62 @@
   id: JobWarlockJobFactosAdept
   groups:
   - WarlockGroupFactosUniform
-  - WarlockGroupFactosOuter
+  - WarlockGroupFactosOuterCadet
   - WarlockGroupFactosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+# --- Гильдия Технос
+- type: roleLoadout
+  id: JobWarlockJobTechnosArchtechnomage
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuterLord
+  - WarlockGroupTechnosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobTechnosSupremeTechnocrat
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuterLord
+  - WarlockGroupTechnosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobTechnosTechnosorcerer
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuter
+  - WarlockGroupTechnosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobTechnosTechnomancer
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuter
+  - WarlockGroupTechnosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobTechnosMage
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuter
+  - WarlockGroupTechnosHead
+  - WarlockGroupShoes
+  - Trinkets
+
+- type: roleLoadout
+  id: JobWarlockJobTechnosAdept
+  groups:
+  - WarlockGroupTechnosUniform
+  - WarlockGroupTechnosOuterCadet
+  - WarlockGroupTechnosHead
   - WarlockGroupShoes
   - Trinkets

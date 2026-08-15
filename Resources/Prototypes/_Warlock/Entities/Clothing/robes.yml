@@ -1,0 +1,172 @@
+# _Warlock
+# Ступени облачений трёх гильдий.
+#
+# Всего пять: кадетская, обычная, ритуальная, боевая, лордская. Обычная и лордская
+# объявлены раньше — первая в guilds.yml, вторая в ranks.yml, — здесь добавлены
+# три недостающие.
+#
+# Ранг читается по силуэту, а не только по цвету: кадетская короткая и без отделки,
+# ритуальная с полами и высоким воротом, боевая с нагрудником, лордская самая широкая.
+# Это сделано затем, чтобы в свалке было видно, кого бьют, даже когда цвет съеден
+# освещением пещеры.
+#
+# Цвета гильдий:
+#   Варлок  — золото с чёрным, молния
+#   Фактос  — чёрное с фиолетовым, глаз
+#   Технос  — белое с чёрным, шестерня
+#
+# Броню даёт только боевая ступень. Остальные — ткань, и защищать не обязаны.
+
+# ================================================================================================
+# Гильдия Варлок
+# ================================================================================================
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildWarlockCadet
+  name: кадетское облачение гильдии Варлок
+  description: >-
+    Короткая роба без отделки. Адепту не полагается ничего, что можно испортить,
+    а испортить он способен что угодно.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_cadet.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_cadet.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildWarlockRitual
+  name: ритуальное облачение гильдии Варлок
+  description: >-
+    Золото по чёрному и молния на груди. Надевается на обращение к Кассу и снимается
+    сразу после: работать в нём неудобно, и это осознанно.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_ritual.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_ritual.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildWarlockCombat
+  name: боевое облачение гильдии Варлок
+  description: >-
+    Та же роба, но с нагрудником поверх. Гильдия долго спорила, не оскорбление ли это
+    Кассу, и сошлась на том, что мёртвый жрец оскорбляет его сильнее.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_combat.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/warlock_combat.rsi
+  # Нагрудник поверх ткани: держит удар, но заметно хуже брони Братства.
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.85
+        Piercing: 0.9
+
+# ================================================================================================
+# Гильдия Фактос
+# ================================================================================================
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildFactosCadet
+  name: кадетское облачение гильдии Фактос
+  description: >-
+    Чёрная роба ученика. Глаза на груди ещё нет — Фактос считает, что смотреть
+    ученику пока нечем.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_cadet.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_cadet.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildFactosRitual
+  name: ритуальное облачение гильдии Фактос
+  description: >-
+    Чёрное с фиолетовым отливом, открытый глаз на груди. В темноте отлив виден
+    раньше, чем сам человек.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_ritual.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_ritual.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildFactosCombat
+  name: боевое облачение гильдии Фактос
+  description: >-
+    Нагрудник поверх чёрной робы. Глаз перенесён на пластину, чтобы его было
+    видно и с закрытым плащом.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_combat.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/factos_combat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.85
+        Piercing: 0.9
+
+# ================================================================================================
+# Гильдия Технос
+# ================================================================================================
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildTechnosCadet
+  name: кадетское облачение гильдии Технос
+  description: >-
+    Белая роба без шестерни. Технос выдаёт шестерню только после первой собранной
+    своими руками вещи, и не раньше.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_cadet.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_cadet.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildTechnosRitual
+  name: ритуальное облачение гильдии Технос
+  description: >-
+    Белое с чёрной оторочкой и шестерня на груди. Единственная роба Техноса,
+    на которой не бывает прожогов: в ней не работают.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_ritual.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_ritual.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterGuildTechnosCombat
+  name: боевое облачение гильдии Технос
+  description: >-
+    Нагрудник, собранный из того же, из чего собирают всё остальное. Держит удар
+    и держится сам — на честном слове и четырёх болтах.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_combat.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/technos_combat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.85
+        Piercing: 0.9
