@@ -1,0 +1,75 @@
+# _Warlock
+# Знамёна фракций.
+#
+# Чистое украшение для маппинга: боевой или механической роли у них нет. Нужны затем,
+# чтобы база читалась как чья-то с порога, до того как игрок встретит первого носителя
+# формы. На пустынной карте, где все базы сложены из одинакового железа и песчаника,
+# это единственное, что отличает храм Варлока от форпоста Техноса на расстоянии.
+#
+# Полотнище одно на фракцию, направлений нет. Родитель BannerBase — тот же, что у
+# ванильных знамён: он уже даёт нужную физику, разрушаемость и noRot.
+
+- type: entity
+  parent: BannerBase
+  id: WarlockBannerWarlock
+  name: знамя гильдии Варлок
+  suffix: Warlock
+  description: >-
+    Золото по чёрному, молния Касса. Полотнище перешивали трижды: каждый раскол гильдия
+    отмечала тем, что срезала старый знак и клала новый на то же место.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Structures/Decoration/Banners/warlock.rsi
+    state: banner
+
+- type: entity
+  parent: BannerBase
+  id: WarlockBannerFactos
+  name: знамя гильдии Фактос
+  suffix: Warlock
+  description: >-
+    Открытый глаз на чёрном. Вблизи видно, что зрачок вышит отдельной нитью и она
+    единственная во всём полотнище не выцвела.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Structures/Decoration/Banners/factos.rsi
+    state: banner
+
+- type: entity
+  parent: BannerBase
+  id: WarlockBannerTechnos
+  name: знамя гильдии Технос
+  suffix: Warlock
+  description: >-
+    Шестерня по белому. Технос вешает знамя только там, где что-то собирают, и снимает,
+    когда мастерская переезжает.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Structures/Decoration/Banners/technos.rsi
+    state: banner
+
+- type: entity
+  parent: BannerBase
+  id: WarlockBannerBrotherhood
+  name: знамя Братства Стали
+  suffix: Warlock
+  description: >-
+    Зубчатое колесо Механтехиона на стальном поле. Полотнище не ткали, а сварили из
+    полос: Братство не считает ткань достойным материалом для присяги.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Structures/Decoration/Banners/brotherhood.rsi
+    state: banner
+
+- type: entity
+  parent: BannerBase
+  id: WarlockBannerUnathi
+  name: знамя Королевства Унатхи
+  suffix: Warlock
+  description: >-
+    Три когтя на выделанной коже. Кожа не крашеная — цвет у неё свой, и что это была
+    за кожа, королевство не уточняет.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Structures/Decoration/Banners/unathi.rsi
+    state: banner

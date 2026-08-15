@@ -59,17 +59,19 @@
     Та же сварная броня, но заплаты на ней выложены в восемь зубьев. Право носить этот узор
     в Братстве не присваивают, его забирают у предыдущего владельца.
   components:
+  # Тот же наш спрайт, что у рядовой брони, подкрашенный в командирскую латунь.
+  # Здесь покраска слоем оправдана: она и должна перебить стальной тон целиком.
   - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
     layers:
     - state: icon
-      color: "#8a7a4a"
+      color: "#c8a86a"
   - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
     clothingVisuals:
       outerClothing:
       - state: equipped-OUTERCLOTHING
-        color: "#8a7a4a"
+        color: "#c8a86a"
   - type: Armor
     modifiers:
       coefficients:

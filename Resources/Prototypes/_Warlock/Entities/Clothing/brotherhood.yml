@@ -31,17 +31,13 @@
     Сваренная из чужого нагрудная броня. Каждая заплата — трофей, и Братство считает,
     что снимать их непочтительно по отношению к Механтехиону.
   components:
+  # Свой спрайт. Цвет уже в графике, красить слоем не надо — покраска поверх
+  # своего спрайта убила бы латунь на гербе и заклёпки.
   - type: Sprite
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-    layers:
-    - state: icon
-      color: "#6f7360"
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/OuterClothing/Armor/heavy.rsi
-    clothingVisuals:
-      outerClothing:
-      - state: equipped-OUTERCLOTHING
-        color: "#6f7360"
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -94,14 +90,9 @@
     Респиратор со сменным картриджем. Братство носит его не от газа, а потому что
     дышать через машину считается правильнее, чем дышать самому.
   components:
+  # Свой спрайт, цвет уже в графике.
   - type: Sprite
-    sprite: Clothing/Mask/gas.rsi
-    layers:
-    - state: icon
-      color: "#6f7360"
+    sprite: _Warlock/Clothing/Mask/brotherhood_gas.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Mask/gas.rsi
-    clothingVisuals:
-      mask:
-      - state: equipped-MASK
-        color: "#6f7360"
+    sprite: _Warlock/Clothing/Mask/brotherhood_gas.rsi

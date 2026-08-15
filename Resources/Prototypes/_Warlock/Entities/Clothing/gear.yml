@@ -1,0 +1,212 @@
+# _Warlock
+# Лицевое снаряжение гильдий: маски, респираторы, линзы.
+#
+# Подбор исходных силуэтов шёл от лора, а не от удобства:
+#
+#   Варлок  — кассолюбы. Лицевое у них в первую очередь молитвенная утварь, и только
+#             потом защита. Отсюда чеканная маска и линзы для чтения обелиска.
+#   Фактос  — прячут лицо целиком. Их маска глухая, а линзы непроглядные.
+#   Технос  — работают руками. Всё лицевое сугубо рабочее, без обрядовой части.
+#
+# Ничего из этого не даёт защиты от урона: это одежда, а не броня. Респираторы
+# фильтруют воздух ванильным BreathMask, потому что в пещерах есть чем травиться.
+
+# ================================================================================================
+# Гильдия Варлок
+# ================================================================================================
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskWarlockPrayer
+  name: молитвенная маска Касса
+  description: >-
+    Чеканный лик без прорези для рта. Надевается, когда обращаются к Кассу вслух:
+    гильдия считает, что просьбу должен слышать он, а не стоящие рядом.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/warlock_prayer.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/warlock_prayer.rsi
+  # Маска глухая, говорить в ней внятно нельзя. relayAccent переносит эффект
+  # с самой маски на того, кто её надел — без него бубнила бы маска, а не человек.
+  - type: MumbleAccent
+    relayAccent: true
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskWarlockRespirator
+  name: респиратор паломника
+  description: >-
+    Фильтр в золочёном кожухе. Кожух ничего не делает, но спускаться к обелиску
+    в некрашеном железе у Варлока не принято.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/warlock_respirator.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/warlock_respirator.rsi
+  # Фильтрует воздух. В ванили это компонент, а не отдельный предок.
+  - type: BreathMask
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingEyesBase
+  id: WarlockEyesWarlockLenses
+  name: линзы чтеца
+  description: >-
+    Толстые стёкла в золотой оправе. Нужны тем, кто подолгу разбирает надписи на камне,
+    и бесполезны всем остальным.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Eyes/warlock_lenses.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Eyes/warlock_lenses.rsi
+
+# ================================================================================================
+# Гильдия Фактос
+# ================================================================================================
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskFactosBlind
+  name: глухая маска Фактос
+  description: >-
+    Клювастая маска без единого отверстия на виду. Фактос считает, что лицо — это то,
+    за что можно взяться, и не отдаёт его никому.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/factos_blind.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/factos_blind.rsi
+  # Лицо не читается: в маске Фактос — это просто «кто-то из Фактос».
+  - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskFactosRespirator
+  name: респиратор Фактос
+  description: Чёрный фильтр с фиолетовым ободом. Обод — единственное, по чему его отличают от чужого.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/factos_respirator.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/factos_respirator.rsi
+  # Фильтрует воздух. В ванили это компонент, а не отдельный предок.
+  - type: BreathMask
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingEyesBase
+  id: WarlockEyesFactosLenses
+  name: непроглядные линзы
+  description: >-
+    Сквозь них не видно глаз. Изнутри видно хуже, чем без них, и Фактос считает
+    это приемлемой платой.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Eyes/factos_lenses.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Eyes/factos_lenses.rsi
+
+# ================================================================================================
+# Гильдия Технос
+# ================================================================================================
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskTechnosRespirator
+  name: рабочий респиратор Технос
+  description: >-
+    Двухпатронный респиратор с открытыми хомутами. Технос принципиально не прячет
+    крепёж: что не видно, то не проверишь.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/technos_respirator.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/technos_respirator.rsi
+  # Фильтрует воздух. В ванили это компонент, а не отдельный предок.
+  - type: BreathMask
+  - type: IngestionBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: WarlockMaskTechnosWelding
+  name: сварочная маска Технос
+  description: >-
+    Щиток на откидной петле. Из всего снаряжения гильдии эта вещь чаще прочих
+    возвращается прожжённой.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Mask/technos_welding.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Mask/technos_welding.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: WarlockEyesTechnosGoggles
+  name: защитные очки Технос
+  description: Простые очки в стальной оправе. Единственное, что стоит между глазом и окалиной.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Eyes/technos_goggles.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Eyes/technos_goggles.rsi
+
+# ================================================================================================
+# Братство Стали
+# ================================================================================================
+- type: entity
+  parent: ClothingOuterBase
+  id: WarlockOuterBrotherhoodRobe
+  name: балахон Братства
+  description: >-
+    Подпоясанный балахон поверх формы. Братство надевает его в переходах: в раме
+    можно воевать, но нельзя спать.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Robes/brotherhood_robe.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Robes/brotherhood_robe.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadBrotherhoodBeret
+  name: берет Братства
+  description: >-
+    Стальной берет с зубчатой кокардой. Носится вне боя, и по нему в Братстве
+    отличают своего быстрее, чем по лицу.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Head/Hats/brotherhood_beret.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Head/Hats/brotherhood_beret.rsi
+
+- type: entity
+  parent: WarlockHeadBrotherhoodBeret
+  id: WarlockHeadBrotherhoodBeretCommand
+  name: берет командира Братства
+  description: >-
+    Тот же берет, перекрашенный в латунь. Право на этот цвет в Братстве
+    не присваивают, его забирают у предыдущего владельца.
+  components:
+  # Латунь поверх стали — здесь покраска слоем оправдана, она и должна
+  # перебить основной тон целиком.
+  - type: Sprite
+    sprite: _Warlock/Clothing/Head/Hats/brotherhood_beret.rsi
+    layers:
+    - state: icon
+      color: "#c8a86a"
+  - type: Clothing
+    sprite: _Warlock/Clothing/Head/Hats/brotherhood_beret.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#c8a86a"

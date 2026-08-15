@@ -1,0 +1,155 @@
+# _Warlock
+# Экзоскелеты Братства Стали.
+#
+# Три рамы разного веса. Логика у всех одна: пока в слоте живая батарея и рама включена,
+# боец бьёт заметно сильнее и почти не чувствует веса. Сядет батарея — ToggleCellDraw
+# выключит раму сам, и она превратится в груз, с которым не догнать и не убежать.
+#
+# Питание целиком ванильное: PowerCellSlot держит батарею, PowerCellDraw её тратит,
+# ToggleCellDraw связывает расход с включением и гасит раму при нуле, ItemToggle даёт
+# сам переключатель. Свой только WarlockExosuit — прибавка к удару и тяжесть мёртвой рамы,
+# потому что ванильный ClothingSpeedModifier умеет замедлять лишь когда вещь включена,
+# а нужно ровно наоборот.
+#
+# Числа подобраны так, чтобы выбор рамы был выбором, а не лестницей: тяжёлая бьёт
+# сильнее всех, но и обесточенная роняет скорость почти вдвое, а батарею жрёт втрое
+# быстрее лёгкой.
+#
+# СПРАЙТЫ ВРЕМЕННЫЕ. Все три рамы пока используют спрайт брони Братства с разной
+# подкраской. Отдельные спрайты рам не нарисованы: их отрисовка требует песочницы,
+# которая на момент правки отвалилась. Свои спрайты лягут в
+# _Warlock/Clothing/OuterClothing/Exosuits/{light,medium,heavy}.rsi — тогда достаточно
+# сменить путь и убрать слои с color.
+
+# ================================================================================================
+# Общий предок
+# ================================================================================================
+- type: entity
+  abstract: true
+  parent: [ ClothingOuterBase, PowerCellSlotMediumItem ]
+  id: WarlockBaseExosuit
+  components:
+  - type: ItemToggle
+    onActivate: false
+    onUse: false
+  - type: ToggleCellDraw
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.9
+  # Рама вокруг тела мешает лечить того, кто в ней. Братство считает это приемлемым.
+  - type: Tag
+    tags:
+    - WarlockExosuit
+
+# ================================================================================================
+# Лёгкая рама
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseExosuit
+  id: WarlockExosuitLight
+  name: лёгкая рама Братства
+  description: >-
+    Приводы на плечах и поясе, остальное — ремни. Собрана из того, что нашлось, и держится
+    на честном слове, зато снять её можно быстрее, чем она успеет стать проблемой.
+  components:
+  # ВРЕМЕННО: пока своей рамы не нарисовано, берём спрайт брони Братства и осветляем.
+  # Отдельные спрайты трёх рам — в следующей пачке, тогда путь сменится на
+  # _Warlock/Clothing/OuterClothing/Exosuits/light.rsi
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    layers:
+    - state: icon
+      color: "#b8c2ce"
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#b8c2ce"
+  - type: PowerCellDraw
+    drawRate: 1.5
+    useCharge: 0
+  - type: WarlockExosuit
+    strengthBonus: 1.2
+    poweredWalk: 1.0
+    poweredSprint: 1.0
+    deadWalk: 0.8
+    deadSprint: 0.75
+
+# ================================================================================================
+# Средняя рама
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseExosuit
+  id: WarlockExosuitMedium
+  name: рама Братства
+  description: >-
+    Полный каркас с приводами на всех суставах. То, что Братство считает нормой, и то,
+    в чём оно обычно приходит.
+  components:
+  # ВРЕМЕННО, см. лёгкую раму. Средняя идёт без подкраски — это опорный стальной тон.
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+  - type: PowerCellDraw
+    drawRate: 3
+    useCharge: 0
+  - type: WarlockExosuit
+    strengthBonus: 1.35
+    poweredWalk: 0.95
+    poweredSprint: 0.95
+    deadWalk: 0.55
+    deadSprint: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.8
+
+# ================================================================================================
+# Тяжёлая рама
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseExosuit
+  id: WarlockExosuitHeavy
+  name: тяжёлая рама Братства
+  description: >-
+    Штурмовая рама. В ней ломают двери и держат проходы, но батарея в ней живёт недолго,
+    а без батареи из неё ещё надо суметь выбраться.
+  components:
+  # ВРЕМЕННО, см. лёгкую раму. Тяжёлая затемнена — она должна читаться самой массивной.
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    layers:
+    - state: icon
+      color: "#6a727c"
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#6a727c"
+  - type: PowerCellDraw
+    drawRate: 5
+    useCharge: 0
+  - type: WarlockExosuit
+    strengthBonus: 1.6
+    poweredWalk: 0.85
+    poweredSprint: 0.8
+    deadWalk: 0.4
+    deadSprint: 0.35
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.7
+        Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.7
