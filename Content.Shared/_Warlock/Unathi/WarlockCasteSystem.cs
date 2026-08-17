@@ -32,6 +32,7 @@ public sealed partial class WarlockCasteSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MobThresholdSystem _thresholds = default!;
 
     public override void Initialize()
     {
@@ -94,26 +95,19 @@ public sealed partial class WarlockCasteSystem : EntitySystem
             || caste.Caste != WarlockCaste.Legionary)
             return 1f;
 
-        if (!TryComp<DamageableComponent>(user, out var dmg)
-            || !TryComp<MobThresholdsComponent>(user, out var thresholds))
-            return 1f;
-
-        // Доля потерянного здоровья до порога смерти.
+        // Порог смерти и накопленный урон берутся через системы, а не из полей.
         //
-        // Словарь порогов устроен наоборот привычного: ключ — это количество урона,
-        // значение — состояние, в которое моб от него переходит. Перебирать надо
-        // по ключам, а не искать состояние в ключах.
-        var dead = 0f;
-        foreach (var (value, state) in thresholds.Thresholds)
-        {
-            if (state == Content.Shared.Mobs.MobState.Dead)
-                dead = value.Float();
-        }
-
-        if (dead <= 0f)
+        // К DamageableComponent.TotalDamage песочница движка не пускает: у поля
+        // права rwxrwx---, и прямое чтение падает анализатором RA0002. Разбирать
+        // словарь порогов руками тоже не надо — для этого есть готовый вызов,
+        // и он заодно устойчив к тому, что порогов у моба может быть несколько.
+        if (!_thresholds.TryGetDeadThreshold(user, out var deadThreshold)
+            || deadThreshold is not { } dead
+            || dead <= 0)
             return 1f;
 
-        var hurt = Math.Clamp(dmg.TotalDamage.Float() / dead, 0f, 1f);
+        var total = _damageable.GetTotalDamage(user);
+        var hurt = Math.Clamp((total / dead).Float(), 0f, 1f);
         return 1f + caste.RageDamage * hurt;
     }
 

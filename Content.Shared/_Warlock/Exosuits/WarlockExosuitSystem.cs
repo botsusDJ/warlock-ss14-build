@@ -135,18 +135,26 @@ public sealed partial class WarlockExosuitSystem : EntitySystem
     /// </summary>
     private float CellOutput(Entity<WarlockExosuitComponent> ent)
     {
-        return TryGetCell(ent, out var cell) ? cell.Value.Comp.Output : 1f;
+        return TryGetCell(ent, out var cell) ? cell.Comp.Output : 1f;
     }
 
-    private bool TryGetCell(Entity<WarlockExosuitComponent> ent, out Entity<WarlockExoCellComponent>? cell)
+    /// <summary>
+    /// Достать из слота ячейку рамы, если там именно она, а не обычная батарея.
+    ///
+    /// out-параметр не Nullable намеренно: с Entity&lt;T&gt;? каждое обращение
+    /// требовало бы .Value, и компилятор всё равно ругался бы на возможный null.
+    /// </summary>
+    private bool TryGetCell(Entity<WarlockExosuitComponent> ent, out Entity<WarlockExoCellComponent> cell)
     {
-        cell = null;
-        if (!_cell.TryGetBatteryFromSlot(ent.Owner, out var batteryUid, out _))
-            return false;
-        if (batteryUid is not { } uid || !TryComp<WarlockExoCellComponent>(uid, out var comp))
+        cell = default;
+
+        // TryGetBatteryFromSlot принимает два аргумента и сам отдаёт Entity с компонентом.
+        if (!_cell.TryGetBatteryFromSlot(ent.Owner, out var battery)
+            || battery is not { } b
+            || !TryComp<WarlockExoCellComponent>(b.Owner, out var comp))
             return false;
 
-        cell = (uid, comp);
+        cell = (b.Owner, comp);
         return true;
     }
 
@@ -196,7 +204,7 @@ public sealed partial class WarlockExosuitSystem : EntitySystem
     public void AddHeat(Entity<WarlockExosuitComponent> ent, float amount)
     {
         if (TryGetCell(ent, out var cell))
-            amount *= cell!.Value.Comp.HeatFactor;
+            amount *= cell.Comp.HeatFactor;
 
         ent.Comp.Heat = Math.Clamp(ent.Comp.Heat + amount, 0f, ent.Comp.MaxHeat);
         Dirty(ent);
@@ -288,7 +296,7 @@ public sealed partial class WarlockExosuitSystem : EntitySystem
 
         // Потолок достигнут. Дальше решает ограничитель — и удача.
         var unstable = ent.Comp.UnstableChance
-                       + (TryGetCell(ent, out var cell) ? cell!.Value.Comp.UnstableBonus : 0f);
+                       + (TryGetCell(ent, out var cell) ? cell.Comp.UnstableBonus : 0f);
 
         if (ent.Comp.Limiter && !_random.Prob(unstable))
         {
