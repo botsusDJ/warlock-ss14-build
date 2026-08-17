@@ -1,0 +1,28 @@
+# _Warlock
+# Указатель боли.
+#
+# Четыре ступени: ноет, режет, агония, затмение. Нулевая ступень алерта не имеет —
+# когда боли нет, значок просто пропадает, и в интерфейсе не остаётся мусора.
+#
+# Категорию задавать НЕЛЬЗЯ. Алерты одной категории вытесняют друг друга, и с
+# category: Health боль дралась бы за один слот с полоской здоровья — а смотреть
+# на них надо одновременно, в этом весь смысл.
+#
+# Спрайт пока ванильный, из набора кровотечения: ступени там идут по нарастающей
+# и по смыслу подходят. Свой значок — в очередь на отрисовку.
+
+- type: alert
+  id: WarlockPain
+  icons:
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed2
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed5
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed8
+  - sprite: /Textures/Interface/Alerts/bleed.rsi
+    state: bleed10
+  minSeverity: 1
+  maxSeverity: 4
+  name: alerts-warlock-pain-name
+  description: alerts-warlock-pain-desc

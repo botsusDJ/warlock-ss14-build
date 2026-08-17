@@ -241,6 +241,17 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             return false;
         }
 
+        // _Warlock: единственная точка, где вообще можно повлиять на длительность
+        // взаимодействия. Своего механизма у ванили нет: Delay проставляется на месте
+        // вызова, и каждый такой вызов пришлось бы править по отдельности — их сотни.
+        //
+        // Событие поднимается на исполнителе, обработчики домножают Multiplier.
+        // Никто не подписан — множитель остаётся единицей, и поведение ванильное.
+        var warlockSpeed = new Content.Shared._Warlock.Interaction.WarlockDoAfterSpeedEvent();
+        RaiseLocalEvent(args.User, ref warlockSpeed);
+        if (!MathHelper.CloseTo(warlockSpeed.Multiplier, 1f))
+            args.Delay *= warlockSpeed.Multiplier;
+
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 

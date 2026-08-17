@@ -1,0 +1,20 @@
+# _Warlock
+# Одежда, привязанная к кастам унатхов.
+#
+# Капюшон десятника — знак того, кто ведёт десяток. Каста при этом остаётся своей:
+# десятником ставят и легионера, и строителя, и знак это не меняет. Он про место
+# в строю, а не про то, кем унатх вылупился.
+
+- type: entity
+  parent: ClothingHeadBase
+  id: WarlockHeadUnathiDecurion
+  name: капюшон десятника
+  description: >-
+    Простой капюшон с костяной застёжкой у горла. Застёжку снимают с предыдущего
+    десятника, и она редко бывает целой.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/Head/Hoods/unathi_decurion.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Warlock/Clothing/Head/Hoods/unathi_decurion.rsi

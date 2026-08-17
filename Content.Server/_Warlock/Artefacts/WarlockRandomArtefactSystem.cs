@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Shared._Warlock.Artefacts;
 using Content.Shared._Warlock.Injuries;
 using Content.Shared._Warlock.Psionics;
+using Content.Shared._Warlock.Unathi;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -129,8 +130,23 @@ public sealed partial class WarlockRandomArtefactSystem : EntitySystem
 
     private void OnExamined(Entity<WarlockRandomArtefactComponent> ent, ref ExaminedEvent args)
     {
-        // Что именно внутри, осмотр не говорит: узнать можно только применив.
         args.PushMarkup(Loc.GetString("warlock-relic-examine", ("uses", ent.Comp.Uses)));
+
+        // Обычному игроку осмотр содержимого не выдаёт: узнать можно только применив,
+        // и в этом весь риск находки. Но тот, кто умеет читать камень, видит всё сразу —
+        // высшая каста унатхов, ритуалисты, архимаги и Фактос целиком. Это и есть
+        // их главная ценность в отряде: они превращают лотерею в работу.
+        if (HasComp<WarlockArtefactSightComponent>(args.Examiner))
+        {
+            foreach (var effect in ent.Comp.Effects)
+            {
+                args.PushMarkup(Loc.GetString("warlock-relic-sight",
+                    ("effect", Loc.GetString($"warlock-relic-{effect.ToString().ToLowerInvariant()}"))));
+            }
+
+            if (ent.Comp.Effects.Count == 0)
+                args.PushMarkup(Loc.GetString("warlock-relic-sight-empty"));
+        }
 
         if (_timing.CurTime < ent.Comp.NextUse)
             args.PushMarkup(Loc.GetString("warlock-relic-examine-cooling"));

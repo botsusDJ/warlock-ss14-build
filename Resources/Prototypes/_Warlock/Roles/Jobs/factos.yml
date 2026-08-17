@@ -19,6 +19,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockUnionCommand
@@ -52,6 +56,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockUnionCommand
@@ -85,6 +93,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockFactos
@@ -116,6 +128,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockFactos
@@ -147,6 +163,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockFactos
@@ -178,6 +198,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
 

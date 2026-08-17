@@ -2,6 +2,7 @@ using Content.Shared._Warlock.Artefacts.Components;
 using Content.Shared._Warlock.Combat.Components;
 using Content.Shared._Warlock.Combat.Events;
 using Content.Shared._Warlock.Exosuits;
+using Content.Shared._Warlock.Pain;
 using Content.Shared._Warlock.Unathi;
 using Content.Shared.Alert;
 using Content.Shared.Damage.Components;
@@ -29,6 +30,9 @@ public sealed partial class WarlockAttackStrengthSystem : EntitySystem
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStaminaSystem _stamina = default!;
+    [Dependency] private WarlockCasteSystem _caste = default!;
+    [Dependency] private WarlockExosuitSystem _exosuit = default!;
+    [Dependency] private WarlockPainSystem _pain = default!;
 
     public override void Initialize()
     {
@@ -129,11 +133,20 @@ public sealed partial class WarlockAttackStrengthSystem : EntitySystem
         if (TryComp<WarlockAtrakFangComponent>(ent.Owner, out var fang))
             modifier *= 1f + MathF.Min(fang.Kills * fang.DamagePerKill, fang.MaxBonus);
 
-        // И приводы экзоскелета Братства — сюда же. Число уже посчитано системой
-        // экзоскелетов и лежит на самом бойце: лазить в инвентарь на каждый замах
-        // дорого, удар — самое частое событие в бою.
-        if (TryComp<WarlockExosuitWearerComponent>(args.User, out var exosuit))
-            modifier *= exosuit.Bonus;
+        // И приводы экзоскелета — сюда же. Какой канал рамы работает, зависит от того,
+        // чем бьют: если оружие и есть сам боец, то это кулаки, и мощность берётся
+        // из кулачного канала. Иначе работает кисть, держащая предмет.
+        var unarmed = ent.Owner == args.User;
+        modifier *= _exosuit.MeleeModifier(args.User, unarmed);
+        _exosuit.HeatFromSwing(args.User);
+
+        // Ярость легионера: чем хуже ему самому, тем сильнее он бьёт.
+        modifier *= _caste.MeleeModifier(args.User);
+
+        // Боль. Считается здесь по той же причине, что берсерк и клык: пара
+        // MeleeWeaponComponent + GetMeleeDamageEvent допускает одну подписку
+        // на весь билд, и она занята этим методом.
+        modifier *= _pain.MeleeModifier(args.User);
 
         if (MathHelper.CloseTo(modifier, 1f))
             return;

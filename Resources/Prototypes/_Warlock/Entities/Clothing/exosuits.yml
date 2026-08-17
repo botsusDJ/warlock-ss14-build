@@ -1,24 +1,24 @@
 # _Warlock
-# Экзоскелеты Братства Стали.
+# Экзоскелеты.
 #
-# Три рамы разного веса. Логика у всех одна: пока в слоте живая батарея и рама включена,
-# боец бьёт заметно сильнее и почти не чувствует веса. Сядет батарея — ToggleCellDraw
-# выключит раму сам, и она превратится в груз, с которым не догнать и не убежать.
+# Логика у всех одна: пока в слоте живая ячейка и рама включена, боец бьёт сильнее
+# и почти не чувствует веса. Села ячейка — ToggleCellDraw выключит раму сам, и она
+# станет грузом, с которым не догнать и не убежать.
 #
-# Питание целиком ванильное: PowerCellSlot держит батарею, PowerCellDraw её тратит,
+# Питание целиком ванильное: PowerCellSlot держит ячейку, PowerCellDraw её тратит,
 # ToggleCellDraw связывает расход с включением и гасит раму при нуле, ItemToggle даёт
-# сам переключатель. Свой только WarlockExosuit — прибавка к удару и тяжесть мёртвой рамы,
-# потому что ванильный ClothingSpeedModifier умеет замедлять лишь когда вещь включена,
-# а нужно ровно наоборот.
+# сам переключатель. Свой только WarlockExosuit — распределение мощности, жар, выброс
+# и сила для отрыва конечностей.
 #
-# Числа подобраны так, чтобы выбор рамы был выбором, а не лестницей: тяжёлая бьёт
-# сильнее всех, но и обесточенная роняет скорость почти вдвое, а батарею жрёт втрое
-# быстрее лёгкой.
+# Кому что досталось. Это не лестница мощности, а расстановка сил на карте:
 #
-# СПРАЙТЫ ВРЕМЕННЫЕ. Все три рамы пока используют спрайт брони Братства с разной
-# подкраской. Отдельные спрайты рам не нарисованы: их отрисовка требует песочницы,
-# которая на момент правки отвалилась. Свои спрайты лягут в
-# _Warlock/Clothing/OuterClothing/Exosuits/{light,medium,heavy}.rsi — тогда достаточно
+#   Братство Стали — малая, боевая, штурмовая. Рамы у них в обилии, это их язык.
+#   Фактос         — боевая и опытная. Опытную они собрали сами и сами не понимают.
+#   Технос, Варлок — только малая. Обе гильдии в рамы не умеют и берут их как трофей.
+#   Унатхи         — прото-рама. Выращена, а не собрана, и работает соответственно.
+#
+# СПРАЙТЫ ВРЕМЕННЫЕ. Все рамы пока используют спрайт брони Братства с подкраской.
+# Свои спрайты лягут в _Warlock/Clothing/OuterClothing/Exosuits/ — тогда достаточно
 # сменить путь и убрать слои с color.
 
 # ================================================================================================
@@ -39,25 +39,31 @@
         Blunt: 0.85
         Slash: 0.85
         Piercing: 0.9
-  # Рама вокруг тела мешает лечить того, кто в ней. Братство считает это приемлемым.
   - type: Tag
     tags:
     - WarlockExosuit
+  # ОС. Доступна и в руках, и надетой: настраивать раму полагается до боя,
+  # а не в тот момент, когда по вам уже бьют.
+  - type: ActivatableUI
+    key: enum.WarlockExoOsUiKey.Key
+    inHandsOnly: false
+    requireActiveHand: false
+  - type: UserInterface
+    interfaces:
+      enum.WarlockExoOsUiKey.Key:
+        type: WarlockExoOsBoundUserInterface
 
 # ================================================================================================
-# Лёгкая рама
+# Малая рама — Братство, Технос, Варлок
 # ================================================================================================
 - type: entity
   parent: WarlockBaseExosuit
   id: WarlockExosuitLight
-  name: лёгкая рама Братства
+  name: лёгкая рама
   description: >-
-    Приводы на плечах и поясе, остальное — ремни. Собрана из того, что нашлось, и держится
-    на честном слове, зато снять её можно быстрее, чем она успеет стать проблемой.
+    Приводы на плечах и поясе, остальное — ремни. Собрана из того, что нашлось,
+    зато снять её можно быстрее, чем она успеет стать проблемой.
   components:
-  # ВРЕМЕННО: пока своей рамы не нарисовано, берём спрайт брони Братства и осветляем.
-  # Отдельные спрайты трёх рам — в следующей пачке, тогда путь сменится на
-  # _Warlock/Clothing/OuterClothing/Exosuits/light.rsi
   - type: Sprite
     sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
     layers:
@@ -73,24 +79,30 @@
     drawRate: 1.5
     useCharge: 0
   - type: WarlockExosuit
+    frame: Small
     strengthBonus: 1.2
     poweredWalk: 1.0
     poweredSprint: 1.0
     deadWalk: 0.8
     deadSprint: 0.75
+    heatPerSecond: 1.4
+    heatPerSwing: 2.2
+    coolPerSecond: 2.0
+    # Малой рамой здоровую конечность не оторвать. Только уже сломанную —
+    # и это единственный способ, которым Технос или Варлок вообще увидят отрыв.
+    tearStrength: 1.0
 
 # ================================================================================================
-# Средняя рама
+# Боевая рама — Братство, Фактос
 # ================================================================================================
 - type: entity
   parent: WarlockBaseExosuit
   id: WarlockExosuitMedium
-  name: рама Братства
+  name: боевая рама
   description: >-
-    Полный каркас с приводами на всех суставах. То, что Братство считает нормой, и то,
-    в чём оно обычно приходит.
+    Полный каркас с приводами на всех суставах. То, что Братство считает нормой,
+    и то, в чём оно обычно приходит.
   components:
-  # ВРЕМЕННО, см. лёгкую раму. Средняя идёт без подкраски — это опорный стальной тон.
   - type: Sprite
     sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
     state: icon
@@ -100,11 +112,9 @@
     drawRate: 3
     useCharge: 0
   - type: WarlockExosuit
+    frame: Standard
     strengthBonus: 1.35
-    poweredWalk: 0.95
-    poweredSprint: 0.95
-    deadWalk: 0.55
-    deadSprint: 0.5
+    tearStrength: 1.5
   - type: Armor
     modifiers:
       coefficients:
@@ -113,17 +123,16 @@
         Piercing: 0.8
 
 # ================================================================================================
-# Тяжёлая рама
+# Штурмовая рама — Братство
 # ================================================================================================
 - type: entity
   parent: WarlockBaseExosuit
   id: WarlockExosuitHeavy
-  name: тяжёлая рама Братства
+  name: штурмовая рама
   description: >-
-    Штурмовая рама. В ней ломают двери и держат проходы, но батарея в ней живёт недолго,
-    а без батареи из неё ещё надо суметь выбраться.
+    В ней ломают двери и держат проходы. Ячейка в ней живёт недолго, а без ячейки
+    из неё ещё надо суметь выбраться.
   components:
-  # ВРЕМЕННО, см. лёгкую раму. Тяжёлая затемнена — она должна читаться самой массивной.
   - type: Sprite
     sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
     layers:
@@ -139,11 +148,15 @@
     drawRate: 5
     useCharge: 0
   - type: WarlockExosuit
+    frame: Heavy
     strengthBonus: 1.6
     poweredWalk: 0.85
     poweredSprint: 0.8
     deadWalk: 0.4
     deadSprint: 0.35
+    heatPerSecond: 3.0
+    heatPerSwing: 4.5
+    tearStrength: 2.0
   - type: Armor
     modifiers:
       coefficients:
@@ -153,3 +166,91 @@
         Heat: 0.85
   - type: ExplosionResistance
     damageCoefficient: 0.7
+
+# ================================================================================================
+# Опытная рама — Фактос
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseExosuit
+  id: WarlockExosuitExperimental
+  name: опытная рама Фактос
+  description: >-
+    Собрана вокруг находки, а не вокруг человека. Мощнее всего, что есть у Братства,
+    и ровно поэтому Фактос надевает её последней.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    layers:
+    - state: icon
+      color: "#7a5ea8"
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#7a5ea8"
+  - type: PowerCellDraw
+    drawRate: 4
+    useCharge: 0
+  - type: WarlockExosuit
+    frame: Experimental
+    strengthBonus: 1.75
+    poweredWalk: 0.92
+    poweredSprint: 0.9
+    deadWalk: 0.45
+    deadSprint: 0.4
+    heatPerSecond: 3.4
+    heatPerSwing: 5.0
+    tearStrength: 2.4
+    # Опытная рама уходит в выброс даже с исправным ограничителем.
+    # Это не поломка, а её свойство.
+    unstableChance: 0.4
+    dischargeDamage: 30
+    dischargeRange: 4.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.75
+
+# ================================================================================================
+# Прото-рама — унатхи
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseExosuit
+  id: WarlockExosuitProto
+  name: прото-рама унатхов
+  description: >-
+    Не собрана, а выращена. Тёплая на ощупь и всегда чуть влажная изнутри. Унатхи
+    говорят, что она не носится, а соглашается — и это не оборот речи.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    layers:
+    - state: icon
+      color: "#8a6a3a"
+  - type: Clothing
+    sprite: _Warlock/Clothing/OuterClothing/Armor/brotherhood.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+        color: "#8a6a3a"
+  - type: PowerCellDraw
+    drawRate: 3.5
+    useCharge: 0
+  - type: WarlockExosuit
+    frame: Proto
+    strengthBonus: 1.5
+    poweredWalk: 0.98
+    poweredSprint: 0.98
+    deadWalk: 0.6
+    deadSprint: 0.55
+    # Греется от самого факта работы: теплоотвода в ней нет, потому что
+    # у того, из чего её вырастили, теплоотвода не было.
+    heatPerSecond: 4.2
+    heatPerSwing: 4.0
+    coolPerSecond: 1.0
+    scorchAt: 55
+    tearStrength: 2.2
+    unstableChance: 0.25

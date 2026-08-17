@@ -159,6 +159,9 @@
     - WarlockActionCycleAttackStrength
   # _Warlock: летопись тела — синяки, ссадины, переломы, шрамы и клейма.
   - type: WarlockInjuries
+  # _Warlock: боль. Промежуток между «цел» и «выключен», которого нет в ванили.
+  # Чувствительность правится на уровне расы: у хладнокровных она ниже.
+  - type: WarlockPain
 
 - type: entity
   abstract: true

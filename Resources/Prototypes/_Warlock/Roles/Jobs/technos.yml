@@ -17,6 +17,10 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockArtefactSight
   access:
   - WarlockUnion
   - WarlockUnionCommand

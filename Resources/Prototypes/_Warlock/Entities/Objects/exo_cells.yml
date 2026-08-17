@@ -1,0 +1,81 @@
+# _Warlock
+# Ячейки экзоскелетов.
+#
+# Обычная батарея в раму встанет и работать будет, но характер рамы не изменит.
+# Специальная — изменит: одна выжимает мощность ценой нагрева, другая холодная
+# и слабая, третья вообще не рассчитана на людей.
+#
+# Ёмкость остаётся ванильной, от родителя. Ячейка правит только то, как рама
+# распоряжается тем, что в ней есть: выход, нагрев и склонность к выбросу.
+#
+# Смысл в том, чтобы выбор ячейки был выбором тактики, а не лестницей «дороже —
+# лучше». Форсированная сильнее серийной, но в затяжном бою убьёт носителя
+# перегревом раньше, чем противника.
+
+- type: entity
+  parent: PowerCellMedium
+  id: WarlockExoCellStandard
+  name: серийная ячейка рамы
+  suffix: Warlock
+  description: >-
+    Обычная ячейка под обычную раму. Ничего не выжимает и ничего не портит —
+    именно поэтому Братство ставит её в девять рам из десяти.
+  components:
+  - type: WarlockExoCell
+    output: 1.0
+    heatFactor: 1.0
+
+- type: entity
+  parent: PowerCellMedium
+  id: WarlockExoCellForced
+  name: форсированная ячейка рамы
+  suffix: Warlock
+  description: >-
+    Ограничители сняты на заводе, а не в поле. Даёт заметно больше мощности и греется
+    втрое — в короткой сшибке это преимущество, в осаде это смерть.
+  components:
+  - type: WarlockExoCell
+    output: 1.35
+    heatFactor: 2.1
+
+- type: entity
+  parent: PowerCellHigh
+  id: WarlockExoCellCold
+  name: холодная ячейка рамы
+  suffix: Warlock
+  description: >-
+    Ячейка с развитым теплоотводом. Мощности даёт меньше серийной, зато в ней можно
+    работать весь день и ни разу не услышать, как щёлкает ограничитель.
+  components:
+  - type: WarlockExoCell
+    output: 0.8
+    heatFactor: 0.45
+
+- type: entity
+  parent: PowerCellHigh
+  id: WarlockExoCellExperimental
+  name: опытная ячейка рамы
+  suffix: Warlock
+  description: >-
+    Фактос собрал её вокруг чего-то, что нашли в породе. Мощность вдвое против серийной,
+    а что она сделает на пределе — не знает и сам Фактос.
+  components:
+  - type: WarlockExoCell
+    output: 1.8
+    heatFactor: 1.6
+    # Даже с включённым ограничителем такая ячейка иногда всё равно уходит в выброс.
+    unstableBonus: 0.35
+
+- type: entity
+  parent: PowerCellSmall
+  id: WarlockExoCellProto
+  name: прото-ячейка
+  suffix: Warlock, унатхи
+  description: >-
+    Не ячейка, а бак с чем-то живым внутри. Унатхи не собирали её под человека и вообще
+    не собирали — она выросла. Греется от одного того, что существует.
+  components:
+  - type: WarlockExoCell
+    output: 1.25
+    heatFactor: 2.6
+    unstableBonus: 0.2

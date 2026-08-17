@@ -19,6 +19,17 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Higher
+    - type: WarlockArtefactSight
+    # Высшая каста двигает вещи не касаясь. Действие общее с ритуалистами
+    # гильдии Варлок: приём один и тот же, источник дара разный.
+    - type: ActionGrant
+      actions:
+      - WarlockActionTelekineticGrasp
   access:
   - WarlockUnathi
   - WarlockUnathiCommand
@@ -52,6 +63,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Legionary
   access:
   - WarlockUnathi
   - WarlockUnathiCommand
@@ -83,6 +99,17 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Matriarch
+    - type: WarlockArtefactSight
+    # Высшая каста двигает вещи не касаясь. Действие общее с ритуалистами
+    # гильдии Варлок: приём один и тот же, источник дара разный.
+    - type: ActionGrant
+      actions:
+      - WarlockActionTelekineticGrasp
   access:
   - WarlockUnathi
   - WarlockUnathiCommand
@@ -113,6 +140,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Legionary
   access:
   - WarlockUnathi
 
@@ -140,6 +172,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Legionary
   access:
   - WarlockUnathi
 
@@ -166,6 +203,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Builder
   access:
   - WarlockUnathi
 
@@ -191,6 +233,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockCaste
+      caste: Builder
   access:
   - WarlockUnathi
 

@@ -1,7 +1,13 @@
 # _Warlock
-# Иконки ролей над головой. Спрайты — плейсхолдеры из ванильного job_icons.rsi,
-# подобраны по смыслу: исследователи для Фактос, инженеры для Технос,
-# культисты для Варлок, синдикатовские для Братства Стали.
+# Иконки ролей над головой.
+#
+# У гильдии Варлок иконки свои: чёрная молния на золоте, ранг читается по цвету
+# рамки — от тусклой бронзы у адепта до белой у Архимага-Епископа. Лежат в
+# _Warlock/Interface/Misc/warlock_job_icons.rsi, генератор — Tools/_Warlock/gen_job_icons.py.
+#
+# У остальных фракций пока плейсхолдеры из ванильного job_icons.rsi, подобранные
+# по смыслу: исследователи для Фактос, инженеры для Технос, синдикатовские
+# для Братства Стали.
 
 # ------------------------------------------------------------------------------------------------
 # Гильдия Фактос
@@ -112,48 +118,48 @@
   parent: JobIcon
   id: WarlockJobIconWarlockArchmageBishop
   icon:
-    sprite: *warlockIcons
-    state: ERTChaplain
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: ArchmageBishop
   jobName: warlock-job-name-warlock-archmage-bishop
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconWarlockHighPriest
   icon:
-    sprite: *warlockIcons
-    state: Chaplain
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: HighPriest
   jobName: warlock-job-name-warlock-high-priest
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconWarlockPriest
   icon:
-    sprite: *warlockIcons
-    state: Chaplain
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: Priest
   jobName: warlock-job-name-warlock-priest
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconWarlockRitualist
   icon:
-    sprite: *warlockIcons
-    state: Librarian
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: Ritualist
   jobName: warlock-job-name-warlock-ritualist
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconWarlockMage
   icon:
-    sprite: *warlockIcons
-    state: Wizard
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: Mage
   jobName: warlock-job-name-warlock-mage
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconWarlockAdept
   icon:
-    sprite: *warlockIcons
-    state: Librarian
+    sprite: /Textures/_Warlock/Interface/Misc/warlock_job_icons.rsi
+    state: Adept
   jobName: warlock-job-name-warlock-adept
 
 # ------------------------------------------------------------------------------------------------
