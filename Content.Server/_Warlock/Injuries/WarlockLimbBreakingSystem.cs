@@ -1,6 +1,7 @@
 using Content.Shared._Warlock.Exosuits;
 using Content.Shared._Warlock.Injuries;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
 using Content.Shared.Standing;

@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared._Warlock.Injuries;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -60,7 +59,7 @@ public sealed partial class WarlockPainSystem : EntitySystem
 
         SubscribeLocalEvent<WarlockPainComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WarlockPainComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<WarlockPainComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<WarlockPainComponent, DamageDealtEvent>(OnDamageDealt);
         SubscribeLocalEvent<WarlockPainComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<WarlockPainComponent, AccentGetEvent>(OnAccent);
         SubscribeLocalEvent<WarlockPainComponent, MobStateChangedEvent>(OnMobStateChanged);
@@ -87,15 +86,20 @@ public sealed partial class WarlockPainSystem : EntitySystem
             SetPain(ent, 0f);
     }
 
-    private void OnDamageChanged(Entity<WarlockPainComponent> ent, ref DamageChangedEvent args)
+    /// <summary>
+    /// Боль от полученного урона.
+    ///
+    /// Берём DamageDealtEvent, а не DamageChangedEvent: последнее помечено устаревшим
+    /// самой ванилью, и она же прямо указывает эту замену. Заодно уходит лишняя проверка —
+    /// это событие поднимается только когда урон именно нанесли, а не при любом изменении.
+    ///
+    /// Лечение боли не снимает: заживить рану быстрее, чем она перестанет болеть, — это
+    /// нормально и даёт бинтам смысл, отличный от аптечки.
+    /// </summary>
+    private void OnDamageDealt(Entity<WarlockPainComponent> ent, ref DamageDealtEvent args)
     {
-        // Лечение боли не снимает: заживить рану быстрее, чем она перестанет
-        // болеть, — это нормально и даёт бинтам смысл, отличный от аптечки.
-        if (args.DamageDelta is not { } delta || !args.DamageIncreased)
-            return;
-
         var add = 0f;
-        foreach (var (type, amount) in delta.DamageDict)
+        foreach (var (type, amount) in args.Damage.DamageDict)
         {
             if (amount <= 0)
                 continue;

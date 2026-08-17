@@ -30,7 +30,7 @@ public sealed partial class WarlockExoOsSystem : EntitySystem
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedPowerCellSystem _cell = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private WarlockExosuitSystem _exosuit = default!;
 
