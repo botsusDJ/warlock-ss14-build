@@ -4,6 +4,9 @@ using Content.Shared._Warlock.Pain;
 using Content.Shared._Warlock.Psionics.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+// InGameICChatType и ChatTransmitRange лежат в общем Content.Shared.Chat,
+// а не в серверной Content.Server.Chat.Systems, где живёт сама ChatSystem.
+using Content.Shared.Chat;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -54,7 +57,8 @@ public sealed partial class WarlockAgonyCastSystem : EntitySystem
         if (!args.Rose || args.Level < WarlockPainLevel.Agony)
             return;
 
-        if (!TryComp<WarlockPainComponent>(ent.Owner, out var pain))
+        // Боль без компонента невозможна, но событие могло прийти от чего-то ещё.
+        if (!HasComp<WarlockPainComponent>(ent.Owner))
             return;
 
         // В затмении срывает вдвое чаще, чем в агонии.
@@ -72,16 +76,20 @@ public sealed partial class WarlockAgonyCastSystem : EntitySystem
         _chat.TrySendInGameICMessage(ent.Owner, Loc.GetString("warlock-pain-spell-slip-emote"),
             InGameICChatType.Emote, ChatTransmitRange.Normal, ignoreActionBlocker: true);
 
-        _actions.PerformAction(ent.Owner, spell.Value, predicted: false);
+        _actions.PerformAction(ent.Owner, spell, predicted: false);
     }
 
     /// <summary>
     /// Выбрать случайный мгновенный приём из тех, что у носителя есть и что
     /// сейчас не на перезарядке.
+    ///
+    /// out-параметр не Nullable намеренно: Entity&lt;T&gt; — структура, и с
+    /// Entity&lt;T&gt;? каждое обращение требовало бы .Value, а компилятор всё
+    /// равно считал бы значение возможно пустым.
     /// </summary>
-    private bool TryPickSpell(EntityUid uid, out Entity<ActionComponent>? spell)
+    private bool TryPickSpell(EntityUid uid, out Entity<ActionComponent> spell)
     {
-        spell = null;
+        spell = default;
 
         var candidates = new List<Entity<ActionComponent>>();
         foreach (var action in _actions.GetActions(uid))
