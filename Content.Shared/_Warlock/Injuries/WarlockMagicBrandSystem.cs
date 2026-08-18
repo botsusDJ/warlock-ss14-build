@@ -50,10 +50,18 @@ public sealed partial class WarlockMagicBrandSystem : EntitySystem
 
     /// <summary>
     /// Ставит клеймо. Повторное того же вида ничего не меняет.
+    ///
+    /// Только сервер. Компонент сетевой, и клиент получает его состоянием — если
+    /// клиент добавит его сам, то сделает это посреди отката предсказанных сущностей,
+    /// когда движок перебирает список компонентов, и упадёт с «Collection was modified».
+    ///
+    /// Сегодня метод и так зовут только с сервера, из системы клеймения. Проверка стоит
+    /// не поэтому, а чтобы правило соблюдалось и завтра: вызвать Apply из общего кода
+    /// ничто не мешает, а поймать такое падение можно только живым клиентом.
     /// </summary>
     public void Apply(EntityUid uid, WarlockBrandEffect effect)
     {
-        if (effect == WarlockBrandEffect.None)
+        if (effect == WarlockBrandEffect.None || !_net.IsServer)
             return;
 
         var comp = EnsureComp<WarlockMagicBrandComponent>(uid);

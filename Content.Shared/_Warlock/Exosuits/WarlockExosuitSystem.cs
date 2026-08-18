@@ -73,7 +73,11 @@ public sealed partial class WarlockExosuitSystem : EntitySystem
         if (args.Slot != ent.Comp.Slot)
             return;
 
-        RemComp<WarlockExosuitWearerComponent>(args.EquipTarget);
+        // Снимает компонент тоже только сервер, по той же причине, что и ставит:
+        // правка списка компонентов на клиенте ломает откат предсказания.
+        if (_net.IsServer)
+            RemComp<WarlockExosuitWearerComponent>(args.EquipTarget);
+
         _speed.RefreshMovementSpeedModifiers(args.EquipTarget);
     }
 
@@ -94,9 +98,24 @@ public sealed partial class WarlockExosuitSystem : EntitySystem
     /// <summary>
     /// Пересчитать всё, что рама даёт носителю, и обновить его скорость.
     /// Вызывается на надевании, на переключении и на смене настроек в ОС.
+    ///
+    /// Сам компонент носителя ставит ТОЛЬКО сервер. Он сетевой, и клиент получает
+    /// его состоянием — а если клиент добавит его сам, то сделает это посреди отката
+    /// предсказанных сущностей, когда движок перебирает список компонентов. Коллекция
+    /// изменится во время перебора, и клиент упадёт с InvalidOperationException прямо
+    /// в момент надевания рамы.
+    ///
+    /// Скорость при этом пересчитывается на обеих сторонах: это локальный пересчёт,
+    /// он ничего не добавляет и клиенту нужен, чтобы движение не дёргалось.
     /// </summary>
     public void Apply(Entity<WarlockExosuitComponent> ent, EntityUid wearer)
     {
+        if (!_net.IsServer)
+        {
+            _speed.RefreshMovementSpeedModifiers(wearer);
+            return;
+        }
+
         var w = EnsureComp<WarlockExosuitWearerComponent>(wearer);
         w.Suit = ent.Owner;
 
