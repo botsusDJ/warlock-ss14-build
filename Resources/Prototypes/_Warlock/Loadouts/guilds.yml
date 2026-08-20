@@ -158,7 +158,7 @@
 - type: loadoutGroup
   id: WarlockGroupWarlockHead
   name: loadout-group-warlock-head
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutWarlockHood
@@ -212,7 +212,7 @@
 - type: loadoutGroup
   id: WarlockGroupFactosHead
   name: loadout-group-warlock-head
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutFactosHood
@@ -258,7 +258,7 @@
 - type: loadoutGroup
   id: WarlockGroupTechnosHead
   name: loadout-group-warlock-head
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
   - WarlockLoadoutTechnosHood

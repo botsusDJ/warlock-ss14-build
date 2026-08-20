@@ -28,6 +28,7 @@ public sealed class WarlockExoOsBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
         _window.OnApply += (share, limiter, cooling) =>
             SendMessage(new WarlockExoOsSetMessage(share, limiter, cooling));
+        _window.OnToggle += () => SendMessage(new WarlockExoOsToggleMessage());
         _window.OpenCentered();
     }
 

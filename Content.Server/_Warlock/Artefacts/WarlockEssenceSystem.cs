@@ -1,21 +1,24 @@
 using System.Text;
 using Content.Server._Warlock.Artefacts.Components;
 using Content.Server.Chat.Systems;
+using Content.Server.Fluids.EntitySystems;
+using Content.Shared._Warlock.Essence;
 using Content.Shared._Warlock.Psionics;
 using Content.Shared._Warlock.Psionics.Components;
 using Content.Shared.Chat;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
+using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -31,20 +34,27 @@ namespace Content.Server._Warlock.Artefacts;
 /// Устроено намеренно нечестно по отношению к игроку: первые две дозы — чистая выгода,
 /// без единого намёка на последствия. Расплата включается с третьей, и откатить её нельзя
 /// ничем: счётчик доз не убывает никогда, даже после смерти и лечения.
+///
+/// Эссенция — реагент, а не предмет. Из трупа она выливается настоящей лужей, и дальше
+/// с ней можно делать всё, что игра умеет делать с жидкостями: пить с пола, набирать
+/// шприцем, разливать по склянкам, подливать в чужой стакан. Последнее и есть главная
+/// причина такого устройства: подсадить на эссенцию соседа должно быть возможно.
+///
+/// Система заодно обрабатывает эффект метаболизма <see cref="WarlockEssenceDose"/> —
+/// отсюда наследование от EntityEffectSystem. Держать счётчик доз в одном месте
+/// с расплатой важнее, чем формально развести их по разным системам.
 /// </summary>
-public sealed partial class WarlockEssenceSystem : EntitySystem
+public sealed partial class WarlockEssenceSystem : EntityEffectSystem<MobStateComponent, WarlockEssenceDose>
 {
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
     [Dependency] private SharedStaminaSystem _stamina = default!;
     [Dependency] private WarlockPsionicsSystem _psionics = default!;
-
-    private static readonly SoundPathSpecifier DrinkSound = new("/Audio/Items/drink.ogg");
 
     /// <summary>
     /// Что вырывается наружу, когда язык уже не свой.
@@ -60,13 +70,11 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
 
     public override void Initialize()
     {
+        // Подписку на эффект метаболизма ставит база. Без этого вызова эссенция
+        // в крови не делает ничего.
         base.Initialize();
 
         SubscribeLocalEvent<WarlockEssenceSourceComponent, MobStateChangedEvent>(OnSourceDied);
-
-        // Лужу не поднимают, её пьют с пола: щелчок пустой рукой по тайлу.
-        SubscribeLocalEvent<WarlockPsiEssenceComponent, InteractHandEvent>(OnDrink);
-        SubscribeLocalEvent<WarlockPsiEssenceComponent, ExaminedEvent>(OnEssenceExamined);
 
         SubscribeLocalEvent<WarlockEssenceCorruptionComponent, ExaminedEvent>(OnCorruptionExamined);
         SubscribeLocalEvent<WarlockEssenceCorruptionComponent, AccentGetEvent>(OnCorruptedAccent);
@@ -79,7 +87,10 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
     #region Откуда берётся
 
     /// <summary>
-    /// Из-под мёртвого скарабея натекает лужа. Один труп — одна порция.
+    /// Из-под мёртвого скарабея натекает настоящая лужа реагента. Один труп — одна доза.
+    ///
+    /// Именно лужа, а не предмет со спрайтом лужи: её можно зачерпнуть шприцем,
+    /// перелить в склянку и унести с собой, а можно затоптать и потерять.
     /// </summary>
     private void OnSourceDied(Entity<WarlockEssenceSourceComponent> ent, ref MobStateChangedEvent args)
     {
@@ -88,58 +99,55 @@ public sealed partial class WarlockEssenceSystem : EntitySystem
 
         ent.Comp.Spent = true;
 
-        var coords = Transform(ent).Coordinates;
+        var solution = new Solution();
+        solution.AddReagent(ent.Comp.Reagent.Id, FixedPoint2.New(ent.Comp.Units));
 
-        for (var i = 0; i < ent.Comp.Amount; i++)
-        {
-            Spawn(ent.Comp.Essence, coords);
-        }
+        _puddle.TrySpillAt(Transform(ent).Coordinates, solution, out _);
     }
 
     #endregion
 
     #region Доза
 
-    private void OnEssenceExamined(Entity<WarlockPsiEssenceComponent> ent, ref ExaminedEvent args)
+    /// <summary>
+    /// Такт метаболизма эссенции.
+    ///
+    /// Разгон продлевается, пока эссенция в крови, и гаснет вместе с ней — отдельного
+    /// таймера на дозу больше нет. Счётчик доз при этом считает не глотки, а единицы:
+    /// реагент можно принять как угодно — залпом с пола, шприцем, по капле в чужом
+    /// стакане, — и заплатить придётся ровно за выпитое.
+    /// </summary>
+    protected override void Effect(Entity<MobStateComponent> entity, ref EntityEffectEvent<WarlockEssenceDose> args)
     {
-        args.PushMarkup(Loc.GetString("warlock-essence-examine"));
-    }
+        var units = args.Effect.Units * args.Scale;
 
-    // По значению и в старой форме: InteractHandEvent — обычный класс, и ваниль слушает
-    // его именно так (BinSystem, SecretStashSystem). Несовпадение падает при старте.
-    private void OnDrink(EntityUid uid, WarlockPsiEssenceComponent comp, InteractHandEvent args)
-    {
-        if (args.Handled)
+        if (units <= 0f)
             return;
 
-        var user = args.User;
+        // Выгода приходит сразу: резерв возвращается, тело разгоняется.
+        _psionics.RestoreEnergy(entity.Owner, units * args.Effect.EnergyPerUnit);
 
-        if (!HasComp<MobStateComponent>(user))
-            return;
+        var high = EnsureComp<WarlockEssenceHighComponent>(entity.Owner);
+        high.EndAt = _timing.CurTime + TimeSpan.FromSeconds(args.Effect.HighDuration);
 
-        args.Handled = true;
-
-        // Выгода приходит сразу и полностью. В этом весь смысл: сомневаться не в чем.
-        _damageable.HealEvenly(user, -comp.Heal, origin: uid);
-        _psionics.RestoreEnergy(user, comp.Energy);
-
-        var high = EnsureComp<WarlockEssenceHighComponent>(user);
-        high.EndAt = _timing.CurTime + TimeSpan.FromSeconds(comp.HighDuration);
-
-        _movement.RefreshMovementSpeedModifiers(user);
-        _stamina.RefreshStaminaCritThreshold(user);
+        _movement.RefreshMovementSpeedModifiers(entity.Owner);
+        _stamina.RefreshStaminaCritThreshold(entity.Owner);
 
         // А счёт ведётся молча.
-        var corruption = EnsureComp<WarlockEssenceCorruptionComponent>(user);
-        corruption.Doses++;
+        var corruption = EnsureComp<WarlockEssenceCorruptionComponent>(entity.Owner);
+        corruption.Units += units;
+
+        var doses = (int) (corruption.Units / corruption.UnitsPerDose);
+
+        if (doses <= corruption.Doses)
+            return;
+
+        corruption.Doses = doses;
         corruption.NextTick = _timing.CurTime + TimeSpan.FromSeconds(corruption.TickInterval);
 
-        _audio.PlayPvs(DrinkSound, user);
-        _popup.PopupEntity(Loc.GetString("warlock-essence-drunk"), user, user, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("warlock-essence-drunk"), entity.Owner, entity.Owner, PopupType.Medium);
 
-        ApplyCorruption((user, corruption));
-
-        QueueDel(uid);
+        ApplyCorruption((entity.Owner, corruption));
     }
 
     #endregion

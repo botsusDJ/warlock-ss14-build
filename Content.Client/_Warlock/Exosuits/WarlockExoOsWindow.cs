@@ -24,6 +24,12 @@ public sealed class WarlockExoOsWindow : DefaultWindow
     /// </summary>
     public event Action<float, bool, WarlockExoCooling>? OnApply;
 
+    /// <summary>
+    /// Пуск или останов приводов. Отдельно от настроек: настройки применяются
+    /// кнопкой целиком, а приводы должны отзываться сразу.
+    /// </summary>
+    public event Action? OnToggle;
+
     private readonly Label _frame;
     private readonly Label _state;
     private readonly ProgressBar _heat;
@@ -35,6 +41,7 @@ public sealed class WarlockExoOsWindow : DefaultWindow
     private readonly Label _shareLabel;
     private readonly CheckBox _limiter;
     private readonly Button _cooling;
+    private readonly Button _power;
 
     private WarlockExoCooling _coolingMode = WarlockExoCooling.Passive;
 
@@ -54,9 +61,15 @@ public sealed class WarlockExoOsWindow : DefaultWindow
         };
 
         _frame = new Label();
-        _state = new Label { Margin = new Thickness(0, 0, 0, 6) };
+        _state = new Label();
         root.AddChild(_frame);
         root.AddChild(_state);
+
+        // Пуск приводов — первым делом и крупно. Это то, ради чего ОС открывают
+        // в бою, и искать её среди настроек распределения нельзя.
+        _power = new Button { Margin = new Thickness(0, 6, 0, 8) };
+        _power.OnPressed += _ => OnToggle?.Invoke();
+        root.AddChild(_power);
 
         // --- жар
         _heatLabel = new Label();
@@ -131,6 +144,12 @@ public sealed class WarlockExoOsWindow : DefaultWindow
         _state.Text = Loc.GetString(state.Active
             ? "warlock-exo-os-state-live"
             : "warlock-exo-os-state-dead");
+
+        _power.Text = Loc.GetString(state.Active
+            ? "warlock-exo-os-stop"
+            : "warlock-exo-os-start");
+        // Без ячейки запускать нечего, и кнопка не должна врать, что можно.
+        _power.Disabled = state.MaxCharge <= 0f;
 
         var heat = state.MaxHeat > 0f ? state.Heat / state.MaxHeat : 0f;
         _heat.Value = heat;

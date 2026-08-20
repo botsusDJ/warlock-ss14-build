@@ -20,6 +20,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 6
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -30,11 +35,8 @@
   id: WarlockGearTechnosArchtechnomage
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnosLord
-    head: WarlockHeadGuildTechnos
+    back: ClothingBackpack
     gloves: WarlockArtefactThousandHands
-    shoes: ClothingShoesColorBlack
   storage:
     back:
     - WarlockGrimoireTechnos
@@ -54,6 +56,12 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 5
+      clergy: true
   access:
   - WarlockUnion
   - WarlockUnionCommand
@@ -63,10 +71,7 @@
   id: WarlockGearTechnosSupremeTechnocrat
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnosLord
-    head: WarlockHeadGuildTechnos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireTechnos
@@ -87,6 +92,12 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 4
+      clergy: true
   access:
   - WarlockUnion
   - WarlockTechnos
@@ -95,10 +106,7 @@
   id: WarlockGearTechnosTechnosorcerer
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnos
-    head: WarlockHeadGuildTechnos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireTechnos
@@ -118,6 +126,11 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 3
   access:
   - WarlockUnion
   - WarlockTechnos
@@ -126,10 +139,7 @@
   id: WarlockGearTechnosTechnomancer
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnosRitual
-    head: WarlockHeadGuildTechnos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireTechnos
@@ -149,6 +159,11 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 2
   access:
   - WarlockUnion
   - WarlockTechnos
@@ -157,10 +172,7 @@
   id: WarlockGearTechnosMage
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnos
-    head: WarlockHeadGuildTechnos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireTechnos
@@ -180,6 +192,11 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 1
   access:
   - WarlockUnion
 
@@ -187,9 +204,7 @@
   id: WarlockGearTechnosAdept
   equipment:
     id: WarlockPdaTechnos
-    jumpsuit: WarlockUniformGuildTechnos
-    outerClothing: WarlockOuterGuildTechnosCadet
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireTechnos

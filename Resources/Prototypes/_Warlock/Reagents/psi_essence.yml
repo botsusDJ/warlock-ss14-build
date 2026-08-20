@@ -1,0 +1,64 @@
+# _Warlock
+# Пси-эссенция.
+#
+# Это реагент, а не предмет. Раньше она была сущностью со спрайтом лужи, которую
+# пили щелчком по полу: выглядело как жижа, вело себя как кнопка — не зачерпнуть,
+# не перелить, не подмешать.
+#
+# Теперь работает всё, что игра умеет делать с жидкостями. Из-под мёртвого скарабея
+# натекает настоящая лужа, её можно набрать шприцем, разлить по склянкам, унести
+# с собой — и подлить кому-нибудь в стакан. Последнее и есть главная причина
+# переделки: подсадить на эссенцию соседа должно быть возможно, и он не должен
+# об этом узнать до третьей дозы.
+#
+# Лечение и отравление сделаны ванильными эффектами прямо здесь. Своего только
+# WarlockEssenceDose — разгон и необратимый счёт выпитого, обрабатывается
+# в Content.Server/_Warlock/Artefacts/WarlockEssenceSystem.cs.
+
+- type: reagent
+  id: WarlockPsiEssence
+  name: reagent-name-warlock-psi-essence
+  group: Special
+  desc: reagent-desc-warlock-psi-essence
+  physicalDesc: reagent-physical-desc-warlock-psi-essence
+  flavor: sweet
+  color: "#e8c46a"
+  metabolisms:
+    Bloodstream:
+      # Медленно: эссенция должна держаться в крови, а не пролетать насквозь.
+      # Разгон живёт ровно столько, сколько она метаболизируется.
+      metabolismRate: 0.25
+      effects:
+      # Затягивает раны быстро и без разбора. Первая доза выглядит чудом,
+      # и это ровно то впечатление, которое нужно.
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -3.5
+            Burn: -2.5
+          types:
+            Asphyxiation: -2
+
+      # Со второй дозы в крови эссенции столько, что тело начинает её замечать.
+      # Порог здесь, а не в счётчике доз: счётчик считает выпитое за жизнь,
+      # а это — передозировка прямо сейчас.
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: WarlockPsiEssence
+          min: 25
+        damage:
+          types:
+            Poison: 1.5
+            Cellular: 0.4
+
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: WarlockPsiEssence
+          min: 40
+
+      # Разгон и счёт. Units обязан совпадать с metabolismRate, иначе счётчик
+      # разойдётся с тем, сколько человек на самом деле выпил.
+      - !type:WarlockEssenceDose
+        units: 0.25

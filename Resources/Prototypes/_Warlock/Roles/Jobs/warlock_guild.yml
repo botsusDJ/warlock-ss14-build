@@ -21,6 +21,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 6
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -31,11 +36,7 @@
   id: WarlockGearWarlockArchmageBishop
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlockLord
-    head: WarlockHeadGuildWarlock
-    neck: WarlockSymbolKass
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock
@@ -56,6 +57,12 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 5
+      clergy: true
   access:
   - WarlockUnion
   - WarlockUnionCommand
@@ -65,11 +72,7 @@
   id: WarlockGearWarlockHighPriest
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlockLord
-    head: WarlockHeadGuildWarlock
-    neck: WarlockSymbolKass
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock
@@ -89,6 +92,12 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 4
+      clergy: true
   access:
   - WarlockUnion
   - WarlockGuildWarlock
@@ -97,11 +106,7 @@
   id: WarlockGearWarlockPriest
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlock
-    head: WarlockHeadGuildWarlock
-    neck: WarlockSymbolKass
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock
@@ -124,6 +129,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 3
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -133,10 +143,7 @@
   id: WarlockGearWarlockRitualist
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlockRitual
-    head: WarlockHeadGuildWarlock
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock
@@ -156,6 +163,11 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 2
   access:
   - WarlockUnion
   - WarlockGuildWarlock
@@ -164,10 +176,7 @@
   id: WarlockGearWarlockMage
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlock
-    head: WarlockHeadGuildWarlock
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock
@@ -187,6 +196,11 @@
   - !type:SpeciesRequirement
     species:
     - WarlockTechnomancer
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 1
   access:
   - WarlockUnion
 
@@ -194,9 +208,7 @@
   id: WarlockGearWarlockAdept
   equipment:
     id: WarlockPdaWarlock
-    jumpsuit: WarlockUniformGuildWarlock
-    outerClothing: WarlockOuterGuildWarlockCadet
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireWarlock

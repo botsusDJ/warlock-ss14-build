@@ -21,6 +21,11 @@
   - !type:SpeciesRequirement
     species:
     - Human
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 6
   access:
   - WarlockBrotherhood
   - WarlockBrotherhoodCommand
@@ -28,6 +33,7 @@
 - type: startingGear
   id: WarlockGearBrotherhoodLordCommander
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     outerClothing: WarlockOuterBrotherhoodArmorCommand
     head: WarlockHeadBrotherhoodHelmetCommand
@@ -54,6 +60,12 @@
   - !type:SpeciesRequirement
     species:
     - Human
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 4
+      clergy: true
   access:
   - WarlockBrotherhood
   - WarlockBrotherhoodCommand
@@ -61,6 +73,7 @@
 - type: startingGear
   id: WarlockGearBrotherhoodChaplain
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     outerClothing: WarlockOuterBrotherhoodArmor
     head: WarlockHeadBrotherhoodHelmet
@@ -86,6 +99,11 @@
   - !type:SpeciesRequirement
     species:
     - Human
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 4
   access:
   - WarlockBrotherhood
   - WarlockBrotherhoodCommand
@@ -93,6 +111,7 @@
 - type: startingGear
   id: WarlockGearBrotherhoodLieutenant
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     outerClothing: WarlockOuterBrotherhoodArmor
     head: WarlockHeadBrotherhoodHelmet
@@ -117,12 +136,18 @@
   - !type:SpeciesRequirement
     species:
     - Human
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 3
   access:
   - WarlockBrotherhood
 
 - type: startingGear
   id: WarlockGearBrotherhoodSergeant
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     outerClothing: WarlockOuterBrotherhoodArmor
     head: WarlockHeadBrotherhoodHelmet
@@ -146,12 +171,18 @@
   - !type:SpeciesRequirement
     species:
     - Human
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 2
   access:
   - WarlockBrotherhood
 
 - type: startingGear
   id: WarlockGearBrotherhoodBattleBrother
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     outerClothing: WarlockOuterBrotherhoodArmor
     mask: WarlockMaskBrotherhood
@@ -175,12 +206,18 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 1
   access:
   - WarlockBrotherhood
 
 - type: startingGear
   id: WarlockGearBrotherhoodScavenger
   equipment:
+    back: ClothingBackpack
     jumpsuit: WarlockUniformBrotherhood
     mask: WarlockMaskBrotherhood
     shoes: ClothingShoesColorBlack
@@ -203,6 +240,11 @@
   - !type:SpeciesRequirement
     species:
     - Reptilian
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 0
 
 - type: startingGear
   id: WarlockGearBrotherhoodSlave

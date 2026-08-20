@@ -22,6 +22,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 6
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -32,10 +37,7 @@
   id: WarlockGearFactosArtarchmage
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactosLord
-    head: WarlockHeadGuildFactos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos
@@ -59,6 +61,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 5
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -69,10 +76,7 @@
   id: WarlockGearFactosGreatSeeker
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactosLord
-    head: WarlockHeadGuildFactos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos
@@ -96,6 +100,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 4
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -105,10 +114,7 @@
   id: WarlockGearFactosSorcerer
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactos
-    head: WarlockHeadGuildFactos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos
@@ -131,6 +137,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 3
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -140,10 +150,7 @@
   id: WarlockGearFactosEnchanter
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactosRitual
-    head: WarlockHeadGuildFactos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos
@@ -166,6 +173,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 2
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -175,10 +186,7 @@
   id: WarlockGearFactosMage
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactos
-    head: WarlockHeadGuildFactos
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos
@@ -201,6 +209,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 1
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockArtefactSight
   access:
   - WarlockUnion
@@ -209,9 +221,7 @@
   id: WarlockGearFactosAdept
   equipment:
     id: WarlockPdaFactos
-    jumpsuit: WarlockUniformGuildFactos
-    outerClothing: WarlockOuterGuildFactosCadet
-    shoes: ClothingShoesColorBlack
+    back: ClothingBackpack
   storage:
     back:
     - WarlockGrimoireFactos

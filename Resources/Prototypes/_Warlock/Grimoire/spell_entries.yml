@@ -129,6 +129,7 @@
   action: WarlockActionSharedFate
   section: Chaplain
   cost: 3
+  clergy: true
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -146,6 +147,7 @@
   action: WarlockActionCursedGrasp
   section: Chaplain
   cost: 3
+  clergy: true
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -163,6 +165,7 @@
   action: WarlockActionGiftHarvest
   section: Chaplain
   cost: 4
+  clergy: true
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -180,6 +183,7 @@
   action: WarlockActionFalseBrother
   section: Chaplain
   cost: 3
+  clergy: true
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -200,6 +204,7 @@
   action: WarlockActionGuildVoice
   section: Command
   cost: 3
+  minRank: 5
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -213,6 +218,7 @@
   action: WarlockActionGuildMark
   section: Command
   cost: 2
+  minRank: 5
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -226,6 +232,7 @@
   action: WarlockActionSilenceCircle
   section: Command
   cost: 4
+  minRank: 5
   jobs:
   - WarlockJobWarlockArchmageBishop
   - WarlockJobWarlockHighPriest
@@ -239,6 +246,7 @@
   action: WarlockActionRiteOfBulwark
   section: Command
   cost: 4
+  minRank: 5
   guilds: [ GuildTechnos ]
   jobs:
   - WarlockJobTechnosArchtechnomage

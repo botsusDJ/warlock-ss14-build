@@ -22,6 +22,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 6
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockCaste
       caste: Higher
     - type: WarlockArtefactSight
@@ -38,6 +43,7 @@
   id: WarlockGearUnathiPriestKing
   equipment:
     id: WarlockTagUnathi
+    back: ClothingBackpack
     jumpsuit: WarlockUniformUnathi
     outerClothing: WarlockOuterUnathiRoyal
     head: WarlockHeadUnathiHelm
@@ -66,6 +72,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 5
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockCaste
       caste: Legionary
   access:
@@ -76,6 +86,7 @@
   id: WarlockGearUnathiKingsClaw
   equipment:
     id: WarlockTagUnathi
+    back: ClothingBackpack
     jumpsuit: WarlockUniformUnathi
     outerClothing: WarlockOuterUnathiScales
     head: WarlockHeadUnathiHelm
@@ -102,6 +113,11 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 4
+      clergy: true
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockCaste
       caste: Matriarch
     - type: WarlockArtefactSight
@@ -118,6 +134,7 @@
   id: WarlockGearUnathiPriestOfThree
   equipment:
     id: WarlockTagUnathi
+    back: ClothingBackpack
     jumpsuit: WarlockUniformUnathi
     head: WarlockHeadUnathiHelm
     shoes: ClothingShoesColorBlack
@@ -141,6 +158,10 @@
     species:
     - Reptilian
   special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 4
   - !type:AddComponentSpecial
     components:
     - type: WarlockCaste
@@ -175,6 +196,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 2
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockCaste
       caste: Legionary
   access:
@@ -204,6 +229,10 @@
     species:
     - Reptilian
   special:
+  - !type:AddComponentSpecial
+    components:
+    - type: WarlockRank
+      rank: 1
   - !type:AddComponentSpecial
     components:
     - type: WarlockCaste
@@ -236,6 +265,10 @@
   special:
   - !type:AddComponentSpecial
     components:
+    - type: WarlockRank
+      rank: 3
+  - !type:AddComponentSpecial
+    components:
     - type: WarlockCaste
       caste: Builder
   access:
@@ -245,6 +278,7 @@
   id: WarlockGearUnathiSlaver
   equipment:
     id: WarlockTagUnathi
+    back: ClothingBackpack
     jumpsuit: WarlockUniformUnathiSlaver
     shoes: ClothingShoesColorBlack
   storage:

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server._Warlock.Guilds;
 using Content.Shared._Warlock.Grimoire;
+using Content.Shared._Warlock.Guilds;
 using Content.Shared.Actions;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
@@ -58,7 +59,6 @@ public sealed partial class WarlockGrimoireSystem : EntitySystem
     /// </summary>
     private void Refresh(Entity<WarlockGrimoireComponent> ent, EntityUid reader)
     {
-        var job = _guilds.GetJobOf(reader);
         var entries = new List<WarlockGrimoireEntry>();
 
         foreach (var entry in GetEntriesFor(ent.Comp))
@@ -74,7 +74,7 @@ public sealed partial class WarlockGrimoireSystem : EntitySystem
                 Section = entry.Section,
                 Cost = entry.Cost,
                 Taken = ent.Comp.Taken.Contains(entry.ID),
-                Allowed = IsAllowed(entry, job),
+                Allowed = IsAllowed(entry, reader),
             });
         }
 
@@ -99,11 +99,30 @@ public sealed partial class WarlockGrimoireSystem : EntitySystem
     }
 
     /// <summary>
-    /// Открыт ли раздел этому читателю. Пустой список должностей — открыт всем.
+    /// Открыт ли раздел этому читателю.
+    ///
+    /// Проверок две, и достаточно любой. Основная — ранг компонентом на теле: он
+    /// выдаётся должностью при спавне и читается одним TryComp. Запасная — список
+    /// должностей из разума: раньше она была единственной, и когда цепочка
+    /// «тело → разум → сущность роли → прототип» где-то рвалась, архимаг терял
+    /// собственные разделы. Теперь порванная цепочка перестала быть приговором.
     /// </summary>
-    private static bool IsAllowed(WarlockSpellEntryPrototype entry, ProtoId<JobPrototype>? job)
+    private bool IsAllowed(WarlockSpellEntryPrototype entry, EntityUid reader)
     {
-        return entry.Jobs.Count == 0 || (job is { } j && entry.Jobs.Contains(j));
+        // Раздел без ограничений открыт всем без всяких проверок.
+        if (entry.MinRank <= 0 && !entry.Clergy && entry.Jobs.Count == 0)
+            return true;
+
+        if (TryComp<WarlockRankComponent>(reader, out var rank)
+            && rank.Rank >= entry.MinRank
+            && (!entry.Clergy || rank.Clergy))
+        {
+            return true;
+        }
+
+        return entry.Jobs.Count > 0
+               && _guilds.GetJobOf(reader) is { } job
+               && entry.Jobs.Contains(job);
     }
 
     private void OnLearn(Entity<WarlockGrimoireComponent> ent, ref WarlockGrimoireLearnMessage args)
@@ -121,7 +140,7 @@ public sealed partial class WarlockGrimoireSystem : EntitySystem
         if (ent.Comp.Taken.Contains(entry.ID))
             return;
 
-        if (!IsAllowed(entry, _guilds.GetJobOf(reader)))
+        if (!IsAllowed(entry, reader))
         {
             _popup.PopupEntity(Loc.GetString("warlock-grimoire-forbidden"), ent, reader, PopupType.MediumCaution);
             return;

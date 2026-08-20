@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Warlock.Artefacts.Components;
@@ -9,6 +10,10 @@ namespace Content.Server._Warlock.Artefacts.Components;
 // обойтись без молитвы. Первая доза лечит и разгоняет, вторая тоже, третья тоже —
 // и именно поэтому её пьют дальше. Расплата не приходит постепенно, она копится молча
 // и вываливается вся сразу.
+//
+// Сама эссенция — реагент WarlockPsiEssence, а не предмет. Всё, что игра умеет
+// делать с жидкостями, работает с ней бесплатно: лужа растекается и высыхает,
+// шприц набирает, склянка хранит, бармен подмешивает.
 
 /// <summary>
 /// _Warlock — из этого тела натечёт эссенция, когда оно умрёт.
@@ -17,47 +22,23 @@ namespace Content.Server._Warlock.Artefacts.Components;
 public sealed partial class WarlockEssenceSourceComponent : Component
 {
     /// <summary>
-    /// Что именно натечёт.
+    /// Какой реагент натечёт.
     /// </summary>
     [DataField]
-    public EntProtoId Essence = "WarlockPsiEssence";
+    public ProtoId<ReagentPrototype> Reagent = "WarlockPsiEssence";
 
     /// <summary>
-    /// Сколько порций. Одного скарабея хватает на одну — за второй придётся идти вниз.
+    /// Сколько единиц. Одного скарабея хватает примерно на одну дозу —
+    /// за второй придётся идти вниз.
     /// </summary>
     [DataField]
-    public int Amount = 1;
+    public float Units = 15f;
 
     /// <summary>
     /// Уже натекло. Второй раз с того же трупа не собрать.
     /// </summary>
     [DataField]
     public bool Spent;
-}
-
-/// <summary>
-/// _Warlock — порция пси-эссенции.
-/// </summary>
-[RegisterComponent]
-public sealed partial class WarlockPsiEssenceComponent : Component
-{
-    /// <summary>
-    /// Сколько урона закрывает доза.
-    /// </summary>
-    [DataField]
-    public float Heal = 45f;
-
-    /// <summary>
-    /// Сколько резерва возвращает.
-    /// </summary>
-    [DataField]
-    public float Energy = 60f;
-
-    /// <summary>
-    /// Сколько секунд держится разгон.
-    /// </summary>
-    [DataField]
-    public float HighDuration = 45f;
 }
 
 /// <summary>
@@ -92,10 +73,24 @@ public sealed partial class WarlockEssenceHighComponent : Component
 public sealed partial class WarlockEssenceCorruptionComponent : Component
 {
     /// <summary>
-    /// Сколько доз выпито за всю жизнь.
+    /// Сколько доз выпито за всю жизнь. Не убывает никогда.
     /// </summary>
     [DataField]
     public int Doses;
+
+    /// <summary>
+    /// Сколько единиц эссенции прошло через кровь. Реагент метаболизируется
+    /// по капле, а пороги считаются дозами, поэтому единицы копятся здесь
+    /// и превращаются в дозу, когда наберётся <see cref="UnitsPerDose"/>.
+    /// </summary>
+    [DataField]
+    public float Units;
+
+    /// <summary>
+    /// Сколько единиц составляет одну дозу. Ровно столько натекает с одного скарабея.
+    /// </summary>
+    [DataField]
+    public float UnitsPerDose = 15f;
 
     [DataField]
     public TimeSpan NextTick;

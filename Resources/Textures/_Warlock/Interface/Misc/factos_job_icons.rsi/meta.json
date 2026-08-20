@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Нарисовано для билда Warlock",
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "states": [
+    {
+      "name": "Adept"
+    },
+    {
+      "name": "Mage"
+    },
+    {
+      "name": "Enchanter"
+    },
+    {
+      "name": "Sorcerer"
+    },
+    {
+      "name": "GreatSeeker"
+    },
+    {
+      "name": "Artarchmage"
+    }
+  ]
+}

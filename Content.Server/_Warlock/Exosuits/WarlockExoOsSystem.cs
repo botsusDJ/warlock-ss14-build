@@ -18,7 +18,7 @@ namespace Content.Server._Warlock.Exosuits;
 ///
 /// Настроек три, и каждая — размен, а не улучшение:
 ///
-///   распределение — усилить хват можно только ослабив удар, сумма всегда единица;
+///   перекос      — доводит кулаки или кисти поверх базы, ниже базы не роняет ничего;
 ///   охлаждение    — активное остывает вдвое быстрее и само ест заряд;
 ///   ограничитель  — снятый даёт доработать на пределе ценой выброса по своим.
 ///
@@ -40,6 +40,28 @@ public sealed partial class WarlockExoOsSystem : EntitySystem
 
         SubscribeLocalEvent<WarlockExosuitComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<WarlockExosuitComponent, WarlockExoOsSetMessage>(OnSet);
+        SubscribeLocalEvent<WarlockExosuitComponent, WarlockExoOsToggleMessage>(OnToggleRequest);
+    }
+
+    /// <summary>
+    /// Пуск и останов приводов из ОС.
+    ///
+    /// Это единственный способ включить раму, и так задумано. Ванильные
+    /// onActivate и onUse у ItemToggle отключены нарочно: активация открывает ОС,
+    /// а не дёргает приводы втихую. Рама — не фонарик, её включают осознанно
+    /// и с открытой панелью, где видно нагрев и заряд.
+    /// </summary>
+    private void OnToggleRequest(Entity<WarlockExosuitComponent> ent, ref WarlockExoOsToggleMessage args)
+    {
+        if (_toggle.IsActivated(ent.Owner))
+            _toggle.TryDeactivate(ent.Owner, user: args.Actor);
+        else
+            _toggle.TryActivate(ent.Owner, user: args.Actor);
+
+        if (TryGetWearer(ent, out var wearer))
+            _exosuit.Apply(ent, wearer);
+
+        Refresh(ent);
     }
 
     private void OnUiOpened(Entity<WarlockExosuitComponent> ent, ref BoundUIOpenedEvent args)

@@ -80,7 +80,7 @@
     useCharge: 0
   - type: WarlockExosuit
     frame: Small
-    strengthBonus: 1.2
+    strengthBonus: 2.0
     poweredWalk: 1.0
     poweredSprint: 1.0
     deadWalk: 0.8
@@ -113,7 +113,7 @@
     useCharge: 0
   - type: WarlockExosuit
     frame: Standard
-    strengthBonus: 1.35
+    strengthBonus: 2.4
     tearStrength: 1.5
   - type: Armor
     modifiers:
@@ -149,7 +149,7 @@
     useCharge: 0
   - type: WarlockExosuit
     frame: Heavy
-    strengthBonus: 1.6
+    strengthBonus: 2.9
     poweredWalk: 0.85
     poweredSprint: 0.8
     deadWalk: 0.4
@@ -194,7 +194,7 @@
     useCharge: 0
   - type: WarlockExosuit
     frame: Experimental
-    strengthBonus: 1.75
+    strengthBonus: 3.4
     poweredWalk: 0.92
     poweredSprint: 0.9
     deadWalk: 0.45
@@ -241,7 +241,7 @@
     useCharge: 0
   - type: WarlockExosuit
     frame: Proto
-    strengthBonus: 1.5
+    strengthBonus: 3.1
     poweredWalk: 0.98
     poweredSprint: 0.98
     deadWalk: 0.6

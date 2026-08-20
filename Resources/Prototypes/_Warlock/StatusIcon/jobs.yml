@@ -1,13 +1,19 @@
 # _Warlock
 # Иконки ролей над головой.
 #
-# У гильдии Варлок иконки свои: чёрная молния на золоте, ранг читается по цвету
-# рамки — от тусклой бронзы у адепта до белой у Архимага-Епископа. Лежат в
-# _Warlock/Interface/Misc/warlock_job_icons.rsi, генератор — Tools/_Warlock/gen_job_icons.py.
+# У трёх гильдий иконки свои. Все три рисует Tools/_Warlock/gen_job_icons.py,
+# лежат в _Warlock/Interface/Misc/*_job_icons.rsi:
 #
-# У остальных фракций пока плейсхолдеры из ванильного job_icons.rsi, подобранные
-# по смыслу: исследователи для Фактос, инженеры для Технос, синдикатовские
-# для Братства Стали.
+#   Варлок — чёрная молния на золоте
+#   Фактос — глаз с фиолетовой радужкой на тёмно-сером
+#   Технос — белая шестерня на сером
+#
+# Ранг в каждой читается двумя способами сразу: цветом рамки (от тусклой у младших
+# до почти белой у главы) и деталями глифа. Одного признака на восьми пикселях мало —
+# рамку видно в общем списке, детали глифа только вблизи.
+#
+# У Братства Стали и Королевства унатхов пока плейсхолдеры из ванильного job_icons.rsi,
+# подобранные по смыслу: синдикатовские для Братства, охранные для унатхов.
 
 # ------------------------------------------------------------------------------------------------
 # Гильдия Фактос
@@ -16,48 +22,48 @@
   parent: JobIcon
   id: WarlockJobIconFactosArtarchmage
   icon:
-    sprite: &warlockIcons /Textures/Interface/Misc/job_icons.rsi
-    state: ResearchDirector
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: Artarchmage
   jobName: warlock-job-name-factos-artarchmage
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconFactosGreatSeeker
   icon:
-    sprite: *warlockIcons
-    state: SeniorResearcher
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: GreatSeeker
   jobName: warlock-job-name-factos-great-seeker
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconFactosSorcerer
   icon:
-    sprite: *warlockIcons
-    state: Wizard
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: Sorcerer
   jobName: warlock-job-name-factos-sorcerer
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconFactosEnchanter
   icon:
-    sprite: *warlockIcons
-    state: Scientist
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: Enchanter
   jobName: warlock-job-name-factos-enchanter
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconFactosMage
   icon:
-    sprite: *warlockIcons
-    state: Scientist
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: Mage
   jobName: warlock-job-name-factos-mage
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconFactosAdept
   icon:
-    sprite: *warlockIcons
-    state: ResearchAssistant
+    sprite: /Textures/_Warlock/Interface/Misc/factos_job_icons.rsi
+    state: Adept
   jobName: warlock-job-name-factos-adept
 
 # ------------------------------------------------------------------------------------------------
@@ -67,48 +73,48 @@
   parent: JobIcon
   id: WarlockJobIconTechnosArchtechnomage
   icon:
-    sprite: *warlockIcons
-    state: ChiefEngineer
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: Archtechnomage
   jobName: warlock-job-name-technos-archtechnomage
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconTechnosSupremeTechnocrat
   icon:
-    sprite: *warlockIcons
-    state: SeniorEngineer
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: SupremeTechnocrat
   jobName: warlock-job-name-technos-supreme-technocrat
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconTechnosTechnosorcerer
   icon:
-    sprite: *warlockIcons
-    state: Roboticist
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: Technosorcerer
   jobName: warlock-job-name-technos-technosorcerer
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconTechnosTechnomancer
   icon:
-    sprite: *warlockIcons
-    state: StationEngineer
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: Technomancer
   jobName: warlock-job-name-technos-technomancer
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconTechnosMage
   icon:
-    sprite: *warlockIcons
-    state: StationEngineer
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: Mage
   jobName: warlock-job-name-technos-mage
 
 - type: jobIcon
   parent: JobIcon
   id: WarlockJobIconTechnosAdept
   icon:
-    sprite: *warlockIcons
-    state: TechnicalAssistant
+    sprite: /Textures/_Warlock/Interface/Misc/technos_job_icons.rsi
+    state: Adept
   jobName: warlock-job-name-technos-adept
 
 # ------------------------------------------------------------------------------------------------
@@ -169,7 +175,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiPriestKing
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Captain
   jobName: warlock-job-name-unathi-priest-king
 
@@ -177,7 +183,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiKingsClaw
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: HeadOfSecurity
   jobName: warlock-job-name-unathi-kings-claw
 
@@ -185,7 +191,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiPriestOfThree
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chaplain
   jobName: warlock-job-name-unathi-priest-of-three
 
@@ -193,7 +199,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiElderFang
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SeniorOfficer
   jobName: warlock-job-name-unathi-elder-fang
 
@@ -201,7 +207,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiFang
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SecurityOfficer
   jobName: warlock-job-name-unathi-fang
 
@@ -209,7 +215,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiNewblood
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SecurityCadet
   jobName: warlock-job-name-unathi-newblood
 
@@ -217,7 +223,7 @@
   parent: JobIcon
   id: WarlockJobIconUnathiSlaver
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Warden
   jobName: warlock-job-name-unathi-slaver
 
@@ -228,7 +234,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodLordCommander
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SyndicateCommander
   jobName: warlock-job-name-brotherhood-lord-commander
 
@@ -236,7 +242,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodChaplain
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SyndicateCorpsman
   jobName: warlock-job-name-brotherhood-chaplain
 
@@ -244,7 +250,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodLieutenant
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SyndicateOperative
   jobName: warlock-job-name-brotherhood-lieutenant
 
@@ -252,7 +258,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodSergeant
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   jobName: warlock-job-name-brotherhood-sergeant
 
@@ -260,7 +266,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodBattleBrother
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   jobName: warlock-job-name-brotherhood-battle-brother
 
@@ -268,7 +274,7 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodScavenger
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: ShaftMiner
   jobName: warlock-job-name-brotherhood-scavenger
 
@@ -276,6 +282,6 @@
   parent: JobIcon
   id: WarlockJobIconBrotherhoodSlave
   icon:
-    sprite: *warlockIcons
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Prisoner
   jobName: warlock-job-name-brotherhood-slave

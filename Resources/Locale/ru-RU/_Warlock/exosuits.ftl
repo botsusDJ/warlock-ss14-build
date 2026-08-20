@@ -6,7 +6,7 @@
 ## Строки называют конкретные числа: игрок должен понимать, что он получает и чем платит,
 ## не выясняя это смертью в пещере.
 ## ================================================================================================
-warlock-exosuit-examine-live = Приводы держат ход. Удар тяжелее на { $bonus }%.
+warlock-exosuit-examine-live = Приводы держат ход. Любой удар тяжелее на { $bonus }%.
 warlock-exosuit-examine-dead = Приводы стоят. Рама висит мёртвым грузом: медленнее на { $slow }%.
 warlock-exosuit-examine-heat = Нагрев: { $heat }%.
 warlock-exosuit-examine-nolimiter = Ограничитель снят. На пределе рама уйдёт в выброс.
@@ -28,11 +28,13 @@ warlock-exo-os-state-dead = Приводы обесточены.
 warlock-exo-os-heat = Нагрев: { $pct }%
 warlock-exo-os-charge = Заряд ячейки: { $pct }%
 warlock-exo-os-nocell = Ячейка не вставлена.
-warlock-exo-os-share = Мощность: кулаки { $fist }% / кисти { $tool }%
+warlock-exo-os-share = Перекос привода: кулаки { $fist }% / кисти { $tool }%
 warlock-exo-os-cooling-passive = Охлаждение: пассивное
 warlock-exo-os-cooling-active = Охлаждение: активное
 warlock-exo-os-limiter = Ограничитель нагрева
 warlock-exo-os-apply = Применить
+warlock-exo-os-start = ЗАПУСТИТЬ ПРИВОДЫ
+warlock-exo-os-stop = Заглушить приводы
 
 warlock-exo-frame-small = лёгкая
 warlock-exo-frame-standard = боевая
