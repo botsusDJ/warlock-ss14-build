@@ -1,0 +1,115 @@
+# _Warlock
+# Реликвии трёх глав гильдий.
+#
+# Реликвия отличается от артефакта масштабом, а не происхождением. Артефакт умеет одну
+# вещь и берёт за неё с того, кто держит. Реликвия снимает с целой гильдии то ограничение,
+# которое эту гильдию душит, — и берёт за это с главы, каждый раз и телом.
+#
+# Ни одна из трёх не наносит урона. Главе гильдии оружие ни к чему: ему нужно,
+# чтобы гильдия работала.
+#
+# Выдаются в стартовом снаряжении Архимага-Епископа, Артархимага и Архитехномага.
+# Отнять их можно, и на этом держится их ценность как цели.
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: WarlockBaseGuildRelic
+  description: Реликвия гильдии. Одна на всех, и та у главы.
+  components:
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - WarlockArtefact
+
+# ------------------------------------------------------------------------------------------------
+# 1. Кадило Касса — Архимаг-Епископ, гильдия Варлок
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseGuildRelic
+  id: WarlockRelicCenserOfKass
+  name: Кадило Касса
+  description: >-
+    Пробитая жёлтой окалиной чаша на цепи. Внутри тлеет то, чего в неё никто не клал.
+    Пока епископ несёт её зажжённой, гильдия вокруг него не пустеет — но сам он
+    выгорает ровно на столько, скольких обслужил.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Relics/censer_of_kass.rsi
+    state: icon
+  - type: PointLight
+    enabled: true
+    radius: 2.6
+    energy: 1.1
+    color: "#e8c46a"
+    netsync: false
+  - type: WarlockCenser
+    range: 5
+    energy: 9
+    pain: 6
+    airloss: 4
+    costPerHead: 0.7
+    tickInterval: 2
+
+# ------------------------------------------------------------------------------------------------
+# 2. Око Фактоса — Артархимаг, гильдия Фактос
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseGuildRelic
+  id: WarlockRelicSeersEye
+  name: Око Фактоса
+  description: >-
+    Гранёный фиолетовый камень в оправе из чужого металла. Смотреть надо не на него,
+    а сквозь. Находка, прочитанная им, перестаёт калечить тех, кто её поднимет,
+    и остаётся такой навсегда — но глаза за это платят свои.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Relics/seers_eye.rsi
+    state: icon
+  - type: PointLight
+    enabled: true
+    radius: 2.0
+    energy: 0.9
+    color: "#8b3fd6"
+    netsync: false
+  - type: WarlockSeersEye
+    charges: 4
+    cost: 12
+  # WarlockArtefactSight здесь не вешается намеренно: он проверяется на осматривающем,
+  # а не на предмете, и на камне не сработал бы. Артархимагу зрение и так выдаёт
+  # его должность — Око добавляет не чтение, а правку прочитанного.
+  - type: ActionGrant
+    actions:
+    - WarlockActionSeersEye
+  - type: ItemActionGrant
+
+# ------------------------------------------------------------------------------------------------
+# 3. Сердце Механтехиона — Архитехномаг, гильдия Технос
+# ------------------------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseGuildRelic
+  id: WarlockRelicMachineHeart
+  name: Сердце Механтехиона
+  description: >-
+    Тяжёлый узел из белого металла, который бьётся. Один разряд наполняет досуха всё,
+    что держит заряд, на полкомнаты вокруг. Ток при этом идёт не только по железу:
+    архитехномаг платит по счётчику, за каждую заряженную ячейку.
+  components:
+  - type: Sprite
+    sprite: _Warlock/Objects/Relics/machine_heart.rsi
+    state: icon
+  - type: PointLight
+    enabled: true
+    radius: 2.2
+    energy: 1.0
+    color: "#dfe8ff"
+    netsync: false
+  - type: WarlockMachineHeart
+    range: 6
+    shockPerCell: 3.5
+    repair: 25
+  - type: ActionGrant
+    actions:
+    - WarlockActionMachineHeart
+  - type: ItemActionGrant

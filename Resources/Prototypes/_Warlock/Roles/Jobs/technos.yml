@@ -39,6 +39,7 @@
     gloves: WarlockArtefactThousandHands
   storage:
     back:
+    - WarlockRelicMachineHeart
     - WarlockGrimoireTechnos
 
 # ------------------------------------------------------------------------------------------------

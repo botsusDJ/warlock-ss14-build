@@ -1,0 +1,58 @@
+# _Warlock
+# Действия реликвий глав гильдий.
+#
+# Кадила здесь нет намеренно: оно зажигается щелчком в руке, а не действием.
+# Реликвия, которую надо включать через панель действий, перестаёт быть предметом.
+#
+# Оба действия обходятся без WarlockPsiCost: реликвия тянет силу из себя, а не
+# из носителя. Плату она берёт иначе — здоровьем, и это считает система.
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionSeersEye
+  name: Прочесть Насквозь
+  description: >-
+    Посмотреть сквозь находку и вырезать из неё всё, что калечит. Изменение постоянное
+    и общее: прирученный камень остаётся безопасным для всех, кто возьмёт его потом.
+    Око выдерживает считанные чтения, и каждое стоит зрения.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: SeersEye
+  - type: TargetAction
+    interactOnMiss: false
+    range: 2
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - WarlockRandomArtefact
+    event: !type:WarlockSeersEyeEvent
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Magic/staff_animation.ogg
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionMachineHeart
+  name: Разряд Питания
+  description: >-
+    Наполнить досуха всё, что держит заряд, на полкомнаты вокруг, и заодно подлатать
+    железо. Ток идёт и через того, кто нажал: чем больше ячеек, тем сильнее приложит.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: MachineHeart
+  - type: InstantAction
+    event: !type:WarlockMachineHeartEvent
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Effects/Lightning/lightningshock.ogg

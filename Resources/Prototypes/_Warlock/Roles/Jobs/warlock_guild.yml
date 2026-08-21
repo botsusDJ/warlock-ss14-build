@@ -39,6 +39,7 @@
     back: ClothingBackpack
   storage:
     back:
+    - WarlockRelicCenserOfKass
     - WarlockGrimoireWarlock
     - WarlockTabletKass
 

@@ -251,3 +251,243 @@
   jobs:
   - WarlockJobTechnosArchtechnomage
   - WarlockJobTechnosSupremeTechnocrat
+
+# ================================================================================================
+# Второе пополнение каталога
+#
+# По пять строк в каждый раздел. Цены расставлены так, чтобы книга на шесть очков
+# не позволяла взять всё из одного раздела: дешёвое бытовое или одно дорогое боевое.
+#
+# Гильдийные ограничения расставлены по специализации, а не по силе:
+# Технос чинит железо, Фактос читает и считает, Варлок молится и служит.
+# ================================================================================================
+
+# --- Рядовые -------------------------------------------------------------------------------
+# Руки Правки чинят механизмы. Технос по профилю, Фактос по описи находок.
+- type: warlockSpellEntry
+  id: WarlockSpellMendingHands
+  action: WarlockActionMendingHands
+  section: Common
+  cost: 2
+  guilds: [ GuildTechnos, GuildFactos ]
+
+- type: warlockSpellEntry
+  id: WarlockSpellSteadyGrip
+  action: WarlockActionSteadyGrip
+  section: Common
+  cost: 2
+
+- type: warlockSpellEntry
+  id: WarlockSpellLightStep
+  action: WarlockActionLightStep
+  section: Common
+  cost: 1
+
+# Второй Взгляд читает чужое имя сквозь маску. Фактос — их работа и есть чтение.
+- type: warlockSpellEntry
+  id: WarlockSpellSecondSight
+  action: WarlockActionSecondSight
+  section: Common
+  cost: 2
+  guilds: [ GuildFactos, GuildWarlock ]
+
+- type: warlockSpellEntry
+  id: WarlockSpellColdHearth
+  action: WarlockActionColdHearth
+  section: Common
+  cost: 2
+
+# --- Боевые --------------------------------------------------------------------------------
+- type: warlockSpellEntry
+  id: WarlockSpellSplinterVolley
+  action: WarlockActionSplinterVolley
+  section: Combat
+  cost: 4
+
+- type: warlockSpellEntry
+  id: WarlockSpellIronCramp
+  action: WarlockActionIronCramp
+  section: Combat
+  cost: 3
+
+# Долг Крови переписывает раны на чужое тело. Варлок — их лор весь про плату собой.
+- type: warlockSpellEntry
+  id: WarlockSpellBloodDebt
+  action: WarlockActionBloodDebt
+  section: Combat
+  cost: 4
+  guilds: [ GuildWarlock ]
+
+- type: warlockSpellEntry
+  id: WarlockSpellStaticShroud
+  action: WarlockActionStaticShroud
+  section: Combat
+  cost: 3
+
+- type: warlockSpellEntry
+  id: WarlockSpellGravebind
+  action: WarlockActionGravebind
+  section: Combat
+  cost: 3
+
+# --- Капелланские --------------------------------------------------------------------------
+- type: warlockSpellEntry
+  id: WarlockSpellLastRites
+  action: WarlockActionLastRites
+  section: Chaplain
+  cost: 5
+  clergy: true
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellVowOfSilence
+  action: WarlockActionVowOfSilence
+  section: Chaplain
+  cost: 4
+  clergy: true
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellBurdenShare
+  action: WarlockActionBurdenShare
+  section: Chaplain
+  cost: 3
+  clergy: true
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellConsecrate
+  action: WarlockActionConsecrate
+  section: Chaplain
+  cost: 5
+  clergy: true
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+- type: warlockSpellEntry
+  id: WarlockSpellCallTheFlock
+  action: WarlockActionCallTheFlock
+  section: Chaplain
+  cost: 3
+  clergy: true
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobWarlockPriest
+  - WarlockJobWarlockRitualist
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobFactosSorcerer
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+  - WarlockJobTechnosTechnosorcerer
+
+# --- Командирские --------------------------------------------------------------------------
+- type: warlockSpellEntry
+  id: WarlockSpellWritOfSeizure
+  action: WarlockActionWritOfSeizure
+  section: Command
+  cost: 3
+  minRank: 5
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellChainOfCommand
+  action: WarlockActionChainOfCommand
+  section: Command
+  cost: 4
+  minRank: 5
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellExcommunicate
+  action: WarlockActionExcommunicate
+  section: Command
+  cost: 5
+  minRank: 5
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellCensus
+  action: WarlockActionCensus
+  section: Command
+  cost: 2
+  minRank: 5
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat
+
+- type: warlockSpellEntry
+  id: WarlockSpellRightOfSearch
+  action: WarlockActionRightOfSearch
+  section: Command
+  cost: 3
+  minRank: 5
+  jobs:
+  - WarlockJobWarlockArchmageBishop
+  - WarlockJobWarlockHighPriest
+  - WarlockJobFactosArtarchmage
+  - WarlockJobFactosGreatSeeker
+  - WarlockJobTechnosArchtechnomage
+  - WarlockJobTechnosSupremeTechnocrat

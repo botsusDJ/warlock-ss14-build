@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Нарисовано для билда Warlock",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "MendingHands"
+    },
+    {
+      "name": "SteadyGrip"
+    },
+    {
+      "name": "LightStep"
+    },
+    {
+      "name": "SecondSight"
+    },
+    {
+      "name": "ColdHearth"
+    },
+    {
+      "name": "SplinterVolley"
+    },
+    {
+      "name": "IronCramp"
+    },
+    {
+      "name": "BloodDebt"
+    },
+    {
+      "name": "StaticShroud"
+    },
+    {
+      "name": "Gravebind"
+    },
+    {
+      "name": "LastRites"
+    },
+    {
+      "name": "VowOfSilence"
+    },
+    {
+      "name": "BurdenShare"
+    },
+    {
+      "name": "Consecrate"
+    },
+    {
+      "name": "CallTheFlock"
+    },
+    {
+      "name": "WritOfSeizure"
+    },
+    {
+      "name": "ChainOfCommand"
+    },
+    {
+      "name": "Excommunicate"
+    },
+    {
+      "name": "Census"
+    },
+    {
+      "name": "RightOfSearch"
+    },
+    {
+      "name": "SeersEye"
+    },
+    {
+      "name": "MachineHeart"
+    }
+  ]
+}

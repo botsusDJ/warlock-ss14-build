@@ -1,0 +1,510 @@
+# _Warlock
+# Второе пополнение гримуаров: по пять строк в каждый из четырёх разделов.
+#
+# Правило то же, что и у первого набора: ни одна строка не является улучшенной версией
+# другой. Если новое заклинание делает то же самое, но сильнее, — оно лишнее. Поэтому
+# здесь нет «большого огненного шара» и «улучшенного лечения»: есть чтение имени сквозь
+# маску, сбитый со всей комнаты огонь, перенос своих ран на чужое тело и опись карманов.
+#
+# Иконки свои, из _Warlock/Interface/Actions/warlock_spells.rsi. Цвет рамки у каждой
+# соответствует разделу: серо-синий рядовым, красный боевым, золотой капелланским,
+# фиолетовый командирским — раздел видно в панели действий, не открывая книгу.
+
+# ================================================================================================
+# Рядовые
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionMendingHands
+  name: Руки Правки
+  description: >-
+    Положить ладонь на механизм и заставить его вспомнить, каким он был целым.
+    На живое не действует вовсе: это ремонт, а не медицина.
+  components:
+  - type: Action
+    useDelay: 25
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Machines/machine_switch.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: MendingHands
+  - type: TargetAction
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    blacklist:
+      components:
+      - MobState
+    event: !type:WarlockMendingHandsEvent
+      repair: 40
+  - type: WarlockPsiCost
+    cost: 12
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionSteadyGrip
+  name: Твёрдая Хватка
+  description: >-
+    Руки перестают дрожать. Всё, что требует времени, делается заметно быстрее —
+    и это единственное заклинание в книге, которое помогает работать, а не драться.
+  components:
+  - type: Action
+    useDelay: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: SteadyGrip
+  - type: InstantAction
+    event: !type:WarlockSteadyGripEvent
+      duration: 30
+      multiplier: 0.6
+  - type: WarlockPsiCost
+    cost: 10
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionLightStep
+  name: Лёгкий Шаг
+  description: >-
+    Вес уходит из ног. Ненадолго и без всякой боевой пользы, кроме той,
+    что от драки можно уйти.
+  components:
+  - type: Action
+    useDelay: 45
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: LightStep
+  - type: InstantAction
+    event: !type:WarlockLightStepEvent
+      duration: 20
+      speed: 1.25
+  - type: WarlockPsiCost
+    cost: 8
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionSecondSight
+  name: Второй Взгляд
+  description: >-
+    Прочесть, кто перед вами, минуя маску, капюшон и чужой скафандр.
+    Цель об этом не узнает и почувствовать ничего не сможет.
+  components:
+  - type: Action
+    useDelay: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: SecondSight
+  - type: TargetAction
+    range: 6
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockSecondSightEvent
+  - type: WarlockPsiCost
+    cost: 8
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionColdHearth
+  name: Холодный Очаг
+  description: >-
+    Сбить огонь со всех вокруг разом, включая себя. Пожар в помещении это не тушит,
+    но людей из него вынимает.
+  components:
+  - type: Action
+    useDelay: 40
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/extinguish.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: ColdHearth
+  - type: InstantAction
+    event: !type:WarlockColdHearthEvent
+      radius: 4
+      extinguish: 10
+      soothe: 8
+  - type: WarlockPsiCost
+    cost: 14
+
+# ================================================================================================
+# Боевые
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionSplinterVolley
+  name: Залп Осколков
+  description: >-
+    Всё, что было пылью и крошкой, разгоняется наружу. Бьёт всех вокруг, кроме вас,
+    и своих не отличает — в строю применять нельзя.
+  components:
+  - type: Action
+    useDelay: 45
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/glass_break1.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: SplinterVolley
+  - type: InstantAction
+    event: !type:WarlockSplinterVolleyEvent
+      radius: 4.5
+      damage: 14
+  - type: WarlockPsiCost
+    cost: 22
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionIronCramp
+  name: Железная Судорога
+  description: >-
+    Мышцы цели сводит разом. Урона почти нет, зато стоять она перестаёт.
+  components:
+  - type: Action
+    useDelay: 35
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/thudswoosh.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: IronCramp
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockIronCrampEvent
+      stamina: 55
+      knockdown: 4
+  - type: WarlockPsiCost
+    cost: 18
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionBloodDebt
+  name: Долг Крови
+  description: >-
+    Переписать собственные раны на чужое тело. Переносится ровно столько, сколько
+    у вас есть: на целом теле заклинание не делает ничего.
+  components:
+  - type: Action
+    useDelay: 50
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Fluids/splat.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: BloodDebt
+  - type: TargetAction
+    range: 4
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockBloodDebtEvent
+      amount: 30
+  - type: WarlockPsiCost
+    cost: 20
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionStaticShroud
+  name: Статический Покров
+  description: >-
+    Воздух вокруг густеет. Бить по вам становится тяжело, ходить вам — тоже.
+  components:
+  - type: Action
+    useDelay: 50
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Lightning/lightningshock.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: StaticShroud
+  - type: InstantAction
+    event: !type:WarlockStaticShroudEvent
+      duration: 15
+      resist: 0.55
+      slow: 0.7
+  - type: WarlockPsiCost
+    cost: 18
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionGravebind
+  name: Могильные Путы
+  description: >-
+    Держит цель на месте. Бить и стрелять она может, уйти — нет.
+  components:
+  - type: Action
+    useDelay: 40
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: Gravebind
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockGravebindEvent
+      duration: 6
+  - type: WarlockPsiCost
+    cost: 16
+
+# ================================================================================================
+# Капелланские
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionLastRites
+  name: Последний Обряд
+  description: >-
+    Вытащить того, кого уже списали. Половину вытащенного вы забираете себе,
+    и отменить это нельзя ничем.
+  components:
+  - type: Action
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_healing.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: LastRites
+  - type: TargetAction
+    range: 1.5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockLastRitesEvent
+      heal: 70
+      backlash: 0.5
+  - type: WarlockPsiCost
+    cost: 30
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionVowOfSilence
+  name: Обет Молчания
+  description: >-
+    Заткнуть чужой дар. Ненадолго, зато на любом — в том числе на архимаге.
+  components:
+  - type: Action
+    useDelay: 70
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: VowOfSilence
+  - type: TargetAction
+    range: 4
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockVowOfSilenceEvent
+      duration: 45
+  - type: WarlockPsiCost
+    cost: 25
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionBurdenShare
+  name: Разделённая Ноша
+  description: >-
+    Забрать чужую боль себе. Не лечит ни на единицу — боль просто меняет владельца,
+    и к концу боя капеллан не может держать оружие сам.
+  components:
+  - type: Action
+    useDelay: 35
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_healing.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: BurdenShare
+  - type: TargetAction
+    range: 2
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockBurdenShareEvent
+      share: 0.6
+  - type: WarlockPsiCost
+    cost: 14
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionConsecrate
+  name: Освящение
+  description: >-
+    Накрыть своих по гильдии. Пока держится, по ним бьёт слабее. Чужих не касается.
+  components:
+  - type: Action
+    useDelay: 80
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_healing.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: Consecrate
+  - type: InstantAction
+    event: !type:WarlockConsecrateEvent
+      radius: 5
+      duration: 25
+      resist: 0.75
+  - type: WarlockPsiCost
+    cost: 28
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionCallTheFlock
+  name: Созыв Паствы
+  description: >-
+    Каждый свой по гильдии узнаёт, где вы и как далеко. Ни карты, ни маркера —
+    сторона света и расстояние в шагах.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/clang.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: CallTheFlock
+  - type: InstantAction
+    event: !type:WarlockCallTheFlockEvent
+  - type: WarlockPsiCost
+    cost: 20
+
+# ================================================================================================
+# Командирские
+# ================================================================================================
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionWritOfSeizure
+  name: Ордер на Изъятие
+  description: >-
+    Всё, что цель держит в руках, оказывается на полу. Работает и на своих —
+    поэтому и лежит в командирском разделе.
+  components:
+  - type: Action
+    useDelay: 40
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/thudswoosh.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: WritOfSeizure
+  - type: TargetAction
+    range: 6
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockWritOfSeizureEvent
+  - type: WarlockPsiCost
+    cost: 18
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionChainOfCommand
+  name: Цепь Приказа
+  description: >-
+    Своих по гильдии в радиусе разгоняет и держит на ногах дольше обычного.
+  components:
+  - type: Action
+    useDelay: 100
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/clang.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: ChainOfCommand
+  - type: InstantAction
+    event: !type:WarlockChainOfCommandEvent
+      radius: 6
+      duration: 30
+      speed: 1.2
+      stamina: 1.35
+  - type: WarlockPsiCost
+    cost: 26
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionExcommunicate
+  name: Отлучение
+  description: >-
+    Снять дар с подчинённого насовсем — и тем же жестом вернуть. Срока нет:
+    отлучение нельзя отсидеть, его можно только отслужить.
+  components:
+  - type: Action
+    useDelay: 120
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/poster_broken.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: Excommunicate
+  - type: TargetAction
+    range: 3
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockExcommunicateEvent
+  - type: WarlockPsiCost
+    cost: 35
+
+- type: entity
+  parent: WarlockBaseSpellAction
+  id: WarlockActionCensus
+  name: Перепись
+  description: >-
+    Сколько кого осталось в живых по всем фракциям. Ни имён, ни мест — только счёт,
+    и этого хватает, чтобы понять, чем кончился штурм на другом конце карты.
+  components:
+  - type: Action
+    useDelay: 90
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Machines/button.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: Census
+  - type: InstantAction
+    event: !type:WarlockCensusEvent
+  - type: WarlockPsiCost
+    cost: 15
+
+- type: entity
+  parent: WarlockBaseTargetedSpellAction
+  id: WarlockActionRightOfSearch
+  name: Право Досмотра
+  description: >-
+    Опись всего, что у цели при себе, вплоть до содержимого сумки. Цель не узнаёт.
+  components:
+  - type: Action
+    useDelay: 45
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Machines/button.ogg
+  - type: Sprite
+    sprite: _Warlock/Interface/Actions/warlock_spells.rsi
+    state: RightOfSearch
+  - type: TargetAction
+    range: 5
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+    event: !type:WarlockRightOfSearchEvent
+  - type: WarlockPsiCost
+    cost: 12
