@@ -1,0 +1,40 @@
+# _Warlock
+# СОБРАНО СКРИПТОМ Tools/_Warlock/gen_mechs.py — ПРАВИТЬ ЗДЕСЬ БЕССМЫСЛЕННО.
+# Вся разница между машинами лежит в таблице MECHS в начале скрипта.
+#
+# Действия экипажа мехов.
+#
+# Отдельного действия «выстрелить» нет: стрелок стреляет обычным кликом,
+# потому что его взаимодействия ретранслируются на мех так же, как у пилота.
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionMechStation
+  name: Сменить пост
+  description: >-
+    Пересесть с рычагов за прицелы и обратно. В одиночку рама или ходит, или стреляет:
+    до того и другого разом руки не достают. Со стрелком на борту переключаться не нужно.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 2
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_clamp
+  - type: InstantAction
+    event: !type:WarlockMechStationEvent
+
+- type: entity
+  parent: BaseAction
+  id: WarlockActionMechGunnerCycle
+  name: Сменить орудие
+  description: Переключить пилон, с которого стреляет стрелок.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 1
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_carbine
+  - type: InstantAction
+    event: !type:WarlockMechGunnerCycleEvent

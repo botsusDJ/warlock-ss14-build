@@ -1,0 +1,668 @@
+# _Warlock
+# СОБРАНО СКРИПТОМ Tools/_Warlock/gen_mechs.py — ПРАВИТЬ ЗДЕСЬ БЕССМЫСЛЕННО.
+# Вся разница между машинами лежит в таблице MECHS в начале скрипта.
+#
+# Узлы мехов. Сорок штук: по десять на раму.
+#
+# Числа dirtRate и meltRate — не украшение. Ступня стоит в песке и забивается
+# вчетверо быстрее кабины, а реакторный блок плавится быстрее всех, потому что
+# и без огня работает горячим. Из-за этого склад запчастей у Братства перекошен:
+# ступней надо много, оснований — почти никогда.
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: WarlockBaseMechPart
+  description: Узел рамы Братства. Снимается, теряется, плавится и забивается песком.
+  components:
+  - type: Item
+    size: Huge
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - WarlockMechPart
+
+# --- Мекантек ------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekCockpit
+  name: кабина «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_harness
+  - type: WarlockMechPart
+    slot: cockpit
+    chassis: Mekantek
+    weight: 0.4
+    dirtRate: 0.4
+    meltRate: 1.2
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekReactor
+  name: реакторный блок «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_chassis
+  - type: WarlockMechPart
+    slot: reactor
+    chassis: Mekantek
+    weight: 0.6
+    dirtRate: 0.3
+    meltRate: 1.6
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekHipL
+  name: левое основание ноги «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: hip_l
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekHipR
+  name: правое основание ноги «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: hip_r
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekKneeL
+  name: левый коленный узел «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: knee_l
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekKneeR
+  name: правый коленный узел «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: knee_r
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekFootL
+  name: левая ступня «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: foot_l
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekFootR
+  name: правая ступня «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: foot_r
+    chassis: Mekantek
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekMountL
+  name: левый пилон «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_l_arm
+  - type: WarlockMechPart
+    slot: mount_l
+    chassis: Mekantek
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekantekMountR
+  name: правый пилон «Мекантек»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_r_arm
+  - type: WarlockMechPart
+    slot: mount_r
+    chassis: Mekantek
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+# --- Трибун --------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneCockpit
+  name: кабина «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_harness
+  - type: WarlockMechPart
+    slot: cockpit
+    chassis: Tribune
+    weight: 0.4
+    dirtRate: 0.4
+    meltRate: 1.2
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneReactor
+  name: реакторный блок «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_chassis
+  - type: WarlockMechPart
+    slot: reactor
+    chassis: Tribune
+    weight: 0.6
+    dirtRate: 0.3
+    meltRate: 1.6
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneHipL
+  name: левое основание ноги «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: hip_l
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneHipR
+  name: правое основание ноги «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: hip_r
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneKneeL
+  name: левый коленный узел «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: knee_l
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneKneeR
+  name: правый коленный узел «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: knee_r
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneFootL
+  name: левая ступня «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: foot_l
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneFootR
+  name: правая ступня «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: foot_r
+    chassis: Tribune
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneMountL
+  name: левый пилон «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_l_arm
+  - type: WarlockMechPart
+    slot: mount_l
+    chassis: Tribune
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartTribuneMountR
+  name: правый пилон «Трибун»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_r_arm
+  - type: WarlockMechPart
+    slot: mount_r
+    chassis: Tribune
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+# --- Легионер ------------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryCockpit
+  name: кабина «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_harness
+  - type: WarlockMechPart
+    slot: cockpit
+    chassis: Legionary
+    weight: 0.4
+    dirtRate: 0.4
+    meltRate: 1.2
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryReactor
+  name: реакторный блок «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_chassis
+  - type: WarlockMechPart
+    slot: reactor
+    chassis: Legionary
+    weight: 0.6
+    dirtRate: 0.3
+    meltRate: 1.6
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryHipL
+  name: левое основание ноги «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: hip_l
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryHipR
+  name: правое основание ноги «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: hip_r
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 0.7
+    meltRate: 0.8
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryKneeL
+  name: левый коленный узел «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: knee_l
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryKneeR
+  name: правый коленный узел «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: knee_r
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 1.1
+    meltRate: 1.0
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryFootL
+  name: левая ступня «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: foot_l
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryFootR
+  name: правая ступня «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: foot_r
+    chassis: Legionary
+    weight: 1.0
+    dirtRate: 1.8
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryMountL
+  name: левый пилон «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_l_arm
+  - type: WarlockMechPart
+    slot: mount_l
+    chassis: Legionary
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartLegionaryMountR
+  name: правый пилон «Легионер»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_r_arm
+  - type: WarlockMechPart
+    slot: mount_r
+    chassis: Legionary
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+# --- Механизатор ---------------------------------------------------------------------------
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorCockpit
+  name: кабина «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_harness
+  - type: WarlockMechPart
+    slot: cockpit
+    chassis: Mekhanizator
+    weight: 0.4
+    dirtRate: 0.4
+    meltRate: 1.2
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorReactor
+  name: реакторный блок «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_chassis
+  - type: WarlockMechPart
+    slot: reactor
+    chassis: Mekhanizator
+    weight: 0.6
+    dirtRate: 0.3
+    meltRate: 1.6
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorLegA
+  name: передняя левая лапа «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: leg_a
+    chassis: Mekhanizator
+    weight: 0.8
+    dirtRate: 1.6
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorLegB
+  name: передняя правая лапа «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: leg_b
+    chassis: Mekhanizator
+    weight: 0.8
+    dirtRate: 1.6
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorLegC
+  name: задняя левая лапа «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_l_leg
+  - type: WarlockMechPart
+    slot: leg_c
+    chassis: Mekhanizator
+    weight: 0.8
+    dirtRate: 1.6
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorLegD
+  name: задняя правая лапа «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_r_leg
+  - type: WarlockMechPart
+    slot: leg_d
+    chassis: Mekhanizator
+    weight: 0.8
+    dirtRate: 1.6
+    meltRate: 0.9
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorClawL
+  name: левый бур-захват «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_l_arm
+  - type: WarlockMechPart
+    slot: claw_l
+    chassis: Mekhanizator
+    weight: 0.3
+    dirtRate: 1.2
+    meltRate: 1.1
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorClawR
+  name: правый бур-захват «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_r_arm
+  - type: WarlockMechPart
+    slot: claw_r
+    chassis: Mekhanizator
+    weight: 0.3
+    dirtRate: 1.2
+    meltRate: 1.1
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorMountL
+  name: левый пилон «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_l_arm
+  - type: WarlockMechPart
+    slot: mount_l
+    chassis: Mekhanizator
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3
+
+- type: entity
+  parent: WarlockBaseMechPart
+  id: WarlockMechPartMekhanizatorMountR
+  name: правый пилон «Механизатор»
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_r_arm
+  - type: WarlockMechPart
+    slot: mount_r
+    chassis: Mekhanizator
+    weight: 0.2
+    dirtRate: 0.5
+    meltRate: 1.3

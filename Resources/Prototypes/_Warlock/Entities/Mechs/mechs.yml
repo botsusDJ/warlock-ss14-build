@@ -1,0 +1,275 @@
+# _Warlock
+# СОБРАНО СКРИПТОМ Tools/_Warlock/gen_mechs.py — ПРАВИТЬ ЗДЕСЬ БЕССМЫСЛЕННО.
+# Вся разница между машинами лежит в таблице MECHS в начале скрипта.
+#
+# Мехи Братства Стали. Ложатся поверх ванильного BaseMech: пилот, батарея,
+# слоты оружия и интерфейс ванильные. Своё — экипаж на двоих, посты, смазка
+# и разборные узлы, всё в компоненте WarlockMech.
+#
+# Спрайты — перекрашенная ваниль из mecha.rsi. Плейсхолдеры.
+
+- type: entity
+  parent: BaseMech
+  id: WarlockMechMekantek
+  name: Мекантек
+  description: >-
+    Штурмовая рама Братства, сваренная из трёх чужих. Ходит тяжело, разворачивается ещё тяжелее, но то, что оказалось перед ней, обычно уже не имеет значения.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha.rsi
+    color: "#6b6f76"
+    layers:
+    - state: marauder
+      map: [ "enum.MechVisualLayers.Base" ]
+  - type: Mech
+    baseState: marauder
+    openState: marauder-open
+    brokenState: marauder-broken
+    maxIntegrity: 420
+    maxEquipmentAmount: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.1
+    baseSprintSpeed: 2.6
+  - type: WarlockMech
+    class: Mechantek
+    maxLubricant: 140
+    lubricant: 140
+    turnTime: 0.78
+    turnAngle: 70
+    requiredSlots:
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+  - type: Damageable
+    damageContainer: Inorganic
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: WarlockMechFrameMekantek
+  name: рама «Мекантек»
+  description: >-
+    Голый несущий каркас. Пока все гнёзда не заняты, это просто железо на ножках.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#6b6f76"
+    state: ripley_chassis
+  - type: WarlockMechFrame
+    result: WarlockMechMekantek
+    chassis: Mekantek
+    slots:
+    - cockpit
+    - reactor
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+    - mount_l
+    - mount_r
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+
+- type: entity
+  parent: BaseMech
+  id: WarlockMechTribune
+  name: Трибун
+  description: >-
+    Командная рама. Выше остальных на голову и видна с другого конца поля — что и есть её задача, и её же главная беда.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha.rsi
+    color: "#7d7266"
+    layers:
+    - state: durand
+      map: [ "enum.MechVisualLayers.Base" ]
+  - type: Mech
+    baseState: durand
+    openState: durand-open
+    brokenState: durand-broken
+    maxIntegrity: 380
+    maxEquipmentAmount: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.3
+    baseSprintSpeed: 2.9
+  - type: WarlockMech
+    class: Tribune
+    maxLubricant: 130
+    lubricant: 130
+    turnTime: 0.68
+    turnAngle: 75
+    requiredSlots:
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+  - type: Damageable
+    damageContainer: Inorganic
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: WarlockMechFrameTribune
+  name: рама «Трибун»
+  description: >-
+    Голый несущий каркас. Пока все гнёзда не заняты, это просто железо на ножках.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7d7266"
+    state: ripley_chassis
+  - type: WarlockMechFrame
+    result: WarlockMechTribune
+    chassis: Tribune
+    slots:
+    - cockpit
+    - reactor
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+    - mount_l
+    - mount_r
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+
+- type: entity
+  parent: BaseMech
+  id: WarlockMechLegionary
+  name: Легионер
+  description: >-
+    Линейная рама Братства. Проще всех и чинится в поле — потому их и больше всех.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha.rsi
+    color: "#5f6b74"
+    layers:
+    - state: hamtr
+      map: [ "enum.MechVisualLayers.Base" ]
+  - type: Mech
+    baseState: hamtr
+    openState: hamtr-open
+    brokenState: hamtr-broken
+    maxIntegrity: 260
+    maxEquipmentAmount: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.6
+    baseSprintSpeed: 3.2
+  - type: WarlockMech
+    class: Line
+    maxLubricant: 100
+    lubricant: 100
+    turnTime: 0.55
+    turnAngle: 80
+    requiredSlots:
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+  - type: Damageable
+    damageContainer: Inorganic
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: WarlockMechFrameLegionary
+  name: рама «Легионер»
+  description: >-
+    Голый несущий каркас. Пока все гнёзда не заняты, это просто железо на ножках.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#5f6b74"
+    state: ripley_chassis
+  - type: WarlockMechFrame
+    result: WarlockMechLegionary
+    chassis: Legionary
+    slots:
+    - cockpit
+    - reactor
+    - hip_l
+    - hip_r
+    - knee_l
+    - knee_r
+    - foot_l
+    - foot_r
+    - mount_l
+    - mount_r
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+
+- type: entity
+  parent: BaseMech
+  id: WarlockMechMekhanizator
+  name: Механизатор
+  description: >-
+    Рабочая рама на четырёх лапах. Лезет туда, куда двуногая не встанет, и разворачивается почти как человек. В драке её жалко.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha.rsi
+    color: "#7a6a3f"
+    layers:
+    - state: clarke
+      map: [ "enum.MechVisualLayers.Base" ]
+  - type: Mech
+    baseState: clarke
+    openState: clarke-open
+    brokenState: clarke-broken
+    maxIntegrity: 200
+    maxEquipmentAmount: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.9
+    baseSprintSpeed: 3.4
+  - type: WarlockMech
+    class: Worker
+    maxLubricant: 90
+    lubricant: 90
+    turnTime: 0.32
+    turnAngle: 100
+    requiredSlots:
+    - leg_a
+    - leg_b
+    - leg_c
+    - leg_d
+  - type: Damageable
+    damageContainer: Inorganic
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: WarlockMechFrameMekhanizator
+  name: рама «Механизатор»
+  description: >-
+    Голый несущий каркас. Пока все гнёзда не заняты, это просто железо на ножках.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+    color: "#7a6a3f"
+    state: ripley_chassis
+  - type: WarlockMechFrame
+    result: WarlockMechMekhanizator
+    chassis: Mekhanizator
+    slots:
+    - cockpit
+    - reactor
+    - leg_a
+    - leg_b
+    - leg_c
+    - leg_d
+    - claw_l
+    - claw_r
+    - mount_l
+    - mount_r
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic

@@ -1,0 +1,444 @@
+# _Warlock
+# СОБРАНО СКРИПТОМ Tools/_Warlock/gen_mechs.py — ПРАВИТЬ ЗДЕСЬ БЕССМЫСЛЕННО.
+# Вся разница между машинами лежит в таблице MECHS в начале скрипта.
+#
+# Рецепты фабрикатора. Узлы печатаются поштучно: это и есть ремонт мехов
+# у Братства — не кнопка «починить», а очередь на фабрикаторе за конкретной
+# ступнёй, которой не хватает.
+
+- type: latheRecipe
+  abstract: true
+  id: WarlockBaseMechPartRecipe
+  categories:
+  - Mech
+  completetime: 8
+
+# --- Мекантек ------------------------------------------------------------------------------
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekCockpit
+  result: WarlockMechPartMekantekCockpit
+  materials:
+    Steel: 3840
+    Glass: 1440
+    Plastic: 640
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekReactor
+  result: WarlockMechPartMekantekReactor
+  materials:
+    Steel: 3360
+    Glass: 1260
+    Plastic: 560
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekHipL
+  result: WarlockMechPartMekantekHipL
+  materials:
+    Steel: 2400
+    Glass: 900
+    Plastic: 400
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekHipR
+  result: WarlockMechPartMekantekHipR
+  materials:
+    Steel: 2400
+    Glass: 900
+    Plastic: 400
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekKneeL
+  result: WarlockMechPartMekantekKneeL
+  materials:
+    Steel: 1680
+    Glass: 630
+    Plastic: 280
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekKneeR
+  result: WarlockMechPartMekantekKneeR
+  materials:
+    Steel: 1680
+    Glass: 630
+    Plastic: 280
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekFootL
+  result: WarlockMechPartMekantekFootL
+  materials:
+    Steel: 1200
+    Glass: 450
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekFootR
+  result: WarlockMechPartMekantekFootR
+  materials:
+    Steel: 1200
+    Glass: 450
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekMountL
+  result: WarlockMechPartMekantekMountL
+  materials:
+    Steel: 1440
+    Glass: 540
+    Plastic: 240
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekantekMountR
+  result: WarlockMechPartMekantekMountR
+  materials:
+    Steel: 1440
+    Glass: 540
+    Plastic: 240
+
+# --- Трибун --------------------------------------------------------------------------------
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneCockpit
+  result: WarlockMechPartTribuneCockpit
+  materials:
+    Steel: 3520
+    Glass: 1760
+    Plastic: 560
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneReactor
+  result: WarlockMechPartTribuneReactor
+  materials:
+    Steel: 3080
+    Glass: 1540
+    Plastic: 480
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneHipL
+  result: WarlockMechPartTribuneHipL
+  materials:
+    Steel: 2200
+    Glass: 1100
+    Plastic: 350
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneHipR
+  result: WarlockMechPartTribuneHipR
+  materials:
+    Steel: 2200
+    Glass: 1100
+    Plastic: 350
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneKneeL
+  result: WarlockMechPartTribuneKneeL
+  materials:
+    Steel: 1540
+    Glass: 770
+    Plastic: 240
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneKneeR
+  result: WarlockMechPartTribuneKneeR
+  materials:
+    Steel: 1540
+    Glass: 770
+    Plastic: 240
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneFootL
+  result: WarlockMechPartTribuneFootL
+  materials:
+    Steel: 1100
+    Glass: 550
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneFootR
+  result: WarlockMechPartTribuneFootR
+  materials:
+    Steel: 1100
+    Glass: 550
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneMountL
+  result: WarlockMechPartTribuneMountL
+  materials:
+    Steel: 1320
+    Glass: 660
+    Plastic: 210
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartTribuneMountR
+  result: WarlockMechPartTribuneMountR
+  materials:
+    Steel: 1320
+    Glass: 660
+    Plastic: 210
+
+# --- Легионер ------------------------------------------------------------------------------
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryCockpit
+  result: WarlockMechPartLegionaryCockpit
+  materials:
+    Steel: 2240
+    Glass: 960
+    Plastic: 320
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryReactor
+  result: WarlockMechPartLegionaryReactor
+  materials:
+    Steel: 1950
+    Glass: 840
+    Plastic: 280
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryHipL
+  result: WarlockMechPartLegionaryHipL
+  materials:
+    Steel: 1400
+    Glass: 600
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryHipR
+  result: WarlockMechPartLegionaryHipR
+  materials:
+    Steel: 1400
+    Glass: 600
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryKneeL
+  result: WarlockMechPartLegionaryKneeL
+  materials:
+    Steel: 970
+    Glass: 420
+    Plastic: 140
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryKneeR
+  result: WarlockMechPartLegionaryKneeR
+  materials:
+    Steel: 970
+    Glass: 420
+    Plastic: 140
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryFootL
+  result: WarlockMechPartLegionaryFootL
+  materials:
+    Steel: 700
+    Glass: 300
+    Plastic: 100
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryFootR
+  result: WarlockMechPartLegionaryFootR
+  materials:
+    Steel: 700
+    Glass: 300
+    Plastic: 100
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryMountL
+  result: WarlockMechPartLegionaryMountL
+  materials:
+    Steel: 840
+    Glass: 360
+    Plastic: 120
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartLegionaryMountR
+  result: WarlockMechPartLegionaryMountR
+  materials:
+    Steel: 840
+    Glass: 360
+    Plastic: 120
+
+# --- Механизатор ---------------------------------------------------------------------------
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorCockpit
+  result: WarlockMechPartMekhanizatorCockpit
+  materials:
+    Steel: 1760
+    Glass: 800
+    Plastic: 400
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorReactor
+  result: WarlockMechPartMekhanizatorReactor
+  materials:
+    Steel: 1540
+    Glass: 700
+    Plastic: 350
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorLegA
+  result: WarlockMechPartMekhanizatorLegA
+  materials:
+    Steel: 770
+    Glass: 350
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorLegB
+  result: WarlockMechPartMekhanizatorLegB
+  materials:
+    Steel: 770
+    Glass: 350
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorLegC
+  result: WarlockMechPartMekhanizatorLegC
+  materials:
+    Steel: 770
+    Glass: 350
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorLegD
+  result: WarlockMechPartMekhanizatorLegD
+  materials:
+    Steel: 770
+    Glass: 350
+    Plastic: 170
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorClawL
+  result: WarlockMechPartMekhanizatorClawL
+  materials:
+    Steel: 880
+    Glass: 400
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorClawR
+  result: WarlockMechPartMekhanizatorClawR
+  materials:
+    Steel: 880
+    Glass: 400
+    Plastic: 200
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorMountL
+  result: WarlockMechPartMekhanizatorMountL
+  materials:
+    Steel: 660
+    Glass: 300
+    Plastic: 150
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechPartMekhanizatorMountR
+  result: WarlockMechPartMekhanizatorMountR
+  materials:
+    Steel: 660
+    Glass: 300
+    Plastic: 150
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechGrease
+  result: WarlockMechGrease
+  completetime: 4
+  materials:
+    Steel: 200
+    Plastic: 300
+
+- type: latheRecipe
+  parent: WarlockBaseMechPartRecipe
+  id: WarlockMechRag
+  result: WarlockMechRag
+  completetime: 2
+  materials:
+    Cloth: 200
+
+# Пак целиком уходит в фабрикатор Братства. Отдельным паком, а не добавкой
+# в ванильный MechParts: ванильный висит на общестанционном фабрикаторе, а рамы
+# Братства печатать всей станции незачем.
+- type: latheRecipePack
+  id: WarlockMechParts
+  recipes:
+  - WarlockMechPartMekantekCockpit
+  - WarlockMechPartMekantekReactor
+  - WarlockMechPartMekantekHipL
+  - WarlockMechPartMekantekHipR
+  - WarlockMechPartMekantekKneeL
+  - WarlockMechPartMekantekKneeR
+  - WarlockMechPartMekantekFootL
+  - WarlockMechPartMekantekFootR
+  - WarlockMechPartMekantekMountL
+  - WarlockMechPartMekantekMountR
+  - WarlockMechPartTribuneCockpit
+  - WarlockMechPartTribuneReactor
+  - WarlockMechPartTribuneHipL
+  - WarlockMechPartTribuneHipR
+  - WarlockMechPartTribuneKneeL
+  - WarlockMechPartTribuneKneeR
+  - WarlockMechPartTribuneFootL
+  - WarlockMechPartTribuneFootR
+  - WarlockMechPartTribuneMountL
+  - WarlockMechPartTribuneMountR
+  - WarlockMechPartLegionaryCockpit
+  - WarlockMechPartLegionaryReactor
+  - WarlockMechPartLegionaryHipL
+  - WarlockMechPartLegionaryHipR
+  - WarlockMechPartLegionaryKneeL
+  - WarlockMechPartLegionaryKneeR
+  - WarlockMechPartLegionaryFootL
+  - WarlockMechPartLegionaryFootR
+  - WarlockMechPartLegionaryMountL
+  - WarlockMechPartLegionaryMountR
+  - WarlockMechPartMekhanizatorCockpit
+  - WarlockMechPartMekhanizatorReactor
+  - WarlockMechPartMekhanizatorLegA
+  - WarlockMechPartMekhanizatorLegB
+  - WarlockMechPartMekhanizatorLegC
+  - WarlockMechPartMekhanizatorLegD
+  - WarlockMechPartMekhanizatorClawL
+  - WarlockMechPartMekhanizatorClawR
+  - WarlockMechPartMekhanizatorMountL
+  - WarlockMechPartMekhanizatorMountR
+  - WarlockMechGrease
+  - WarlockMechRag

@@ -1,0 +1,68 @@
+# _Warlock
+# СОБРАНО СКРИПТОМ Tools/_Warlock/gen_mechs.py — ПРАВИТЬ ЗДЕСЬ БЕССМЫСЛЕННО.
+# Вся разница между машинами лежит в таблице MECHS в начале скрипта.
+#
+# Обслуживание мехов: фабрикатор Братства, смазка и ветошь.
+#
+# Смазка и ветошь нарочно дешёвые и расходные. Дорогой расходник копят
+# и не тратят, а копить смазку — значит ездить на сухой раме и стирать ноги.
+
+- type: entity
+  parent: ExosuitFabricator
+  id: WarlockMechFabricator
+  name: рамный фабрикатор Братства
+  description: >-
+    Переваренный под свои нужды экзокостюмный фабрикатор. Печатает узлы рам,
+    смазку и ветошь — больше ничего Братству от него не нужно.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/exosuit_fabricator.rsi
+    color: "#8a7f6a"
+    layers:
+    - state: fab-idle
+      map: [ "enum.LatheVisualLayers.IsRunning" ]
+    - state: fab-load
+      map: [ "enum.MaterialStorageVisualLayers.Inserting" ]
+    - state: fab-o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Lathe
+    idleState: fab-idle
+    runningState: fab-active
+    staticPacks:
+    - WarlockMechParts
+
+- type: entity
+  parent: BaseItem
+  id: WarlockMechGrease
+  name: канистра рамной смазки
+  description: >-
+    Густая серая смазка Братства. Пахнет горелым и держится в суставе смену.
+    Заливается прямо в раму, лить куда-то ещё бессмысленно.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/bucket.rsi
+    color: "#6f6a5a"
+    state: icon
+  - type: Item
+    size: Normal
+  - type: WarlockMechGrease
+    amount: 100
+    pour: 50
+
+- type: entity
+  parent: BaseItem
+  id: WarlockMechRag
+  name: ветошь
+  description: >-
+    Промасленный лоскут. Единственное, что снимает с узла набившийся песок,
+    и единственное, чего на складе Братства всегда не хватает.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/rag.rsi
+    color: "#8d8577"
+    state: rag
+  - type: Item
+    size: Small
+  - type: WarlockMechRag
+    clean: 45
+    uses: 6
